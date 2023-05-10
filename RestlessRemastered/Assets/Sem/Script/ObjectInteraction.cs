@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.SubsystemsImplementation;
 
 public class ObjectInteraction : MonoBehaviour
 {
     private Transform mainCamera;
     public GameObject crossHair;
     public bool lookingAtObject;
-    
+    public Renderer rend;
     private Transform carriedObject;
     private bool carrying = false;
     private float pickupDistance = 3f;
@@ -49,7 +51,7 @@ public class ObjectInteraction : MonoBehaviour
         CrosshairFade();
 
     }
-
+    
     void Carry(Transform obj)
     {
         if(throwing == false &&inPosition == false)
@@ -146,11 +148,26 @@ public class ObjectInteraction : MonoBehaviour
             carriedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             carriedObject.GetComponent<Rigidbody>().isKinematic = false;
             carriedObject.GetComponent<Rigidbody>().AddForce(mainCamera.forward * finalForce, ForceMode.Impulse);
-            carriedObject.gameObject.layer = LayerMask.NameToLayer("PickUp");            
-            carriedObject.GetComponent<Renderer>().material.SetInt("Outline", false ? 1 : 0);
+            carriedObject.gameObject.layer = LayerMask.NameToLayer("PickUp");
+            rend = carriedObject.GetComponent<Renderer>();
+            StartCoroutine(nameof(Dissolve));
             carriedObject = null;
             carrying = false;
             throwing=false;
         }
+    }
+    public IEnumerator Dissolve()
+    {
+        yield return new WaitForSeconds(1);
+        float t =0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / 2;
+            rend.material.SetFloat("_Dissolve", t);
+            yield return null;
+
+        }
+        Destroy(rend.gameObject);
+        
     }
 }
