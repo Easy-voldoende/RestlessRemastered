@@ -94,7 +94,14 @@ public class ObjectInteraction : MonoBehaviour
             image.color = color;
         }
     }
-
+    public void AddToInventory()
+    {
+        if(carriedObject != null)
+        {
+            ItemManager manager = GetComponentInParent<ItemManager>();
+            
+        }
+    }
     void Pickup()
     {
         RaycastHit hit;

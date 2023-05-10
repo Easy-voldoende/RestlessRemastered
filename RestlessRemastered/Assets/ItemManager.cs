@@ -22,6 +22,7 @@ public class ItemManager : MonoBehaviour
             {
                 selectedItem = maxSlots;
             }
+            SelectItem();
         }
         else if (Input.mouseScrollDelta.y < 0)
         {
@@ -30,10 +31,21 @@ public class ItemManager : MonoBehaviour
             {
                 selectedItem = 0;
             }
+            SelectItem();
         }
     }
     public void SelectItem()
     {
-
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (i == selectedItem)
+            {
+                itemSlots[i].SetActive(true);
+            }
+            else
+            {
+                itemSlots[i].SetActive(false);
+            }
+        }
     }
 }
