@@ -932,6 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ee21730c8e78a408bf614b5129b994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canRoam: 0
   target: {x: 0, y: 0, z: 0}
   player: {fileID: 67710307}
   damage: 2
@@ -942,10 +943,17 @@ MonoBehaviour:
   roamRadius: 30
   minRoamTime: 1
   maxRoamTime: 5
+  angle: 45
+  angleToPlayer: 0
   currentAngle: 0
   distanceToTarget: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   state: 0
   lookingAtPlayer: 0
+  detectionRange: 20
+  detectionAngle: 90
 --- !u!195 &1052784462
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -960,7 +968,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

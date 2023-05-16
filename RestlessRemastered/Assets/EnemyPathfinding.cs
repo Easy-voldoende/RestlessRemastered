@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class EnemyPathfinding : MonoBehaviour
 {
+    public bool canRoam;
     private NavMeshAgent agent;
     public Vector3 target;
     public Transform player;
@@ -18,11 +19,12 @@ public class EnemyPathfinding : MonoBehaviour
     public float roamRadius = 30.0f;
     public float minRoamTime = 1.0f;
     public float maxRoamTime = 5.0f;    
-    private float nextRoamTime;
-    private float angle = 45f;
+    public float angle;
+    public float angleToPlayer;
     public float currentAngle;
     
     public float distanceToTarget;
+    public LayerMask layerMask;
     public enum EnemyState
     {
         Roaming,
@@ -43,6 +45,13 @@ public class EnemyPathfinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(state.ToString());
+        Detect();
+        SwitchStates();
+    }
+
+    public void SwitchStates()
+    {
         distanceToTarget = Vector3.Distance(transform.position, target);
         Transform myPos = gameObject.transform;
         switch (state)
@@ -55,10 +64,7 @@ public class EnemyPathfinding : MonoBehaviour
                     agent.SetDestination(target);
                 }
 
-                if (lookingAtPlayer == true&& Vector3.Distance(myPos.position, player.position)<20)
-                {
-                    state = EnemyState.Chasing;
-                }
+                
 
 
                 break;
@@ -66,23 +72,15 @@ public class EnemyPathfinding : MonoBehaviour
 
                 target = player.position;
                 agent.SetDestination(target);
-
-                if(Vector3.Distance(myPos.position, player.position) < 2f)
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit, detectionRange, layerMask))
+                {
+                    transform.LookAt(player.position);
+                }
+                if (Vector3.Distance(myPos.position, player.position) < 2f)
                 {
                     Debug.Log("You died");
-                }
-                if (lookingAtPlayer == true && Vector3.Distance(myPos.position, player.position) > 20)
-                {
-                    target = RandomNavSphere(transform.position, roamRadius, -1);
-                    agent.SetDestination(target);
-                    state = EnemyState.Roaming;
-                }
-                if (lookingAtPlayer == false && Vector3.Distance(myPos.position, player.position) > 20)
-                {
-                    target = RandomNavSphere(transform.position, roamRadius, -1);
-                    agent.SetDestination(target);
-                    state = EnemyState.Roaming;
-                }
+                }                
 
                 break;
             case EnemyState.Idle:
@@ -92,19 +90,7 @@ public class EnemyPathfinding : MonoBehaviour
                 break;
         }
 
-        Vector3 directionToObject = player.transform.position - transform.position;
-        Vector3 forward = transform.forward;
-        float dot = Vector3.Dot(directionToObject.normalized, forward.normalized);
-        float angleBetween = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        if (angleBetween <= angle)
-        {
-            lookingAtPlayer = true;
-        }
-        else
-        {
-            lookingAtPlayer = false;
-        }
-        currentAngle = angleBetween;
+        
     }
      
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
@@ -117,4 +103,47 @@ public class EnemyPathfinding : MonoBehaviour
 
         return navHit.position;
     }
+
+
+    public float detectionRange;
+    public float detectionAngle;
+    public RaycastHit hit;
+    private void Detect()
+    {
+        if (Vector3.Distance(transform.position, player.position) < 4)
+        {
+
+            state = EnemyState.Chasing;
+        }
+
+        Vector3 targetDir = target - transform.position;
+        angleToPlayer = Vector3.Angle(targetDir, transform.forward);
+        
+
+        if (angleToPlayer < 45.0f)
+        {
+            if(Physics.Raycast(transform.position, player.position, out hit, detectionRange, layerMask))
+            {
+                lookingAtPlayer = true;
+            }
+            else
+            {
+                lookingAtPlayer = false;
+            }
+        }
+        else
+        {
+            lookingAtPlayer = false;
+        }
+
+        if (angleToPlayer <= detectionAngle && lookingAtPlayer == true)
+        {
+            
+            state = EnemyState.Chasing;
+        }
+
+        Debug.DrawRay(transform.position, transform.forward * detectionRange, Color.green);
+
+    }
+
 }
