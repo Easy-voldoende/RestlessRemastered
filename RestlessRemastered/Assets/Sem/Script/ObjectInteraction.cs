@@ -9,8 +9,9 @@ public class ObjectInteraction : MonoBehaviour
     public GameObject crossHair;
     public bool lookingAtObject;
     public Renderer rend;
+    
     private Transform carriedObject;
-    private bool carrying = false;
+    public bool carrying = false;
     private float pickupDistance = 3f;
     private float holdDistance = 1f;
     public float finalForce;
@@ -26,6 +27,7 @@ public class ObjectInteraction : MonoBehaviour
     public Transform throwingTransform;
     public Vector3 newPos;
     public bool inPosition;
+    public bool inThrowingPosition;
 
     void Start()
     {
@@ -37,8 +39,11 @@ public class ObjectInteraction : MonoBehaviour
         if (carrying)
         {
             
-            Carry(carriedObject);
-            CheckThrow(carriedObject);
+            if(carriedObject != null)
+            {
+                Carry(carriedObject);
+                CheckThrow(carriedObject);
+            }
         }
         else
         {
@@ -56,7 +61,7 @@ public class ObjectInteraction : MonoBehaviour
     {
         if(throwing == false &&inPosition == false)
         {
-            obj.position = Vector3.Lerp(obj.position, holdingTransform.position, Time.deltaTime *6);
+            obj.position = Vector3.Lerp(obj.position, holdingTransform.position, Time.deltaTime *10);
             obj.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             
         }
@@ -123,10 +128,10 @@ public class ObjectInteraction : MonoBehaviour
             }
             
         }
-        else if (!Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
+
+        if (!Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
         {
-            lookingAtObject = false;
-            
+            lookingAtObject = false;            
 
         }
 
@@ -137,16 +142,22 @@ public class ObjectInteraction : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            if(Vector3.Distance(obj.position, throwingTransform.position) > 0.05f)
+
+            if(Vector3.Distance(obj.position, throwingTransform.position) > 0.05f && inThrowingPosition == false)
             {
-                obj.position = Vector3.Lerp(obj.position, throwingTransform.position, Time.deltaTime * 4);
+                inThrowingPosition = false;
+                obj.position = Vector3.Lerp(obj.position, throwingTransform.position, Time.deltaTime * 10);
             }
             else if (Vector3.Distance(obj.position, throwingTransform.position) <= 0.05f)
             {
-                obj.position = throwingTransform.position;
+                inThrowingPosition = true;
+                
             }
             throwing = true;
-            
+            if(inThrowingPosition == true && throwing == true)
+            {
+                obj.position = throwingTransform.position;
+            }
             finalForce += 17.5f * Time.deltaTime;
             
         }
@@ -159,6 +170,9 @@ public class ObjectInteraction : MonoBehaviour
             rend = carriedObject.GetComponent<Renderer>();
             StartCoroutine(nameof(Dissolve));
             carriedObject = null;
+            inPosition = false;
+            inThrowingPosition = false;
+
             carrying = false;
             throwing=false;
         }

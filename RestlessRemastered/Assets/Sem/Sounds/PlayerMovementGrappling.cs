@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMovementAdvanced : MonoBehaviour
+public class PlayerMovementGrappling : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
-    public float footstepDistance = 0.2f; 
-    public AudioClip footstepClip; 
-
+    public float swingSpeed;
+    public AudioClip footstepClip;
+    public float footstepDistance = 1f;
     private float distanceTraveled;
     private Vector3 lastPosition;
 
@@ -44,7 +44,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
-    
+
+    [Header("Camera Effects")]
+    public Camera cam;
+    public float grappleFov = 95f;
 
     public Transform orientation;
 
@@ -58,22 +61,27 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public MovementState state;
     public enum MovementState
     {
+        freeze,
+        grappling,
+        swinging,
         walking,
         sprinting,
         crouching,
         air
     }
 
+    public bool freeze;
+
     private void Start()
     {
+
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
 
         startYScale = transform.localScale.y;
-        audioSource = GetComponent<AudioSource>();
-        lastPosition = transform.position;
     }
 
     private void Update()
@@ -90,32 +98,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-        CheckForFootstep();
+        if (grounded)
+        {
+            CheckForFootstep();
+        }
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
     }
-    public void CheckForFootstep()
-    {
-        float distance = Vector3.Distance(transform.position, lastPosition);
-        distanceTraveled += distance;
-        if (distanceTraveled >= footstepDistance)
-        {
-            audioSource.PlayOneShot(footstepClip);
-            distanceTraveled = 0f;
-        }
 
-        lastPosition = transform.position;
-    }
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
 
@@ -140,15 +140,23 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void StateHandler()
     {
+        // Mode - Freeze
+        if (freeze)
+        {
+            state = MovementState.freeze;
+            moveSpeed = 0;
+            rb.velocity = Vector3.zero;
+        }
+
         // Mode - Crouching
-        if (Input.GetKey(crouchKey))
+        else if (Input.GetKey(crouchKey))
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
         }
 
         // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
+        else if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
@@ -170,6 +178,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MovePlayer()
     {
+
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -183,11 +192,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         // on ground
-        else if(grounded)
+        else if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
-        else if(!grounded)
+        else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
@@ -196,6 +205,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void SpeedControl()
     {
+
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
@@ -211,7 +221,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
             // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
-                rb.velocity = Vector3.ClampMagnitude(rb.velocity, moveSpeed * 6f);
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
         }
     }
@@ -230,11 +241,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
         readyToJump = true;
 
         exitingSlope = false;
-    }
+    }  
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
@@ -242,9 +253,35 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         return false;
     }
+    public void CheckForFootstep()
+    {
+        float distance = Vector3.Distance(transform.position, lastPosition);
+        distanceTraveled += distance;
+        if (distanceTraveled >= footstepDistance)
+        {
+            audioSource.PlayOneShot(footstepClip);
+            distanceTraveled = 0f;
+        }
 
+        lastPosition = transform.position;
+    }
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) 
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+
+    
 }
