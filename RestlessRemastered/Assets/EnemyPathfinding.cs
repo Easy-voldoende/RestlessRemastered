@@ -12,16 +12,18 @@ public class EnemyPathfinding : MonoBehaviour
     public Vector3 target;
     public Transform player;
     public float damage;
-    public bool isRoaming;
-    public bool isIdle;
-    public bool isChasing;
+    private bool isRoaming;
+    private bool isIdle;
+    private bool isChasing;
     public float speed;
     public float roamRadius = 30.0f;
     public float minRoamTime = 1.0f;
     public float maxRoamTime = 5.0f;    
     public float angle;
     public float angleToPlayer;
-    public float currentAngle;
+    public bool inAngle;
+    public Vector3 playerPos;
+    public GameObject eye;
     
     public float distanceToTarget;
     public LayerMask layerMask;
@@ -45,9 +47,9 @@ public class EnemyPathfinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(state.ToString());
+        //Debug.Log(state.ToString());
         Detect();
-        SwitchStates();
+        SwitchStates(); 
     }
 
     public void SwitchStates()
@@ -58,7 +60,7 @@ public class EnemyPathfinding : MonoBehaviour
         {
             case EnemyState.Roaming:
 
-                if (Vector3.Distance(myPos.position, target) < 2f)
+                if (Vector3.Distance(myPos.position, target) < 2.5f)
                 {
                     target = RandomNavSphere(transform.position, roamRadius, -1);
                     agent.SetDestination(target);
@@ -72,11 +74,6 @@ public class EnemyPathfinding : MonoBehaviour
 
                 target = player.position;
                 agent.SetDestination(target);
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit, detectionRange, layerMask))
-                {
-                    transform.LookAt(player.position);
-                }
                 if (Vector3.Distance(myPos.position, player.position) < 2f)
                 {
                     Debug.Log("You died");
@@ -90,7 +87,7 @@ public class EnemyPathfinding : MonoBehaviour
                 break;
         }
 
-        
+        playerPos = player.position;
     }
      
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
@@ -108,42 +105,47 @@ public class EnemyPathfinding : MonoBehaviour
     public float detectionRange;
     public float detectionAngle;
     public RaycastHit hit;
-    private void Detect()
+    public void Detect()
     {
         if (Vector3.Distance(transform.position, player.position) < 4)
         {
-
             state = EnemyState.Chasing;
         }
 
-        Vector3 targetDir = target - transform.position;
+        Vector3 targetDir = playerPos - transform.position;
         angleToPlayer = Vector3.Angle(targetDir, transform.forward);
-        
 
-        if (angleToPlayer < 45.0f)
+        if (angleToPlayer <= detectionAngle && Vector3.Distance(transform.position, player.position) < detectionRange)
         {
-            if(Physics.Raycast(transform.position, player.position, out hit, detectionRange, layerMask))
+            if (Physics.Linecast(transform.position, player.transform.position, out hit))
             {
-                lookingAtPlayer = true;
+                if (hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log("Looking at player");
+                    state = EnemyState.Chasing;
+                }
+                else
+                {
+                    Debug.Log("Not looking at player");
+                    state = EnemyState.Roaming;
+                }
             }
-            else
-            {
-                lookingAtPlayer = false;
-            }
         }
-        else
-        {
-            lookingAtPlayer = false;
-        }
-
-        if (angleToPlayer <= detectionAngle && lookingAtPlayer == true)
-        {
-            
-            state = EnemyState.Chasing;
-        }
-
-        Debug.DrawRay(transform.position, transform.forward * detectionRange, Color.green);
-
+        Debug.DrawLine(eye.transform.position, player.transform.position, Color.red);
     }
+    void OnDrawGizmosSelected()
+    {
+        float totalFOV = detectionAngle;
+        float rayRange = detectionRange;
+        float halfFOV = totalFOV / 2.0f;
+        
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
+        Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);       
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
+        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+        Gizmos.DrawRay(transform.position, leftRayDirection * rayRange);
+        Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
 
+        
+    }
 }
