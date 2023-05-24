@@ -24,6 +24,12 @@ public class EnemyPathfinding : MonoBehaviour
     public bool inAngle;
     public Vector3 playerPos;
     public GameObject eye;
+    private Animator anim;
+    public GameObject playerObj;
+    public GameObject cameraObj;
+    public Transform myPos;
+    public Transform enemyPos;
+    public bool sceneStarted;
     
     public float distanceToTarget;
     public LayerMask layerMask;
@@ -40,6 +46,7 @@ public class EnemyPathfinding : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = transform.position;
     }
@@ -77,6 +84,11 @@ public class EnemyPathfinding : MonoBehaviour
                 if (Vector3.Distance(myPos.position, player.position) < 2f)
                 {
                     Debug.Log("You died");
+                    if(sceneStarted == false)
+                    {
+                        StartCoroutine(nameof(DeathScene));
+                        sceneStarted = false;
+                    }
                 }                
 
                 break;
@@ -89,7 +101,25 @@ public class EnemyPathfinding : MonoBehaviour
 
         playerPos = player.position;
     }
-     
+    public IEnumerator DeathScene()
+    {
+        cameraObj.GetComponent<CustomizableCamera>().died = true;
+        playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        playerObj.gameObject.transform.position = myPos.position;
+        playerObj.gameObject.transform.rotation = myPos.rotation;
+        GetComponent<Rigidbody>().isKinematic = true;
+        transform.position = enemyPos.position;
+        transform.rotation = enemyPos.rotation;
+        NavMeshAgent nav = GetComponent<NavMeshAgent>();
+        nav.acceleration = 100000;
+        nav.speed = 0;
+        player.GetComponent<Animator>().SetTrigger("Died");
+        yield return new WaitForSeconds(1f);
+        anim.SetTrigger("Died");
+        
+        
+
+    }
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = Random.insideUnitSphere * dist;
