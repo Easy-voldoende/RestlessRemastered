@@ -111,6 +111,19 @@ public class ObjectInteraction : MonoBehaviour
     void Pickup()
     {
         RaycastHit hit;
+
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance))
+        {
+
+            if (hit.transform.gameObject.CompareTag("Pin"))
+            {
+                lookingAtObject = true;
+            }
+
+        }
+
+
+        
         if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
         {
             lookingAtObject = true;

@@ -12,13 +12,18 @@ public class PlayerMovementGrappling : MonoBehaviour
     public float swingSpeed;
     public AudioClip footstepClip;
     public float footstepDistance = 1f;
+    public float heartBeatSpeed =1;
+    public float heartBeatCooldown;
+    public float closeness;
+    public float maxCooldown = 10;
     private float distanceTraveled;
     private Vector3 lastPosition;
 
     private AudioSource audioSource;
+    public AudioSource heartBeat;
 
     public float groundDrag;
-
+    public GameObject shadow;
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -88,7 +93,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        PlayHeartBeat();
         MyInput();
         SpeedControl();
         StateHandler();
@@ -205,20 +210,15 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     private void SpeedControl()
     {
-
-        // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
             if (rb.velocity.magnitude > moveSpeed)
                 rb.velocity = rb.velocity.normalized * moveSpeed;
         }
-
-        // limiting speed on ground or in air
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-            // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -231,7 +231,6 @@ public class PlayerMovementGrappling : MonoBehaviour
     {
         exitingSlope = true;
 
-        // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -259,11 +258,35 @@ public class PlayerMovementGrappling : MonoBehaviour
         distanceTraveled += distance;
         if (distanceTraveled >= footstepDistance)
         {
-            audioSource.PlayOneShot(footstepClip);
+            float pitch = Random.Range(0.9f, 1.1f);
+            PlayOnce(GetComponent<AudioSource>(), pitch); 
             distanceTraveled = 0f;
         }
 
         lastPosition = transform.position;
+    }
+    public void PlayOnce(AudioSource source, float pitch)
+    {
+        source.pitch = pitch;
+        source.Play();
+
+    }
+    public void PlayHeartBeat()
+    {
+        float dist = Vector3.Distance(transform.position, shadow.transform.position);
+        float maxDist = 20;
+        float value = maxDist - dist;
+        if (dist <= maxDist)
+        {
+            
+            heartBeatCooldown += 0.5f* value * Time.deltaTime*2;
+
+            if(heartBeatCooldown >= maxCooldown)
+            {
+                PlayOnce(heartBeat, 1);
+                heartBeatCooldown = 0;
+            }
+        }
     }
     private Vector3 GetSlopeMoveDirection()
     {

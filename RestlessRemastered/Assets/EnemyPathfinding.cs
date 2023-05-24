@@ -15,8 +15,10 @@ public class EnemyPathfinding : MonoBehaviour
     private bool isRoaming;
     private bool isIdle;
     private bool isChasing;
-    public float speed;
-    public float roamRadius = 30.0f;
+    private float speed;
+    public float runningSpeed;
+    public float walkingSpeed;
+    public float roamRadius = 50.0f;
     public float minRoamTime = 1.0f;
     public float maxRoamTime = 5.0f;    
     public float angle;
@@ -30,9 +32,10 @@ public class EnemyPathfinding : MonoBehaviour
     public Transform myPos;
     public Transform enemyPos;
     public bool sceneStarted;
-    
+    public int shadowState;
     public float distanceToTarget;
     public LayerMask layerMask;
+    public Vector3 origin;
     public enum EnemyState
     {
         Roaming,
@@ -46,14 +49,18 @@ public class EnemyPathfinding : MonoBehaviour
 
     private void Start()
     {
+        shadowState = 0;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = transform.position;
+        origin = transform.position;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //Debug.Log(state.ToString());
         Detect();
         SwitchStates(); 
@@ -61,15 +68,19 @@ public class EnemyPathfinding : MonoBehaviour
 
     public void SwitchStates()
     {
+        NavMeshAgent nav = GetComponent<NavMeshAgent>();
         distanceToTarget = Vector3.Distance(transform.position, target);
         Transform myPos = gameObject.transform;
         switch (state)
         {
             case EnemyState.Roaming:
-
+                nav.speed = walkingSpeed;
+                speed = walkingSpeed;
+                shadowState = 0;
+                anim.SetInteger("State", shadowState);
                 if (Vector3.Distance(myPos.position, target) < 2.5f)
                 {
-                    target = RandomNavSphere(transform.position, roamRadius, -1);
+                    target = RandomNavSphere(origin, roamRadius, -1);
                     agent.SetDestination(target);
                 }
 
@@ -79,6 +90,9 @@ public class EnemyPathfinding : MonoBehaviour
                 break;
             case EnemyState.Chasing:
 
+                nav.speed = runningSpeed;
+                shadowState = 1;
+                anim.SetInteger("State", shadowState);
                 target = player.position;
                 agent.SetDestination(target);
                 if (Vector3.Distance(myPos.position, player.position) < 2f)
@@ -165,6 +179,7 @@ public class EnemyPathfinding : MonoBehaviour
     }
     void OnDrawGizmosSelected()
     {
+
         float totalFOV = detectionAngle;
         float rayRange = detectionRange;
         float halfFOV = totalFOV / 2.0f;
@@ -177,5 +192,7 @@ public class EnemyPathfinding : MonoBehaviour
         Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
 
         
+        Gizmos.color = Color.yellow;        
+        Gizmos.DrawWireSphere(origin, roamRadius);
     }
 }
