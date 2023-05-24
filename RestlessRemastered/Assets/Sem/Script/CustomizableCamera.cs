@@ -7,6 +7,7 @@ public class CustomizableCamera : MonoBehaviour
     [SerializeField] private float minYAngle = -90f; // The minimum vertical angle the camera can rotate
     [SerializeField] private float maxYAngle = 90f; // The maximum vertical angle the camera can rotate
     public bool died;
+    public Transform orientation;
     public bool sceneStarted;
     public GameObject movement;
 

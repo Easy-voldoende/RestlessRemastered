@@ -55,6 +55,7 @@ public class ObjectInteraction : MonoBehaviour
         }
         CrosshairFade();
 
+
     }
     
     void Carry(Transform obj)
