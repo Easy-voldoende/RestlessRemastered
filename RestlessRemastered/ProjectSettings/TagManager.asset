@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Lock
   - Pin
+  - Screwdriver
   layers:
   - Default
   - TransparentFX
