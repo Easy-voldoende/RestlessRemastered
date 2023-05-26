@@ -65,6 +65,7 @@ public class EnemyPathfinding : MonoBehaviour
     {
         Detect();
         SwitchStates(); 
+        CheckForFootstep();
     }
 
     public void SwitchStates()
@@ -207,6 +208,31 @@ public class EnemyPathfinding : MonoBehaviour
             }
         }
         Debug.DrawLine(eye.transform.position, player.transform.position, Color.red);
+    }
+
+
+    private float distanceTraveled;
+    private Vector3 lastPosition;
+    public float footstepDistance;
+    public AudioSource audioSource;
+    public void CheckForFootstep()
+    {
+        float distance = Vector3.Distance(transform.position, lastPosition);
+        distanceTraveled += distance;
+        if (distanceTraveled >= footstepDistance)
+        {
+            float pitch = Random.Range(0.9f, 1.1f);
+            PlayOnce(GetComponent<AudioSource>(), pitch);
+            distanceTraveled = 0f;
+        }
+
+        lastPosition = transform.position;
+    }
+    public void PlayOnce(AudioSource source, float pitch)
+    {
+        source.pitch = pitch;
+        source.Play();
+
     }
     void OnDrawGizmosSelected()
     {
