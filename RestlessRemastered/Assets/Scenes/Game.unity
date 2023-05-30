@@ -1960,8 +1960,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1280921452}
+  - component: {fileID: 1280921453}
   m_Layer: 8
-  m_Name: CameraHolder
+  m_Name: Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1983,6 +1984,22 @@ Transform:
   m_Father: {fileID: 7401499803763220897}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280921453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280921451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fb8d1ee383dc4478e9dda6b12784bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobbingSpeed: 0.1
+  bobbingAmount: 0.05
+  player: {fileID: 7401499803763220926}
+  speed: 0.01
 --- !u!1 &1383779351
 GameObject:
   m_ObjectHideFlags: 0
@@ -10742,7 +10759,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 660f9f5349239ed43bf6425e60163f9c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0
+  m_Volume: 0.712
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -12406,7 +12423,6 @@ GameObject:
   - component: {fileID: 7401499803429614371}
   - component: {fileID: 7401499803429614370}
   - component: {fileID: 7401499803429614369}
-  - component: {fileID: 7401499803429614372}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12590,22 +12606,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &7401499803429614372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7401499803429614361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0fb8d1ee383dc4478e9dda6b12784bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: {x: 0, y: 0.831, z: 0}
-  cam: {fileID: 1280921452}
-  bobSpeed: 4.8
-  bobAmount: 1000000
 --- !u!222 &7401499803595853138
 CanvasRenderer:
   m_ObjectHideFlags: 0

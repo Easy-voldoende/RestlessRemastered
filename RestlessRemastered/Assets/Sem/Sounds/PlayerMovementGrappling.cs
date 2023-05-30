@@ -11,7 +11,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     public float sprintSpeed;
     public float swingSpeed;
     public AudioClip footstepClip;
-    public float footstepDistance = 1f;
+    public float footstepDistance;
     public float heartBeatSpeed =1;
     public float heartBeatCooldown;
     public float closeness;
