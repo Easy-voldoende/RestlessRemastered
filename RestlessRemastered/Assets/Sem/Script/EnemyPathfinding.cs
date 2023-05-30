@@ -8,7 +8,7 @@ public class EnemyPathfinding : MonoBehaviour
 {
     public bool canRoam;
     public GameObject[] eyes;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     public Vector3 target;
     public Transform lastPlayerPos;
     public Transform player;

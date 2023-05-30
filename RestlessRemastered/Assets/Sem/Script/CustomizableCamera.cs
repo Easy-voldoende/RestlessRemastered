@@ -56,4 +56,5 @@ public class CustomizableCamera : MonoBehaviour
         Quaternion q = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
         gameObject.transform.rotation = q;
     }
+
 }
