@@ -7,23 +7,27 @@ public class PlayerMovementGrappling : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
+
+    public AudioSource secondFootStep;
+    public AudioSource secondFootStepTwo;
+    public bool inFootstepArea;
     public float walkSpeed;
     public float sprintSpeed;
     public float swingSpeed;
     public AudioClip footstepClip;
     public float footstepDistance;
     public float heartBeatSpeed =1;
-    public float heartBeatCooldown;
+    
     public float closeness;
-    public float maxCooldown = 10;
-    private float distanceTraveled;
+    
+    public float distanceTraveled;
     private Vector3 lastPosition;
 
     private AudioSource audioSource;
     public AudioSource heartBeat;
 
     public float groundDrag;
-    public GameObject shadow;
+    
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -93,7 +97,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        PlayHeartBeat();
+        
         MyInput();
         SpeedControl();
         StateHandler();
@@ -259,11 +263,44 @@ public class PlayerMovementGrappling : MonoBehaviour
         if (distanceTraveled >= footstepDistance)
         {
             float pitch = Random.Range(0.9f, 1.1f);
-            PlayOnce(GetComponent<AudioSource>(), pitch); 
+            PlayOnce(GetComponent<AudioSource>(), pitch);
+            
             distanceTraveled = 0f;
+            if (inFootstepArea)
+            {
+                int i = Random.Range(1, 10);
+                int j = Random.Range(0, 2);
+                if(i == 1)
+                {
+                    if(j == 0)
+                    {
+                        StartCoroutine(nameof(SecondStep));
+                        Debug.Log("StepOne");
+                    }
+
+                    if (j == 1)
+                    {
+                        StartCoroutine(nameof(SecondStepTwo));
+                        Debug.Log("StepTwo");
+                    }
+                }
+            }
         }
 
         lastPosition = transform.position;
+        
+    }
+    public IEnumerator SecondStep()
+    {
+        yield return new WaitForSeconds(0.2f);
+        PlayOnce(secondFootStep, 1);
+
+    }
+    public IEnumerator SecondStepTwo()
+    {
+        yield return new WaitForSeconds(0.2f);
+        PlayOnce(secondFootStepTwo, 1);
+
     }
     public void PlayOnce(AudioSource source, float pitch)
     {
@@ -271,23 +308,7 @@ public class PlayerMovementGrappling : MonoBehaviour
         source.Play();
 
     }
-    public void PlayHeartBeat()
-    {
-        float dist = Vector3.Distance(transform.position, shadow.transform.position);
-        float maxDist = 20;
-        float value = maxDist - dist;
-        if (dist <= maxDist)
-        {
-            
-            heartBeatCooldown += 0.5f* value * Time.deltaTime*2;
-
-            if(heartBeatCooldown >= maxCooldown)
-            {
-                PlayOnce(heartBeat, 1);
-                heartBeatCooldown = 0;
-            }
-        }
-    }
+    
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
@@ -305,6 +326,6 @@ public class PlayerMovementGrappling : MonoBehaviour
 
         return velocityXZ + velocityY;
     }
-
     
+
 }

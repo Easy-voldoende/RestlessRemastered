@@ -16,6 +16,8 @@ public class LockPick : MonoBehaviour
     public GameObject screwDriver;
     public float maxAngle = 90;
     public float lockSpeed = 10;
+    public AudioSource pickingSound;
+    public AudioSource openTheNoor;
 
     [Range(1, 25)]
     public float lockRange = 10;
@@ -63,11 +65,13 @@ public class LockPick : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     movePick = false;
+                    PlayOnce(pickingSound,1);
                     keyPressTime = 1;
                 }
                 if (Input.GetKeyUp(KeyCode.D))
                 {
                     movePick = true;
+                    StopSound(pickingSound);
                     keyPressTime = 0;
                 }
 
@@ -101,7 +105,16 @@ public class LockPick : MonoBehaviour
 
         
     }
+    public void StopSound(AudioSource source)
+    {
+        source.Stop();
+    }
+    public void PlayOnce(AudioSource source, float pitch)
+    {
+        source.pitch = pitch;
+        source.Play();
 
+    }
     void NewLock()
     {
         unlockAngle = Random.Range(-maxAngle + lockRange, maxAngle - lockRange);
@@ -112,6 +125,7 @@ public class LockPick : MonoBehaviour
     {
         GameObject player = GameObject.Find("Player");
         GameObject camera = GameObject.Find("Main Camera");
+        PlayOnce(openTheNoor, 1);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StartCoroutine(nameof(ResetPlayerPos));
