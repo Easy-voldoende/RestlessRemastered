@@ -39,7 +39,7 @@ public class JumpScare : MonoBehaviour
             {
                 if (angleToScare <= 60 && !jumpscareActivated)
                 {
-                    PlayOnce(jumpscareAudioSource, Random.Range(0.9f, 1.1f));
+                    PlayOnce(jumpscareAudioSource, Random.Range(1.1f, 1.3f));
                     StartCoroutine(nameof(Scare));
                     jumpscareActivated = true;
                 }
@@ -97,6 +97,7 @@ public class JumpScare : MonoBehaviour
         shadowPrefab.SetActive(true);
         yield return new WaitForSeconds(1f);
         shadowPrefab.SetActive(false);
+        gameObject.GetComponent<JumpScare>().enabled = false;
         canPlay = false;
     }
     public void CrawlScare()
@@ -116,15 +117,16 @@ public class JumpScare : MonoBehaviour
         shadowPrefab.SetActive(true);
         yield return new WaitForSeconds(1f);
         shadowPrefab.SetActive(false);
+        gameObject.GetComponent<JumpScare>().enabled = false;
         canPlay = false;
     }
     public IEnumerator Adjust()
     {
-        rotate = 70;
-        yield return new WaitForSeconds(0.3f);
+        rotate = 140;
+        yield return new WaitForSeconds(0.15f);
         rotate = 0;
-        yield return new WaitForSeconds(0.3f);
-        rotate = -70;
+        yield return new WaitForSeconds(0.4f);
+        rotate = -100;
     }
     public void CheckForFootstep()
     {

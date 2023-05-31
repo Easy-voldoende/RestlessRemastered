@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class PlayerMovementGrappling : MonoBehaviour
 {
@@ -10,15 +11,19 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     public AudioSource secondFootStep;
     public AudioSource secondFootStepTwo;
+    public LayerMask walkingSufaces;
     public bool inFootstepArea;
     public float walkSpeed;
     public float sprintSpeed;
-    public float swingSpeed;
-    public AudioClip footstepClip;
+    public AudioSource[] gravelFootstepClips;
+    public AudioSource[] gravelFootstepClipsSprinting;
+    public AudioSource[] woodFootstepClips;
+    public AudioSource[] woodFootstepsSprinting;
+    public AudioSource[] grassFootstepClips;
+    public AudioSource[] grassFootstepsSprinting;
     public float footstepDistance;
     public float heartBeatSpeed =1;
-    
-    public float closeness;
+
     
     public float distanceTraveled;
     private Vector3 lastPosition;
@@ -64,7 +69,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
-
+    public string curWalkingSurface;
     Rigidbody rb;
 
     public MovementState state;
@@ -92,12 +97,17 @@ public class PlayerMovementGrappling : MonoBehaviour
 
         startYScale = transform.localScale.y;
     }
-
+    RaycastHit hitcast;
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down,out hitcast, playerHeight * 0.5f + 0.1f, whatIsGround);
         
+        if(Physics.Raycast(transform.position, Vector3.down, out hitcast, playerHeight * 0.5f + 0.1f, whatIsGround))
+        {
+            curWalkingSurface = hitcast.transform.gameObject.tag;
+        }
+
         MyInput();
         SpeedControl();
         StateHandler();
@@ -260,28 +270,104 @@ public class PlayerMovementGrappling : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, lastPosition);
         distanceTraveled += distance;
-        if (distanceTraveled >= footstepDistance)
+        if(state == MovementState.walking)
         {
-            float pitch = Random.Range(0.9f, 1.1f);
-            PlayOnce(GetComponent<AudioSource>(), pitch);
-            
-            distanceTraveled = 0f;
-            if (inFootstepArea)
+            if (distanceTraveled >= footstepDistance)
             {
-                int i = Random.Range(1, 10);
-                int j = Random.Range(0, 2);
-                if(i == 1)
+                if (curWalkingSurface == "Gravel")
                 {
-                    if(j == 0)
-                    {
-                        StartCoroutine(nameof(SecondStep));
-                        Debug.Log("StepOne");
-                    }
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, gravelFootstepClips.Length);
+                    PlayOnce(gravelFootstepClips[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
 
-                    if (j == 1)
+                if (curWalkingSurface == "Wood")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, woodFootstepClips.Length);
+                    PlayOnce(woodFootstepClips[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+
+                if (curWalkingSurface == "Grass")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, grassFootstepClips.Length);
+                    PlayOnce(grassFootstepClips[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+                if (inFootstepArea)
+                {
+                    int i = Random.Range(1, 10);
+                    int j = Random.Range(0, 2);
+                    if (i == 1)
                     {
-                        StartCoroutine(nameof(SecondStepTwo));
-                        Debug.Log("StepTwo");
+                        if (j == 0)
+                        {
+                            StartCoroutine(nameof(SecondStep));
+                            Debug.Log("StepOne");
+                        }
+
+                        if (j == 1)
+                        {
+                            StartCoroutine(nameof(SecondStepTwo));
+                            Debug.Log("StepTwo");
+                        }
+                    }
+                }
+            }
+        }
+        else if(state == MovementState.sprinting)
+        {
+            if (distanceTraveled >= footstepDistance)
+            {
+                if (curWalkingSurface == "Gravel")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, gravelFootstepClipsSprinting.Length);
+                    PlayOnce(gravelFootstepClipsSprinting[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+
+                if (curWalkingSurface == "Wood")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, woodFootstepsSprinting.Length);
+                    PlayOnce(woodFootstepsSprinting[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+
+                if (curWalkingSurface == "Grass")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, grassFootstepsSprinting.Length);
+                    PlayOnce(grassFootstepsSprinting[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+                if (inFootstepArea)
+                {
+                    int i = Random.Range(1, 10);
+                    int j = Random.Range(0, 2);
+                    if (i == 1)
+                    {
+                        if (j == 0)
+                        {
+                            StartCoroutine(nameof(SecondStep));
+                            Debug.Log("StepOne");
+                        }
+
+                        if (j == 1)
+                        {
+                            StartCoroutine(nameof(SecondStepTwo));
+                            Debug.Log("StepTwo");
+                        }
                     }
                 }
             }
