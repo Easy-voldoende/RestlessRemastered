@@ -20,6 +20,7 @@ public class HeadBob : MonoBehaviour
 
     private void Update()
     {
+
         bobbingSpeed = player.GetComponent<Rigidbody>().velocity.magnitude * speed;
         // Calculate the vertical position of the head based on a sine wave
         float waveslice = 0.0f;
@@ -58,4 +59,5 @@ public class HeadBob : MonoBehaviour
             transform.localPosition = originalPosition;
         }
     }
+
 }
