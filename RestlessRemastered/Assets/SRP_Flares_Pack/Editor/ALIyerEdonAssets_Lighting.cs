@@ -1,6 +1,3 @@
-// ALIyerEdon@gmail.com - Writed at July 2021
-// All rights reserved
-
 using UnityEditor;
 using UnityEngine;
 
@@ -24,34 +21,128 @@ public class ALIyerEdonAssets_Lighting : EditorWindow
     private const int windowWidth = 610;
     private const int windowHeight = 500;
     Vector2 _scrollPosition;
+    public bool dontShow;
 
     void OnEnable()
     {
+
         titleContent = new GUIContent("Lighting Tools and Assets");
         maxSize = new Vector2(windowWidth, windowHeight);
         minSize = maxSize;
+
+        if (EditorPrefs.GetInt("dontShow_OAK_Pine_Tree") == 3)
+            dontShow = true;
+        if (EditorPrefs.GetInt("dontShow_OAK_Pine_Tree") != 3)
+            dontShow = false;
+
+        if (!GameObject.FindObjectOfType<LightingTools_Offer>())
+        {
+            GameObject adsLoader = GameObject.Instantiate(new GameObject("Offers") as GameObject, Vector3.zero, Quaternion.identity);
+
+            GameObject.DestroyImmediate(GameObject.Find("Offers"));
+            GameObject.Find("Offers(Clone)").name = "Offers";
+
+            adsLoader.AddComponent<LightingTools_Offer>(); 
+
+            adsLoader.GetComponent<LightingTools_Offer>().targetTextures = new Texture[12];
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL = new string[12];
+
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[0] = "http://89.163.206.23/AssetStore/TreeOffers/Border.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[1] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_1.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[2] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_2.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[3] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_3.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[4] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_4.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[5] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_5.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[6] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_6.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[7] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_7.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[8] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_8.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[9] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_9.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[10] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_10.jpg";
+            adsLoader.GetComponent<LightingTools_Offer>().ImagesURL[11] = "http://89.163.206.23/AssetStore/TreeOffers/Offer_11.jpg";
+
+            adsLoader.GetComponent<LightingTools_Offer>().gameLinks = "http://89.163.206.23/AssetStore/TreeOffers/OfferLink.txt";
+
+        }
 
     }
 
     private void OnGUI()
     {
+        Texture2D border = new Texture2D(4, 4);
+        Texture2D ad1 = new Texture2D(4, 4);
+        Texture2D ad2 = new Texture2D(4, 4);
+        Texture2D ad3 = new Texture2D(4, 4);
+        Texture2D ad4 = new Texture2D(4, 4);
+        Texture2D ad5 = new Texture2D(4, 4);
+        Texture2D ad6 = new Texture2D(4, 4);
+        Texture2D ad7 = new Texture2D(4, 4);
+        Texture2D ad8 = new Texture2D(4, 4);
+        Texture2D ad9 = new Texture2D(4, 4);
+        Texture2D ad10 = new Texture2D(4, 4);
+        Texture2D ad11 = new Texture2D(4, 4);
+
+        if (GameObject.FindObjectOfType<LightingTools_Offer>())
+        {
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[0])
+                border = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[0] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[1])
+                ad1 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[1] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[2])
+                ad2 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[2] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[3])
+                ad3 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[3] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[4])
+                ad4 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[4] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[5])
+                ad5 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[5] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[6])
+                ad6 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[6] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[7])
+                ad7 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[7] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[8])
+                ad8 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[8] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[9])
+                ad9 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[9] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[10])
+                ad10 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[10] as Texture2D;
+            //________________________________________________________________________________________________
+            if (GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[11])
+                ad11 = GameObject.FindObjectOfType<LightingTools_Offer>().targetTextures[11] as Texture2D;
+            //________________________________________________________________________________________________
         
-        Texture2D border = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/border.psd") as Texture2D;
-        Texture2D ad1 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad1.psd") as Texture2D;
-        Texture2D ad2 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad2.psd") as Texture2D;
-        Texture2D ad3 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad3.psd") as Texture2D;
-        Texture2D ad4 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad4.psd") as Texture2D;
-        Texture2D ad5 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad5.psd") as Texture2D;
-        Texture2D ad6 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad6.psd") as Texture2D;
-        Texture2D ad7 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad7.psd") as Texture2D;
-        Texture2D ad8 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad8.psd") as Texture2D;
-        Texture2D ad9 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad9.psd") as Texture2D;
-        Texture2D ad10 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad10.psd") as Texture2D;
-        Texture2D ad11 = EditorGUIUtility.Load("Assets/SRP_Flares_Pack/Editor/Textures/UI/Ads/ad11.psd") as Texture2D;
+        }
+
 
         EditorGUILayout.Space();
         EditorGUILayout.HelpBox("Buy My Lighting Assets", MessageType.None);
         EditorGUILayout.Space();
+
+
+        var dontShowRef = dontShow;
+
+        dontShow = EditorGUILayout.Toggle("Don't show for a long time", dontShow);
+
+        if (dontShowRef != dontShow)
+        {
+            if (dontShow == true)            
+                EditorPrefs.SetInt("dontShow_OAK_Pine_Tree", 3); // 3 == true
+            if (dontShow == false)
+                EditorPrefs.SetInt("dontShow_OAK_Pine_Tree", 0); // 0 = false
+        }
+
+        if (GameObject.FindObjectOfType<LightingTools_Offer>().isLoading)
+            EditorGUILayout.HelpBox("\n                                                                                       Loading Offers...\n", MessageType.None);
+
         EditorGUILayout.Space();
 
         _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition,
@@ -61,69 +152,79 @@ public class ALIyerEdonAssets_Lighting : EditorWindow
                      GUILayout.Height(windowHeight-20));        //---------Ad 1-------------------------------------------------
                                                                 //  GUILayout.BeginVertical("Box");
 
-        //_scrollPosition = EditorGUILayout.BeginScrollView(scrollViewRect, _scrollPosition, new Rect(0, 0, 2000, 2000));
-       
+
         if (GUILayout.Button(border, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/publishers/23606");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[0]);
         }
 
         if (GUILayout.Button(ad1, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/hdrp-lighting-box-2-nextgen-lighting-solution-180283");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[1]);
         }
 
         if (GUILayout.Button(ad2, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/urp-lighting-box-2-181550");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[2]);
         }
 
         if (GUILayout.Button(ad3, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/lighting-box-2-next-gen-lighting-solution-2021-93057");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[3]);
         }
 
         if (GUILayout.Button(ad4, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/built-in-mobile-lighting-box-2021-181005");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[4]);
         }
 
         if (GUILayout.Button(ad5, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/vfx/shaders/terrain-tessellation-shader-hdrp-and-built-in-191250");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[5]);
         }
 
         if (GUILayout.Button(ad6, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/3d/environments/interior-lighting-kit-vr-mobile-standalone-84542");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[6]);
         }
 
         if (GUILayout.Button(ad7, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/templates/tutorials/archviz-lighting-kit-paris-95071");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[7]);
         }
 
         if (GUILayout.Button(ad8, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/3d/environments/interior-lighting-template-vol-2-88464");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[8]);
         }
 
         if (GUILayout.Button(ad9, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/vfx/shaders/realistic-car-lighting-sample-2020-94970");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[9]);
         }
 
         if (GUILayout.Button(ad10, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/3d/vegetation/trees/tree-collection-pack-76974");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[10]);
         }
 
         if (GUILayout.Button(ad11, "", GUILayout.Width(600), GUILayout.Height(130)))
         {
-            Application.OpenURL("https://assetstore.unity.com/packages/tools/utilities/lighting-tools-2021-107069");
+            Application.OpenURL(GameObject.FindObjectOfType<LightingTools_Offer>().LinksURL[11]);
         }
         EditorGUILayout.EndScrollView();
 
+    }
+
+    void OnInspectorUpdate()
+    {
+        // Call Repaint on OnInspectorUpdate as it repaints the windows
+        // less times as if it was OnGUI/Update
+        Repaint();
+    }
+    void OnDestroy()
+    {
+        GameObject.DestroyImmediate(GameObject.FindObjectOfType<LightingTools_Offer>().gameObject);
     }
 }
 
@@ -131,17 +232,25 @@ public class ALIyerEdonAssets_Lighting : EditorWindow
 [InitializeOnLoad]
 public class Startup
 {
-    static Startup()
+    static Startup() 
     {
-        EditorPrefs.SetInt("showCounts_slf", EditorPrefs.GetInt("showCounts_slf") + 1);
-        if (EditorPrefs.GetInt("showCounts_slf") < 2)
+        EditorPrefs.SetInt("showCounts_OAK_Pine_Tree", EditorPrefs.GetInt("showCounts_OAK_Pine_Tree") + 1);
+        if (EditorPrefs.GetInt("showCounts_OAK_Pine_Tree") < 2)
         { 
-            EditorApplication.ExecuteMenuItem("Window/Lighting Tools");
-        }
-        else    
-        {
-            if(EditorPrefs.GetInt("showCounts_slf") >= 30)
-               EditorPrefs.SetInt("showCounts_slf", 0);
+            EditorApplication.ExecuteMenuItem("Window/Lighting Tools");            
+        }                 
+        else          
+        {   
+            if (EditorPrefs.GetInt("dontShow_OAK_Pine_Tree") == 3)
+            {
+                if (EditorPrefs.GetInt("showCounts_OAK_Pine_Tree") >= 210)
+                    EditorPrefs.SetInt("showCounts_OAK_Pine_Tree", 0);
+            }
+            else
+            {
+                if (EditorPrefs.GetInt("showCounts_OAK_Pine_Tree") >= 50)
+                    EditorPrefs.SetInt("showCounts_OAK_Pine_Tree", 0);
+            }
         }            
     }
-}
+} 
