@@ -21,6 +21,10 @@ public class PlayerMovementGrappling : MonoBehaviour
     public AudioSource[] woodFootstepsSprinting;
     public AudioSource[] grassFootstepClips;
     public AudioSource[] grassFootstepsSprinting;
+
+    public AudioSource[] grassJump;
+    public AudioSource[] woodJump;
+    public AudioSource[] gravelJump;
     public float footstepDistance;
     public float heartBeatSpeed =1;
 
@@ -67,7 +71,7 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
-
+    public HeadBob headBob;
     Vector3 moveDirection;
     public string curWalkingSurface;
     Rigidbody rb;
@@ -88,7 +92,7 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     private void Start()
     {
-
+        headBob = GameObject.Find("Holder").GetComponent<HeadBob>();
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -179,6 +183,7 @@ public class PlayerMovementGrappling : MonoBehaviour
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            headBob.bobbingAmount = 0.1f;
         }
 
         // Mode - Walking
@@ -186,12 +191,14 @@ public class PlayerMovementGrappling : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            headBob.bobbingAmount = 0.1f;
         }
 
         // Mode - Air
         else
         {
             state = MovementState.air;
+            headBob.bobbingAmount = 0;
         }
     }
 
@@ -248,6 +255,26 @@ public class PlayerMovementGrappling : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        if(curWalkingSurface == "Wood")
+        {
+            float pitch = Random.Range(0.9f, 1.1f);
+            int audioSourceInt = Random.Range(0, woodJump.Length);
+            PlayOnce(woodJump[audioSourceInt], pitch);
+        }
+
+        if(curWalkingSurface == "Grass")
+        {
+            float pitch = Random.Range(0.9f, 1.1f);
+            int audioSourceInt = Random.Range(0, grassJump.Length);
+            PlayOnce(grassJump[audioSourceInt], pitch);
+        }
+
+        if(curWalkingSurface == "Gravel")
+        {
+            float pitch = Random.Range(0.9f, 1.1f);
+            int audioSourceInt = Random.Range(0, gravelJump.Length);
+            PlayOnce(gravelJump[audioSourceInt], pitch);
+        }
     }
     private void ResetJump()
     {

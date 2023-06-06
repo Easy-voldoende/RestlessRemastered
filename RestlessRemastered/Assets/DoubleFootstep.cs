@@ -15,7 +15,11 @@ public class DoubleFootstep : MonoBehaviour
         {
             player.GetComponent<PlayerMovementGrappling>().inFootstepArea = true;
         }
-        else
+       
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
         {
             player.GetComponent<PlayerMovementGrappling>().inFootstepArea = false;
         }
