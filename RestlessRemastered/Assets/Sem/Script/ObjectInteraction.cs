@@ -122,8 +122,18 @@ public class ObjectInteraction : MonoBehaviour
 
         }
 
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance))
+        {
 
-        
+            if (hit.transform.gameObject.CompareTag("Pic"))
+            {
+                lookingAtObject = true;
+            }
+
+        }
+
+
+
         if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
         {
             lookingAtObject = true;

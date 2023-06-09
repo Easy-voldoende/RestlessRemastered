@@ -29,15 +29,21 @@ public class CameraShake : MonoBehaviour
             Shake();
         }
 
-        if (canShake)
+        if (canShake == true &&shakeDuration >0)
         {
             Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
             Vector3 targetPosition = originalPosition + shakeOffset;
+            shakeDuration -= Time.deltaTime;
             cameraTransform.localPosition = Vector3.SmoothDamp(cameraTransform.localPosition, targetPosition, ref shakeVelocity, dampingSpeed);
         }
-        else
+        else if(canShake == false)
         {
             cameraTransform.localPosition = originalPosition;
+        }
+
+        if(shakeDuration <= 0)
+        {
+            canShake = false;
         }
     }
 
@@ -47,10 +53,13 @@ public class CameraShake : MonoBehaviour
         if (canShake == true)
         {
             canShake = false;
+            shakeDuration = 0.1f;
         }
         else
         {
             canShake = true;
+            shakeDuration = 0.1f;
+
         }
 
     }

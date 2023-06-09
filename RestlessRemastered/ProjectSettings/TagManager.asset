@@ -12,6 +12,8 @@ TagManager:
   - Gravel
   - Grass
   - Wood
+  - Pic
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - Grass
   - Metal
   - Button
-  - 
+  - Pic
   - 
   - 
   - 

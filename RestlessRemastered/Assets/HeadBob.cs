@@ -15,7 +15,7 @@ public class HeadBob : MonoBehaviour
     private void Start()
     {
         originalPosition = transform.localPosition;
-        midpoint = 0.831f;
+        midpoint = 0.8f;
     }
 
     private void Update()

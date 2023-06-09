@@ -52,23 +52,26 @@ public class SafePuzzle : MonoBehaviour
         {
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 3f, mask))
             {
-                if (hit.transform.gameObject.name.ToString() == correctCombination[enteredNumbers].ToString())
+                if(hit.transform.gameObject.tag == "Button")
                 {
-                    enteredNumbers++;
-                    Debug.Log("entered correct number" + hit.transform.gameObject.name.ToString());
-                    if (enteredNumbers < 4)
+                    if (hit.transform.gameObject.name.ToString() == correctCombination[enteredNumbers].ToString())
                     {
-                        PlayOnce(source, 1);
-                    }
+                        enteredNumbers++;
+                        Debug.Log("entered correct number" + hit.transform.gameObject.name.ToString());
+                        if (enteredNumbers < 4)
+                        {
+                            PlayOnce(source, 1);
+                        }
 
-                }
-                else
-                {
-                    enteredNumbers = 0;
-                    PlayOnce(source, 0.6f);
-                    ai.GetComponent<EnemyPathfinding>().target = transform.position;
-                    ai.GetComponent<EnemyPathfinding>().agent.SetDestination(transform.position);
-                    Debug.Log("entered Wrong number");
+                    }
+                    else
+                    {
+                        enteredNumbers = 0;
+                        PlayOnce(source, 0.6f);
+                        ai.GetComponent<EnemyPathfinding>().target = transform.position;
+                        ai.GetComponent<EnemyPathfinding>().agent.SetDestination(transform.position);
+                        Debug.Log("entered Wrong number");
+                    }
                 }
             }
         }

@@ -198,7 +198,7 @@ public class PlayerMovementGrappling : MonoBehaviour
         else
         {
             state = MovementState.air;
-            headBob.bobbingAmount = 0;
+            headBob.bobbingAmount = 0f;
         }
     }
 
