@@ -14,6 +14,7 @@ public class EnemyPathfinding : MonoBehaviour
     public Transform player;
     public float damage;
     private float speed;
+    public Animator Ui;
     public float runningSpeed;
     public float walkingSpeed;
     public float roamRadius = 50.0f;
@@ -36,6 +37,7 @@ public class EnemyPathfinding : MonoBehaviour
     public float distanceToTarget;
     public LayerMask layerMask;
     public Vector3 origin;
+    private int lookState;
     public enum EnemyState
     {
         Roaming,
@@ -66,6 +68,13 @@ public class EnemyPathfinding : MonoBehaviour
         Detect();
         SwitchStates(); 
         CheckForFootstep();
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            GetComponent<EnemyPathfinding>().enabled = false;
+            lookState = 0;
+        }
+        Ui.SetInteger("LookState", lookState);
     }
 
     public void SwitchStates()
@@ -78,7 +87,8 @@ public class EnemyPathfinding : MonoBehaviour
             case EnemyState.Roaming:                
                 if(chasing == true)
                 {
-                    
+                    lookState = 1;
+
                     shadowState = 2;
                     anim.SetInteger("State", shadowState);
                     nav.speed = 0;
@@ -90,7 +100,8 @@ public class EnemyPathfinding : MonoBehaviour
                 }
                 else
                 {
-                    
+                    lookState = 0;
+
                     nav.speed = walkingSpeed;
                     shadowState = 0;
                     anim.SetInteger("State", shadowState);
@@ -104,8 +115,7 @@ public class EnemyPathfinding : MonoBehaviour
 
                 break;
             case EnemyState.Chasing:
-
-                
+                lookState = 1;
                 nav.speed = runningSpeed;
                 shadowState = 1;
                 anim.SetInteger("State", shadowState);

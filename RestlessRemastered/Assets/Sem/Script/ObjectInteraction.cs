@@ -100,27 +100,6 @@ public class ObjectInteraction : MonoBehaviour
 
         }
 
-
-
-        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
-        {
-            lookingAtObject = true;
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (hit.rigidbody != null)
-                {
-
-                    carriedObject = hit.transform;
-                    carriedObject.GetComponent<Renderer>().material.SetInt("Outline", true ? 1 : 0); ;
-                    carrying = true;
-                    finalForce = minThrowForce;
-                    carriedObject.gameObject.layer = LayerMask.NameToLayer("PickedUp");
-                    
-                }
-            }
-            
-        }
-
         if (!Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance, layer))
         {
             lookingAtObject = false;            
@@ -129,46 +108,6 @@ public class ObjectInteraction : MonoBehaviour
 
     }
 
-    void CheckThrow(Transform obj)
-    {
-        
-        if (Input.GetMouseButton(0))
-        {
-
-            if(Vector3.Distance(obj.position, throwingTransform.position) > 0.05f && inThrowingPosition == false)
-            {
-                inThrowingPosition = false;
-                obj.position = Vector3.Lerp(obj.position, throwingTransform.position, Time.deltaTime * 10);
-            }
-            else if (Vector3.Distance(obj.position, throwingTransform.position) <= 0.05f)
-            {
-                inThrowingPosition = true;
-                
-            }
-            throwing = true;
-            if(inThrowingPosition == true && throwing == true)
-            {
-                obj.position = throwingTransform.position;
-            }
-            finalForce += 17.5f * Time.deltaTime;
-            
-        }
-        else if (throwing == true && !Input.GetMouseButton(0))
-        {
-            carriedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            carriedObject.GetComponent<Rigidbody>().isKinematic = false;
-            carriedObject.GetComponent<Rigidbody>().AddForce(mainCamera.forward * finalForce, ForceMode.Impulse);
-            carriedObject.gameObject.layer = LayerMask.NameToLayer("PickUp");
-            rend = carriedObject.GetComponent<Renderer>();
-            StartCoroutine(nameof(Dissolve));
-            carriedObject = null;
-            inPosition = false;
-            inThrowingPosition = false;
-
-            carrying = false;
-            throwing=false;
-        }
-    }
     public IEnumerator Dissolve()
     {
         yield return new WaitForSeconds(1);

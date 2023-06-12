@@ -128,6 +128,10 @@ public class PlayerMovementGrappling : MonoBehaviour
         {
             CheckForFootstep();
         }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            ChangeSpeed();
+        }
     }
 
     private void FixedUpdate()
@@ -429,6 +433,16 @@ public class PlayerMovementGrappling : MonoBehaviour
 
         lastPosition = transform.position;
         
+    }
+    public void ChangeSpeed()
+    {
+        if(sprintSpeed == 9.45f)
+        {
+            sprintSpeed = 20;
+        }else if(sprintSpeed == 20)
+        {
+            sprintSpeed = 9.45f;
+        }
     }
     public IEnumerator SecondStep()
     {

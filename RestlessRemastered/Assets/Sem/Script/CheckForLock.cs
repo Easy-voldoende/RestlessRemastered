@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CheckForLock : MonoBehaviour
@@ -9,6 +10,8 @@ public class CheckForLock : MonoBehaviour
     public Transform lastPos;
     public bool pickedUpPin;
     public bool pickedUpScrewDriver;
+    public GameObject UI;
+    public TextMeshProUGUI text;
 
     public GameObject player;
     RaycastHit hit;
@@ -31,6 +34,11 @@ public class CheckForLock : MonoBehaviour
                     {
                         hit.transform.gameObject.tag = "Door";
                         StartPicking();
+                    }
+                    else
+                    {
+                        text.text = "Find something to open the noor with...";
+                        UI.GetComponent<Animator>().SetTrigger("Text");
                     }
                 }
             }
