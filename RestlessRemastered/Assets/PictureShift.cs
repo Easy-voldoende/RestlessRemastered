@@ -7,6 +7,7 @@ public class PictureShift : MonoBehaviour
     private bool hasRotated;
     public bool solved;
     public LayerMask mask;
+    public AudioSource source;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class PictureShift : MonoBehaviour
                 if (puzzlePiece.transform.IsChildOf(transform))
                 {
                     puzzlePiece.transform.Rotate(Vector3.right, -90f);
-
+                    PlayOnce(source, Random.Range(0.7f, 0.9f));
                     hasRotated = true;
                 }
             }
@@ -61,6 +62,12 @@ public class PictureShift : MonoBehaviour
 
             newRotations[i] = puzzlePiece.transform.localEulerAngles;
         }
+    }
+    public void PlayOnce(AudioSource source, float pitch)
+    {
+        source.pitch = pitch;
+        source.Play();
+
     }
     public bool CheckPuzzleSolved()
     {

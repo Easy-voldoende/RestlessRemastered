@@ -12,7 +12,7 @@ public class ObjectInteraction : MonoBehaviour
     
     private Transform carriedObject;
     public bool carrying = false;
-    private float pickupDistance = 3f;
+    public float pickupDistance = 3f;
     public float finalForce;
     public float minThrowForce = 0;
     public float maxThrowForce = 30;
@@ -35,45 +35,11 @@ public class ObjectInteraction : MonoBehaviour
 
     void Update()
     {
-        if (carrying)
-        {
-            
-            if(carriedObject != null)
-            {
-                Carry(carriedObject);
-                CheckThrow(carriedObject);
-            }
-        }
-        else
-        {
-            Pickup();
-        }
-        if(finalForce > maxThrowForce)
-        {
-            finalForce = maxThrowForce;
-        }
         CrosshairFade();
-
+        Pickup();
 
     }
     
-    void Carry(Transform obj)
-    {
-        if(throwing == false &&inPosition == false)
-        {
-            obj.position = Vector3.Lerp(obj.position, holdingTransform.position, Time.deltaTime *10);
-            obj.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            
-        }
-        if(Vector3.Distance(obj.position, holdingTransform.position) < 0.05f)
-        {
-            inPosition = true;
-        }
-        if (inPosition == true && throwing == false)
-        {
-            obj.position = holdingTransform.position;
-        }
-    }
     public void CrosshairFade()
     {
         Image image = crossHair.GetComponent<Image>();
@@ -99,14 +65,7 @@ public class ObjectInteraction : MonoBehaviour
             image.color = color;
         }
     }
-    public void AddToInventory()
-    {
-        if(carriedObject != null)
-        {
-            ItemManager manager = GetComponentInParent<ItemManager>();
-            
-        }
-    }
+
     void Pickup()
     {
         RaycastHit hit;
