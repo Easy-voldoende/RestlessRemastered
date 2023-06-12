@@ -13,7 +13,6 @@ public class ObjectInteraction : MonoBehaviour
     private Transform carriedObject;
     public bool carrying = false;
     private float pickupDistance = 3f;
-    private float holdDistance = 1f;
     public float finalForce;
     public float minThrowForce = 0;
     public float maxThrowForce = 30;
@@ -126,6 +125,16 @@ public class ObjectInteraction : MonoBehaviour
         {
 
             if (hit.transform.gameObject.CompareTag("Pic"))
+            {
+                lookingAtObject = true;
+            }
+
+        }
+
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, pickupDistance))
+        {
+
+            if (hit.transform.gameObject.CompareTag("Lock"))
             {
                 lookingAtObject = true;
             }

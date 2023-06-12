@@ -26,8 +26,10 @@ public class CheckForLock : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Lock"))
                 {
-                    if (pickedUpPin && pickedUpScrewDriver)
+                    LockPick pick = GameObject.Find("LockPickObj").GetComponent<LockPick>();
+                    if (pickedUpPin && pickedUpScrewDriver&& pick.picked == false)
                     {
+                        hit.transform.gameObject.tag = "Door";
                         StartPicking();
                     }
                 }

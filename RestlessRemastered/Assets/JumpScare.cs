@@ -19,7 +19,6 @@ public class JumpScare : MonoBehaviour
     public float distanceTraveled;
     public float footstepDistance;
     bool canPlay = false;
-    bool canRotate = false;
     float rotate;
     void Start()
     {
@@ -110,7 +109,6 @@ public class JumpScare : MonoBehaviour
     {
         gameObject.transform.Rotate(0, 0, rotate * Time.deltaTime);
     }
-    bool opposite = false;
     public IEnumerator GateScare()
     {
         StartCoroutine(nameof(Adjust));

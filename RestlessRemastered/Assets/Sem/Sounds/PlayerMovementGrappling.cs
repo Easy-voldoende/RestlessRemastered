@@ -21,6 +21,9 @@ public class PlayerMovementGrappling : MonoBehaviour
     public AudioSource[] woodFootstepsSprinting;
     public AudioSource[] grassFootstepClips;
     public AudioSource[] grassFootstepsSprinting;
+    public AudioSource[] rockFootstepsSprinting;
+    public AudioSource[] rockFootstepsWalking;
+    public AudioSource[] rockJump;
 
     public AudioSource[] grassJump;
     public AudioSource[] woodJump;
@@ -275,6 +278,13 @@ public class PlayerMovementGrappling : MonoBehaviour
             int audioSourceInt = Random.Range(0, gravelJump.Length);
             PlayOnce(gravelJump[audioSourceInt], pitch);
         }
+        if (curWalkingSurface == "Rock")
+        {
+            float pitch = Random.Range(0.9f, 1.1f);
+            int audioSourceInt = Random.Range(0, rockJump.Length);
+            PlayOnce(rockJump[audioSourceInt], pitch);
+        }
+
     }
     private void ResetJump()
     {
@@ -327,6 +337,15 @@ public class PlayerMovementGrappling : MonoBehaviour
                     distanceTraveled = 0f;
                     Debug.Log(curWalkingSurface);
                 }
+
+                if (curWalkingSurface == "Rock")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, rockFootstepsWalking.Length);
+                    PlayOnce(rockFootstepsWalking[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
                 if (inFootstepArea)
                 {
                     int i = Random.Range(1, 10);
@@ -375,6 +394,14 @@ public class PlayerMovementGrappling : MonoBehaviour
                     float pitch = Random.Range(0.9f, 1.1f);
                     int audioSourceInt = Random.Range(0, grassFootstepsSprinting.Length);
                     PlayOnce(grassFootstepsSprinting[audioSourceInt], pitch);
+                    distanceTraveled = 0f;
+                    Debug.Log(curWalkingSurface);
+                }
+                if (curWalkingSurface == "Rock")
+                {
+                    float pitch = Random.Range(0.9f, 1.1f);
+                    int audioSourceInt = Random.Range(0, rockFootstepsSprinting.Length);
+                    PlayOnce(rockFootstepsSprinting[audioSourceInt], pitch);
                     distanceTraveled = 0f;
                     Debug.Log(curWalkingSurface);
                 }

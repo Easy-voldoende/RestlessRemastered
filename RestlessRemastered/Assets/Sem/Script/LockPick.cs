@@ -10,6 +10,7 @@ public class LockPick : MonoBehaviour
     public bool picked;
     public GameObject camPos;
     public GameObject door;
+    public GameObject door2;
     public Camera cam;
     public Transform innerLock;
     public Transform pickPosition;
@@ -18,7 +19,7 @@ public class LockPick : MonoBehaviour
     public float lockSpeed = 10;
     public AudioSource pickingSound;
     public AudioSource openTheNoor;
-
+    
     [Range(1, 25)]
     public float lockRange = 10;
 
@@ -59,7 +60,7 @@ public class LockPick : MonoBehaviour
                     eulerAngle = Mathf.Clamp(eulerAngle, -maxAngle, maxAngle);
 
                     Quaternion rotateTo = Quaternion.AngleAxis(eulerAngle, Vector3.forward);
-                    transform.rotation = rotateTo;
+                    transform.localRotation = rotateTo;
                 }
 
                 if (Input.GetKeyDown(KeyCode.D))
@@ -79,8 +80,8 @@ public class LockPick : MonoBehaviour
                 float lockRotation = ((percentage / 100) * maxAngle) * keyPressTime;
                 float maxRotation = (percentage / 100) * maxAngle;
 
-                float lockLerp = Mathf.Lerp(innerLock.eulerAngles.z, lockRotation, Time.deltaTime * lockSpeed);
-                innerLock.eulerAngles = new Vector3(0, 0, lockLerp);
+                float lockLerp = Mathf.Lerp(innerLock.localEulerAngles.z, lockRotation, Time.deltaTime * lockSpeed);
+                innerLock.localEulerAngles = new Vector3(0, 0, lockLerp);
 
                 if (lockLerp >= maxRotation - 1)
                 {
@@ -90,14 +91,14 @@ public class LockPick : MonoBehaviour
                         NewLock();
                         EndPicking();
                         picked = true;
-                        movePick = true;
+                        movePick = false;
                         keyPressTime = 0;
                         
                     }
                     else
                     {
                         float randomRotation = Random.insideUnitCircle.x;
-                        transform.eulerAngles += new Vector3(0, 0, Random.Range(-randomRotation, randomRotation));
+                        transform.localEulerAngles += new Vector3(0, 0, Random.Range(-randomRotation, randomRotation));
                     }
                 }
             }
@@ -147,7 +148,10 @@ public class LockPick : MonoBehaviour
         player.GetComponent<PlayerMovementGrappling>().enabled = true;
         camera.GetComponent<CustomizableCamera>().enabled = true;
         rb.isKinematic = false;
+        door2.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.75f);
+        
     }
 
 }

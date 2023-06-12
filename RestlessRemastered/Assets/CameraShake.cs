@@ -10,7 +10,6 @@ public class CameraShake : MonoBehaviour
     public float dampingSpeed = 1f;
 
     private Vector3 originalPosition;
-    private float currentShakeDuration = 0f;
     private Vector3 shakeVelocity = Vector3.zero;
     public bool canShake;
 
