@@ -7442,6 +7442,8 @@ MonoBehaviour:
   lastPos: {fileID: 0}
   pickedUpPin: 0
   pickedUpScrewDriver: 0
+  UI: {fileID: 0}
+  text: {fileID: 0}
   player: {fileID: 3354176333001246096}
 --- !u!124 &3354176334542296847
 Behaviour:
