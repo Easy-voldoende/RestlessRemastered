@@ -9,8 +9,11 @@ public class SafePuzzle : MonoBehaviour
     public AudioSource source;
     public GameObject ai;
     public AudioSource source2;
-    public int enteredNumbers;
+    public Animator numbers;
+    public string enteredLine;
+    public int numbersEntered;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI text2;
     RaycastHit hit;
     GameObject cam;
     public LayerMask mask;
@@ -33,18 +36,21 @@ public class SafePuzzle : MonoBehaviour
         }
         text.text = correctCombination[0].ToString() + correctCombination[1].ToString() + correctCombination[2].ToString() + correctCombination[3].ToString();
     }
-    
+
     private void Update()
     {
+        text2.text = enteredLine;
         CheckNumber();
-        if(enteredNumbers == correctCombination.Length)
+        if (numbersEntered == correctCombination.Length)
         {
             OpenSafe();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             GenerateRandomCombination();
+            enteredLine = "";
         }
+
     }
     public void CheckNumber()
     {
@@ -54,19 +60,23 @@ public class SafePuzzle : MonoBehaviour
             {
                 if(hit.transform.gameObject.tag == "Button")
                 {
-                    if (hit.transform.gameObject.name.ToString() == correctCombination[enteredNumbers].ToString())
+                    enteredLine += hit.transform.gameObject.name.ToString();
+                    if (hit.transform.gameObject.name.ToString() == correctCombination[numbersEntered].ToString())
                     {
-                        enteredNumbers++;
+                        numbersEntered++;
+                        
                         Debug.Log("entered correct number" + hit.transform.gameObject.name.ToString());
-                        if (enteredNumbers < 4)
+                        if (numbersEntered < 4)
                         {
                             PlayOnce(source, 1);
+                            
                         }
 
                     }
                     else
                     {
-                        enteredNumbers = 0;
+                        enteredLine = "";
+                        numbersEntered = 0;
                         PlayOnce(source, 0.6f);
                         ai.GetComponent<EnemyPathfinding>().target = transform.position;
                         ai.GetComponent<EnemyPathfinding>().agent.SetDestination(transform.position);
@@ -86,6 +96,6 @@ public class SafePuzzle : MonoBehaviour
     {
         Debug.Log("Open the noor");
         PlayOnce(source, 1.4f);
-        enteredNumbers = 0;
+        numbersEntered = 0;
     }
 }
