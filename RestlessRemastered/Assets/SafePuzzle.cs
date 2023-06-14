@@ -45,11 +45,11 @@ public class SafePuzzle : MonoBehaviour
         {
             OpenSafe();
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            GenerateRandomCombination();
-            enteredLine = "";
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    GenerateRandomCombination();
+        //    enteredLine = "";
+        //}
 
     }
     public void CheckNumber()

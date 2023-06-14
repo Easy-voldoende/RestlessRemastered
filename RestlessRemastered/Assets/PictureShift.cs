@@ -45,10 +45,10 @@ public class PictureShift : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            NewRot();
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    NewRot();
+        //}
     }
     public void NewRot()
     {

@@ -8,7 +8,8 @@ public class PlayerMovementGrappling : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
-
+    public bool lightOn;
+    public GameObject lightBulb;
     public AudioSource secondFootStep;
     public AudioSource secondFootStepTwo;
     public LayerMask walkingSufaces;
@@ -108,6 +109,10 @@ public class PlayerMovementGrappling : MonoBehaviour
     private void Update()
     {
         // ground check
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            FlashLight();
+        }
         grounded = Physics.Raycast(transform.position, Vector3.down,out hitcast, playerHeight * 0.5f + 0.3f, whatIsGround);
         
         if(Physics.Raycast(transform.position, Vector3.down, out hitcast, playerHeight * 0.5f + 0.3f, whatIsGround))
@@ -433,6 +438,21 @@ public class PlayerMovementGrappling : MonoBehaviour
 
         lastPosition = transform.position;
         
+    }
+    public void FlashLight()
+    {
+        if(lightOn == false)
+        {
+            lightBulb.SetActive(true);
+            lightOn = true;
+        }
+        else
+        {
+            lightBulb.SetActive(false);
+            lightOn = false;
+        }
+
+ 
     }
     public void ChangeSpeed()
     {
