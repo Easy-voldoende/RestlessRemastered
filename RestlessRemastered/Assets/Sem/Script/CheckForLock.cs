@@ -10,6 +10,7 @@ public class CheckForLock : MonoBehaviour
     public Transform lastPos;
     public bool pickedUpPin;
     public bool pickedUpScrewDriver;
+    public AudioSource doorSound;
     public GameObject UI;
     public TextMeshProUGUI text;
 
@@ -37,6 +38,8 @@ public class CheckForLock : MonoBehaviour
                     }
                     else
                     {
+                        AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
+                        PlayOnce(door, Random.Range(0.9f, 1.1f));
                         text.text = "Find something to open the noor with...";
                         UI.GetComponent<Animator>().SetTrigger("Text");
                     }
@@ -67,6 +70,12 @@ public class CheckForLock : MonoBehaviour
                 }
             }
         }
+    }
+    public void PlayOnce(AudioSource source, float pitch)
+    {
+        source.pitch = pitch;
+        source.Play();
+
     }
     public void StartPicking()
     {
