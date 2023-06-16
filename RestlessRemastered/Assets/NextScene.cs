@@ -38,8 +38,10 @@ public class NextScene : MonoBehaviour
     }
     public IEnumerator Sound2()
     {
-        yield return new WaitForSeconds(19.3f);
-        PlayOnce(sounds[5], 1);
+        yield return new WaitForSeconds(16f);
+        PlayOnce(sounds[6], 1);
+        yield return new WaitForSeconds(3.4f);
+        PlayOnce(sounds[5], 1); 
     }
     private void Update()
     {
@@ -55,6 +57,17 @@ public class NextScene : MonoBehaviour
         {
             sounds[2].pitch += 0.5f * Time.deltaTime;
         }
+
+
+        if (sounds[7].volume < 0.1f && crashed == false)
+        {
+            sounds[7].volume += 0.05f * Time.deltaTime;
+        }
+        else if (crashed == true)
+        {
+            sounds[7].volume -= 0.5f * Time.deltaTime;
+        }
+        
 
     }
     public void PlayOnce(AudioSource source, float pitch)

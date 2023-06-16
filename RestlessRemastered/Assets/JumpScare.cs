@@ -34,7 +34,7 @@ public class JumpScare : MonoBehaviour
             Vector3 direction;
             direction = transform.position - player.transform.position;
             angleToScare = Vector3.Angle(direction, player.transform.forward);
-            if (Vector3.Distance(transform.position, player.transform.position) < 20)
+            if (Vector3.Distance(transform.position, player.transform.position) < 5)
             {
                 if (angleToScare <= 60 && !jumpscareActivated)
                 {
