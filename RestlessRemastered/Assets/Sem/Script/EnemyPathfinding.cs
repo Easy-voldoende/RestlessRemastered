@@ -27,7 +27,7 @@ public class EnemyPathfinding : MonoBehaviour
     public bool inAngle;
     public Vector3 playerPos;
     public GameObject eye;
-    private Animator anim;
+    public Animator anim;
     public GameObject playerObj;
     public GameObject cameraObj;
     public Transform myPos;
@@ -156,7 +156,8 @@ public class EnemyPathfinding : MonoBehaviour
         player.GetComponent<Animator>().SetTrigger("Died");
         yield return new WaitForSeconds(1f);
         anim.SetTrigger("Died");
-        
+        yield return new WaitForSeconds(3);
+        //deathUI
         
 
     }

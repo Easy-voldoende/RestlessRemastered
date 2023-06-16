@@ -16,6 +16,7 @@ TagManager:
   - Button
   - Rock
   - Door
+  - Hide
   layers:
   - Default
   - TransparentFX

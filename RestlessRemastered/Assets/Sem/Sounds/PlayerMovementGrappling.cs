@@ -439,17 +439,24 @@ public class PlayerMovementGrappling : MonoBehaviour
         lastPosition = transform.position;
         
     }
+    public IEnumerator FlashlightUI()
+    {
+        yield return new WaitForSeconds(6);
+
+    }
     public void FlashLight()
     {
         if(lightOn == false)
         {
-            lightBulb.SetActive(true);
+            lightBulb.GetComponent<Light>().enabled = true;
             lightOn = true;
+            PlayOnce(lightBulb.GetComponent<AudioSource>(), Random.Range(1.1f, 1.2f));
         }
         else
         {
-            lightBulb.SetActive(false);
+            lightBulb.GetComponent<Light>().enabled = false;
             lightOn = false;
+            PlayOnce(lightBulb.GetComponent<AudioSource>(), Random.Range(0.8f, 0.9f));
         }
 
  

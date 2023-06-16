@@ -38,6 +38,6 @@ public class FlashlightIntensity : MonoBehaviour
     }
     public void SmoothFade()
     {
-        intensity = Mathf.Lerp(currentIntensity, desiredIntensity, Time.deltaTime*10);
+        intensity = Mathf.Lerp(currentIntensity, desiredIntensity, Time.deltaTime*15);
     }
 }

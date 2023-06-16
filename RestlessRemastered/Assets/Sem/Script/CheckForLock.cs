@@ -8,20 +8,26 @@ public class CheckForLock : MonoBehaviour
     public GameObject maincam;
     public GameObject mainHolder;
     public Transform lastPos;
+    public Vector3 lastPosVector;
     public bool pickedUpPin;
     public bool pickedUpScrewDriver;
     public AudioSource doorSound;
     public GameObject UI;
     public TextMeshProUGUI text;
+    public bool hidden;
 
     public GameObject player;
     RaycastHit hit;
     void Start()
     {
-        
+        StartCoroutine(nameof(FlashLightUI));
     }
-
-    // Update is called once per frame
+    public IEnumerator FlashLightUI()
+    {
+        yield return new WaitForSeconds(5);
+        UI.GetComponent<Animator>().SetTrigger("Text");
+        text.text = "Press 'F' to activate your flashlight";
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -44,9 +50,18 @@ public class CheckForLock : MonoBehaviour
                         UI.GetComponent<Animator>().SetTrigger("Text");
                     }
                 }
+                if (hit.transform.CompareTag("Hide") && hidden ==false)
+                {
+                    lastPosVector = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+                    hidden = true;
+                    
+                    player.GetComponent<Rigidbody>().isKinematic = true;
+                    player.transform.position = hit.transform.gameObject.transform.GetChild(0).transform.position;
+
+                }
             }
         }
-
+        
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f))
@@ -70,6 +85,21 @@ public class CheckForLock : MonoBehaviour
                 }
             }
         }
+        if(hidden == true && Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnHide();
+        }
+        if(player.GetComponent<Rigidbody>().isKinematic == true)
+        {
+            hidden = true;
+        }
+    }
+    public void UnHide()
+    {
+        player.GetComponent<Rigidbody>().isKinematic = false;
+        player.transform.position = lastPosVector;
+        hidden = false;
+
     }
     public void PlayOnce(AudioSource source, float pitch)
     {
@@ -79,7 +109,7 @@ public class CheckForLock : MonoBehaviour
     }
     public void StartPicking()
     {
-        lastPos = transform;
+        lastPos = player.transform;
         hit.transform.gameObject.transform.GetComponent<GetGameObject>().obj.GetComponent<LockPick>().startedPicking = true;
         hit.transform.gameObject.transform.GetComponent<GetGameObject>().obj.GetComponent<LockPick>().pin.SetActive(true);
         hit.transform.gameObject.transform.GetComponent<GetGameObject>().obj.GetComponent<LockPick>().screwDriver.SetActive(true);

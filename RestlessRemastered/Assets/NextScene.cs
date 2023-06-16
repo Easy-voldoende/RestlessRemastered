@@ -15,6 +15,8 @@ public class NextScene : MonoBehaviour
         StartCoroutine(nameof(Nextscene));
         StartCoroutine(nameof(Sound));
         StartCoroutine(nameof(Sound2));
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public IEnumerator Sound()
     {        
