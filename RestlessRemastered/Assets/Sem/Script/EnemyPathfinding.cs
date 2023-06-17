@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class EnemyPathfinding : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class EnemyPathfinding : MonoBehaviour
     public Vector3 target;
     public Transform lastPlayerPos;
     public Transform player;
+    public Animator cameraAnim;
     public float damage;
     private float speed;
     public Animator Ui;
@@ -38,6 +41,7 @@ public class EnemyPathfinding : MonoBehaviour
     public LayerMask layerMask;
     public Vector3 origin;
     private int lookState;
+    public GameObject focus;
     public enum EnemyState
     {
         Roaming,
@@ -147,17 +151,18 @@ public class EnemyPathfinding : MonoBehaviour
         playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
         playerObj.gameObject.transform.position = myPos.position;
         playerObj.gameObject.transform.rotation = myPos.rotation;
+        playerObj.gameObject.transform.LookAt(focus.transform.position);
         GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = enemyPos.position;
         transform.rotation = enemyPos.rotation;
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         nav.acceleration = 100000;
         nav.speed = 0;
-        player.GetComponent<Animator>().SetTrigger("Died");
-        yield return new WaitForSeconds(1f);
+        cameraAnim.SetTrigger("Died");
         anim.SetTrigger("Died");
-        yield return new WaitForSeconds(3);
-        //deathUI
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(1);
         
 
     }
