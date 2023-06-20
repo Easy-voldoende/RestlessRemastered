@@ -67,7 +67,7 @@ public class SliderSpin : MonoBehaviour
         Vector3 rot = new Vector3(0, 0, sliderValue * -spinSpeed);
         handle.GetComponent<RectTransform>().localEulerAngles = rot;
         
-        if(isPlaying == true && gameObject.name == "MusicSlider")
+        if(isPlaying == true)
         {
             PlaySound(boogersounds[soundIndex]);
         }
@@ -81,12 +81,16 @@ public class SliderSpin : MonoBehaviour
     public void NewInt()
     {
         intCooldown -= 1 * Time.deltaTime;
-        if (intCooldown <= 0)
+        if (intCooldown <= 0 && soundIndex ==0)
         {
-            intCooldown = 3;
-            previousIndex = soundIndex;
-            soundIndex = Random.Range(0, 2);
+
+            soundIndex = 1;
         }
+        else if(intCooldown <=0 && soundIndex == 1)
+        {
+            soundIndex = 0;
+        }
+        
     }
     public void SaveVolumeButton()
     {
@@ -121,14 +125,9 @@ public class SliderSpin : MonoBehaviour
     {
         isPlaying = false;
 
-        if (boogersounds[previousIndex].isPlaying == true)
+        foreach(AudioSource source in boogersounds)
         {
-            boogersounds[previousIndex].Stop();
-        }
-
-        if (boogersounds[soundIndex].isPlaying == true)
-        {
-            boogersounds[soundIndex].Stop();
+            source.Stop();
         }
     }
 }
