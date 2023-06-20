@@ -87,7 +87,7 @@ public class CheckForLock : MonoBehaviour
         }
         if(hidden == true && Input.GetKeyDown(KeyCode.Escape))
         {
-            UnHide();
+            //UnHide();
         }
         if(player.GetComponent<Rigidbody>().isKinematic == true)
         {
@@ -96,9 +96,12 @@ public class CheckForLock : MonoBehaviour
     }
     public void UnHide()
     {
-        player.GetComponent<Rigidbody>().isKinematic = false;
-        player.transform.position = lastPosVector;
-        hidden = false;
+        if(hidden == true)
+        {
+            player.GetComponent<Rigidbody>().isKinematic = false;
+            player.transform.position = lastPosVector;
+            hidden = false;
+        }
 
     }
     public void PlayOnce(AudioSource source, float pitch)
