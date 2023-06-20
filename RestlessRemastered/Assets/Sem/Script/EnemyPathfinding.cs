@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -147,13 +146,18 @@ public class EnemyPathfinding : MonoBehaviour
     }
     public IEnumerator DeathScene()
     {
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         cameraObj.GetComponent<CustomizableCamera>().died = true;
         playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
         playerObj.gameObject.transform.position = myPos.position;
         playerObj.gameObject.transform.rotation = myPos.rotation;
         playerObj.gameObject.transform.LookAt(focus.transform.position);
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<CameraShake>().shakeDuration = 10f;
+        GetComponent<CameraShake>().shakeMagnitude = 0.1f;
+        
+        GetComponent<CameraShake>().dampingSpeed = 0.02f;
+
         transform.position = enemyPos.position;
         transform.rotation = enemyPos.rotation;
         NavMeshAgent nav = GetComponent<NavMeshAgent>();

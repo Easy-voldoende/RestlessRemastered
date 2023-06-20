@@ -10,7 +10,7 @@ public class CameraShake : MonoBehaviour
     public float dampingSpeed = 1f;
 
     private Vector3 originalPosition;
-    private Vector3 shakeVelocity = Vector3.zero;
+    public Vector3 shakeVelocity = Vector3.zero;
     public bool canShake;
 
     private void Awake()
@@ -32,7 +32,7 @@ public class CameraShake : MonoBehaviour
         {
             Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
             Vector3 targetPosition = originalPosition + shakeOffset;
-            shakeDuration -= Time.deltaTime;
+            //shakeDuration -= Time.deltaTime;
             cameraTransform.localPosition = Vector3.SmoothDamp(cameraTransform.localPosition, targetPosition, ref shakeVelocity, dampingSpeed);
         }
         else if(canShake == false)
@@ -49,17 +49,9 @@ public class CameraShake : MonoBehaviour
     public void Shake()
     {
         originalPosition = cameraTransform.localPosition;
-        if (canShake == true)
-        {
-            canShake = false;
-            shakeDuration = 0.1f;
-        }
-        else
-        {
-            canShake = true;
-            shakeDuration = 0.1f;
+        canShake = true;
+        shakeDuration = 2;
 
-        }
 
     }
 }
