@@ -17,9 +17,11 @@ public class JumpScare : MonoBehaviour
     public float speed = 10f;
     public Vector3 lastPosition;
     public float distanceTraveled;
+    public AudioSource aud2;
     public float footstepDistance;
     bool canPlay = false;
     float rotate;
+    bool soundPlayed;
     void Start()
     {
         shadowPrefab.SetActive(false);
@@ -49,7 +51,7 @@ public class JumpScare : MonoBehaviour
             Vector3 direction;
             direction = transform.position - player.transform.position;
             angleToScare = Vector3.Angle(direction, player.transform.forward);
-            if (Vector3.Distance(transform.position, player.transform.position) < 15)
+            if (Vector3.Distance(transform.position, player.transform.position) < 10)
             {
                 if (angleToScare <= 90 && !jumpscareActivated)
                 {
@@ -102,6 +104,11 @@ public class JumpScare : MonoBehaviour
     public void CrawlScare()
     {
         shadowPrefab.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if(soundPlayed == false)
+        {
+            PlayOnce(aud2, 1);
+            soundPlayed = true;
+        }
         CheckForFootstep();
 
     }

@@ -15787,6 +15787,7 @@ MonoBehaviour:
   speed: 10
   lastPosition: {x: 0, y: 0, z: 0}
   distanceTraveled: 0
+  aud2: {fileID: 0}
   footstepDistance: 0
 --- !u!4 &1300960531
 Transform:
@@ -17458,12 +17459,13 @@ MonoBehaviour:
   gateScare: 0
   jumpscareActivated: 0
   player: {fileID: 7401499803763220926}
-  jumpscareAudioSource: {fileID: 0}
+  jumpscareAudioSource: {fileID: 1883611380}
   footStepSound: {fileID: 1179984471}
   angleToScare: 0
   speed: 20
   lastPosition: {x: 0, y: 0, z: 0}
   distanceTraveled: 0
+  aud2: {fileID: 1883611380}
   footstepDistance: 2.6
 --- !u!1 &1439810654
 GameObject:
@@ -27959,11 +27961,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1883611378}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1017292057079682506, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 15332cb90e922844191c6caa2244def8, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 301b68b2f942d454b87be1d47db3de8f, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -28008,7 +28010,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -30889,6 +30891,7 @@ MonoBehaviour:
   speed: 10
   lastPosition: {x: 0, y: 0, z: 0}
   distanceTraveled: 0
+  aud2: {fileID: 0}
   footstepDistance: 0
 --- !u!4 &2044949342
 Transform:
@@ -55128,7 +55131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7401499803763220926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -76.38, y: 8.693, z: -638.02}
+  m_LocalPosition: {x: 0, y: 0.69, z: 0}
   m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
