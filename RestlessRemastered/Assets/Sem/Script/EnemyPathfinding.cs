@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class EnemyPathfinding : MonoBehaviour
 {
     public bool canRoam;
+    public float rotationAdjustment;
     public GameObject[] eyes;
     public NavMeshAgent agent;
     public Vector3 target;
@@ -41,6 +42,7 @@ public class EnemyPathfinding : MonoBehaviour
     public Vector3 origin;
     private int lookState;
     public GameObject focus;
+    public bool manual;
     public enum EnemyState
     {
         Roaming,
@@ -124,7 +126,7 @@ public class EnemyPathfinding : MonoBehaviour
                 anim.SetInteger("State", shadowState);
                 target = player.position;
                 agent.SetDestination(target);
-                if (Vector3.Distance(myPos.position, player.position) < 2f)
+                if (Vector3.Distance(myPos.position, player.position) < 3f)
                 {
                     Debug.Log("You died");
                     if(sceneStarted == false)
@@ -158,7 +160,6 @@ public class EnemyPathfinding : MonoBehaviour
         
         GetComponent<CameraShake>().dampingSpeed = 0.02f;
 
-        transform.position = enemyPos.position;
         transform.rotation = enemyPos.rotation;
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         nav.acceleration = 100000;
@@ -166,7 +167,7 @@ public class EnemyPathfinding : MonoBehaviour
         cameraAnim.SetTrigger("Died");
         anim.SetTrigger("Died");
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
         
 
     }

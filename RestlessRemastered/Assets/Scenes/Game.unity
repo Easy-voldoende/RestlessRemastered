@@ -3727,6 +3727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 371289855}
   - {fileID: 1752164456}
@@ -3762,6 +3763,7 @@ MonoBehaviour:
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -7525,9 +7527,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8308,6 +8310,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704810884}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &712201318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 712201319}
+  m_Layer: 8
+  m_Name: EnemyPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &712201319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712201318}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: -1, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7401499803763220897}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &718772508
 GameObject:
   m_ObjectHideFlags: 0
@@ -28083,6 +28116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 89954402}
   - {fileID: 1499843976}
@@ -28118,6 +28152,7 @@ MonoBehaviour:
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -32135,9 +32170,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -46350,6 +46385,7 @@ MonoBehaviour:
   previousvolume2: 0
   source1: {fileID: 1688052670}
   source2: {fileID: 1732499015}
+  biden: {fileID: 8288619658090426779}
   menuSound1: {fileID: 3420985876452920094}
   menuSound2: {fileID: 3420985877910952860}
   otherUI: {fileID: 1513735070}
@@ -53755,6 +53791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 2863171072629693352}
   - {fileID: 2863171072918996781}
@@ -53790,6 +53827,7 @@ MonoBehaviour:
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -55131,7 +55169,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7401499803763220926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.69, z: 0}
+  m_LocalPosition: {x: -154, y: 0.69, z: -584}
   m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -55139,6 +55177,7 @@ Transform:
   - {fileID: 7401499804223019970}
   - {fileID: 1280921452}
   - {fileID: 644479037}
+  - {fileID: 712201319}
   m_Father: {fileID: 1568944482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55917,6 +55956,8 @@ MonoBehaviour:
   rockJump:
   - {fileID: 533437709}
   - {fileID: 1349496511}
+  enemySpawnPos: {x: 0, y: 0, z: 0}
+  enemySpawn: {fileID: 712201318}
   grassJump:
   - {fileID: 925206491}
   - {fileID: 352101452}
@@ -56285,7 +56326,7 @@ Transform:
   m_GameObject: {fileID: 8934937957148590362}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 12.5, y: 4.41, z: -5.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4955420312858673349}
@@ -57030,7 +57071,7 @@ GameObject:
   - component: {fileID: 8985328759170141749}
   - component: {fileID: 8985328759170141750}
   m_Layer: 15
-  m_Name: Shadow
+  m_Name: RealShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57049,6 +57090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 633098386}
   - {fileID: 1383779351}
@@ -57075,7 +57117,7 @@ MonoBehaviour:
   playerObj: {fileID: 7401499803763220926}
   cameraObj: {fileID: 7401499803429614361}
   myPos: {fileID: 7401499803763220897}
-  enemyPos: {fileID: 4955420312858673349}
+  enemyPos: {fileID: 712201319}
   sceneStarted: 0
   shadowState: 0
   distanceToTarget: 0
@@ -57084,6 +57126,7 @@ MonoBehaviour:
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 1407497019}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

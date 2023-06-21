@@ -16,6 +16,7 @@ public class ActivateUI : MonoBehaviour
     public float previousvolume2;
     public AudioSource source1;
     public AudioSource source2;
+    public AudioSource biden;
     public AudioSource menuSound1;
     public AudioSource menuSound2;
     public GameObject otherUI;
@@ -30,13 +31,14 @@ public class ActivateUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen == false)
         {
             menuSound2.Play();
+            biden.Pause();
             otherUI.SetActive(false);
             pauseMenu.SetActive(true);
             Quaternion q = cam.transform.rotation;
             previousvolume1 = source1.volume;
             previousvolume2 = source2.volume;
-            source1.volume = 0;
-            source2.volume = 0;
+            source1.Pause();
+            source2.Pause();
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -52,13 +54,14 @@ public class ActivateUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen == true)
         {
             menuSound1.Play();
+            biden.Play();
             otherUI.SetActive(true);
             StartCoroutine(nameof(SetBoolInActive));
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
-            source1.volume = previousvolume1;
-            source2.volume = previousvolume2;
+            source1.Play();
+            source2.Play();
             Cursor.visible = false;
             cam.GetComponent<CustomizableCamera>().enabled = true;
             cam.GetComponent<CustomizableCamera>().sensitivity = previousSens;

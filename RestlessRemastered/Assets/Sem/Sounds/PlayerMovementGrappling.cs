@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class PlayerMovementGrappling : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class PlayerMovementGrappling : MonoBehaviour
     public AudioSource[] rockFootstepsSprinting;
     public AudioSource[] rockFootstepsWalking;
     public AudioSource[] rockJump;
-
+    public Vector3 enemySpawnPos;
+    public GameObject enemySpawn;
     public AudioSource[] grassJump;
     public AudioSource[] woodJump;
     public AudioSource[] gravelJump;
@@ -110,6 +112,11 @@ public class PlayerMovementGrappling : MonoBehaviour
     RaycastHit hitcast;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            ManualJumpScare();
+
+        }
         // ground check
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -141,6 +148,15 @@ public class PlayerMovementGrappling : MonoBehaviour
         }
     }
 
+    public void ManualJumpScare()
+    {
+        GameObject shadow = GameObject.Find("RealShadow");
+        shadow.GetComponent<EnemyPathfinding>().manual = true;
+        shadow.GetComponent<NavMeshAgent>().enabled = false;
+        enemySpawnPos = enemySpawn.transform.position;
+        shadow.transform.position = enemySpawnPos;
+        StartCoroutine(shadow.GetComponent<EnemyPathfinding>().DeathScene());
+    }
     private void FixedUpdate()
     {
         MovePlayer();
