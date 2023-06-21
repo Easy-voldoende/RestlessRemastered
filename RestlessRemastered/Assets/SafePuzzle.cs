@@ -8,6 +8,7 @@ public class SafePuzzle : MonoBehaviour
 {
     public AudioSource source;
     public GameObject ai;
+    public Animator door;
     public AudioSource source2;
     public Animator numbers;
     public string enteredLine;
@@ -17,13 +18,14 @@ public class SafePuzzle : MonoBehaviour
     RaycastHit hit;
     GameObject cam;
     public LayerMask mask;
+    public float maxRot;
+    public bool canRot;
     public int[] correctCombination = new int[4];
     // Start is called before the first frame update
     void Start()
     {
         cam = GameObject.Find("Main Camera");
         GenerateRandomCombination();
-        source = GetComponent<AudioSource>();
     }
 
     void GenerateRandomCombination()
@@ -50,6 +52,8 @@ public class SafePuzzle : MonoBehaviour
         //    GenerateRandomCombination();
         //    enteredLine = "";
         //}
+
+
 
     }
     public void CheckNumber()
@@ -96,6 +100,7 @@ public class SafePuzzle : MonoBehaviour
     {
         Debug.Log("Open the noor");
         PlayOnce(source, 1.4f);
+        door.SetTrigger("Door");
         numbersEntered = 0;
     }
 }

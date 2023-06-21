@@ -148,6 +148,10 @@ public class EnemyPathfinding : MonoBehaviour
     }
     public IEnumerator DeathScene()
     {
+        foreach(GameObject eye in eyes)
+        {
+            eye.GetComponent<LensFlareComponentSRP>().scale = 3;
+        }
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         cameraObj.GetComponent<CustomizableCamera>().died = true;
@@ -199,14 +203,15 @@ public class EnemyPathfinding : MonoBehaviour
         if (angleToPlayer <= detectionAngle && Vector3.Distance(transform.position, player.position) < detectionRange)
         {
 
-            foreach (GameObject eyes in eyes)
-            {
-                eyes.GetComponent<LensFlareComponentSRP>().enabled = true;
-            }
+            
             if (Physics.Linecast(transform.position, player.transform.position, out hit))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
+                    foreach (GameObject eyes in eyes)
+                    {
+                        eyes.GetComponent<LensFlareComponentSRP>().enabled = true;
+                    }
                     Debug.Log("Looking at player");
                     state = EnemyState.Chasing;
                     chasing = true;

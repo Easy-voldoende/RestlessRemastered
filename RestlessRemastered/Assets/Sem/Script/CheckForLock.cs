@@ -85,7 +85,30 @@ public class CheckForLock : MonoBehaviour
                 }
             }
         }
-        if(hidden == true && Input.GetKeyDown(KeyCode.Escape))
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f))
+            {
+                if (hit.transform.gameObject.CompareTag("Screen"))
+                {
+
+                    TurnOffScreen screen = hit.transform.gameObject.GetComponent<TurnOffScreen>();
+
+                    if(screen.switched == true)
+                    {
+                        screen.switched = false;
+                    }
+                    else
+                    {
+                        screen.switched = true;
+                    }
+
+                    
+                }
+            }
+        }
+        if (hidden == true && Input.GetKeyDown(KeyCode.Escape))
         {
             //UnHide();
         }
