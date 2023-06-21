@@ -86,7 +86,7 @@ public class NextScene : MonoBehaviour
     public IEnumerator Nextscene()
     {
 
-        yield return new WaitForSeconds(26f);
+        yield return new WaitForSeconds(25f);
         SceneManager.LoadScene(2);
     }
 

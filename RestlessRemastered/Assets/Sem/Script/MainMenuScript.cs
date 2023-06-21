@@ -35,12 +35,12 @@ public class MainMenuScript : MonoBehaviour
     public IEnumerator SwitchScene()
     {
         particle1.startLifetime = 0;
-        particle2.startLifetime = 0;
+        particle2.emissionRate = 0;
         PlayOnce(aud2);
         canSmoke = true;
         canFade = true;
         yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         
 
 
@@ -55,7 +55,8 @@ public class MainMenuScript : MonoBehaviour
         if(canSmoke == true)
         {
             particle2.playbackSpeed += speed * Time.deltaTime;
-            light.intensity -= 15 * Time.deltaTime;
+            particle1.playbackSpeed += 0.75f * Time.deltaTime;
+            light.intensity -= 20 * Time.deltaTime;
         }
     }
     public void FadeImage()

@@ -79,6 +79,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     Vector3 moveDirection;
     public string curWalkingSurface;
     Rigidbody rb;
+    float mass;
 
     public MovementState state;
     public enum MovementState
@@ -96,6 +97,7 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     private void Start()
     {
+        mass = GetComponent<Rigidbody>().mass;
         headBob = GameObject.Find("Holder").GetComponent<HeadBob>();
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
@@ -181,20 +183,27 @@ public class PlayerMovementGrappling : MonoBehaviour
             state = MovementState.freeze;
             moveSpeed = 0;
             rb.velocity = Vector3.zero;
+            GetComponent<Rigidbody>().mass = mass*3;
         }
 
         // Mode - Crouching
         else if (Input.GetKey(crouchKey))
         {
             state = MovementState.crouching;
+            
+            GetComponent<Rigidbody>().mass = mass;
             moveSpeed = crouchSpeed;
         }
-
+        if (Input.GetKeyDown(crouchKey))
+        {
+            rb.AddForce(Vector3.down* 5f, ForceMode.Impulse);
+        }
         // Mode - Sprinting
         else if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            GetComponent<Rigidbody>().mass = mass;
             headBob.bobbingAmount = 0.1f;
         }
 
@@ -203,6 +212,7 @@ public class PlayerMovementGrappling : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            GetComponent<Rigidbody>().mass = mass;
             headBob.bobbingAmount = 0.1f;
         }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class CustomizableCamera : MonoBehaviour
 {
     [SerializeField] private Transform player; // The player object
-    [SerializeField] private float sensitivity = 2f; // The sensitivity of the mouse movement
+    [SerializeField] public float sensitivity = 2f; // The sensitivity of the mouse movement
     [SerializeField] private float minYAngle = -90f; // The minimum vertical angle the camera can rotate
     [SerializeField] private float maxYAngle = 90f; // The maximum vertical angle the camera can rotate
     public bool died;
