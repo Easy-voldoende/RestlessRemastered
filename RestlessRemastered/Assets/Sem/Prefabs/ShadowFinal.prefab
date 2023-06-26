@@ -604,7 +604,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 119345756dc366041ab60324d9f64d82, type: 2}
+  - {fileID: 2100000, guid: b459b14ea4b354946aa8c37a595894f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LensFlareData: {fileID: 11400000, guid: 924cc7830aa71d949b7a8d2a0362abba, type: 2}
-  intensity: 2
+  intensity: 5
   maxAttenuationDistance: 30
   maxAttenuationScale: 30
   distanceAttenuationCurve:
@@ -783,7 +783,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 119345756dc366041ab60324d9f64d82, type: 2}
+  - {fileID: 2100000, guid: b459b14ea4b354946aa8c37a595894f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LensFlareData: {fileID: 11400000, guid: 924cc7830aa71d949b7a8d2a0362abba, type: 2}
-  intensity: 2
+  intensity: 5
   maxAttenuationDistance: 30
   maxAttenuationScale: 30
   distanceAttenuationCurve:
@@ -1567,6 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 3427569213987747728}
   - {fileID: 3427569213756893973}
@@ -1574,7 +1575,9 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   lastPlayerPos: {fileID: 0}
   player: {fileID: 0}
+  cameraAnim: {fileID: 0}
   damage: 0
+  Ui: {fileID: 0}
   runningSpeed: 0
   walkingSpeed: 0
   roamRadius: 47
@@ -1587,6 +1590,7 @@ MonoBehaviour:
   inAngle: 0
   playerPos: {x: 0, y: 0, z: 0}
   eye: {fileID: 3427569213987747728}
+  anim: {fileID: 0}
   playerObj: {fileID: 0}
   cameraObj: {fileID: 0}
   myPos: {fileID: 0}
@@ -1598,6 +1602,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
+  focus: {fileID: 0}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

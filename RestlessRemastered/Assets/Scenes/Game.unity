@@ -15892,6 +15892,7 @@ MonoBehaviour:
   distanceTraveled: 0
   aud2: {fileID: 0}
   footstepDistance: 0
+  otherSources: []
 --- !u!4 &1300960531
 Transform:
   m_ObjectHideFlags: 0
@@ -17570,6 +17571,7 @@ MonoBehaviour:
   distanceTraveled: 0
   aud2: {fileID: 1883611380}
   footstepDistance: 2.6
+  otherSources: []
 --- !u!1 &1439810654
 GameObject:
   m_ObjectHideFlags: 0
@@ -30900,6 +30902,7 @@ MonoBehaviour:
   distanceTraveled: 0
   aud2: {fileID: 0}
   footstepDistance: 0
+  otherSources: []
 --- !u!4 &2044949342
 Transform:
   m_ObjectHideFlags: 0
@@ -46729,6 +46732,9 @@ MonoBehaviour:
   image: {fileID: 0}
   canFade: 0
   canSmoke: 0
+  sources: []
+  canMuteSources: 0
+  screen: {fileID: 0}
 --- !u!223 &3420985876452920092
 Canvas:
   m_ObjectHideFlags: 0
@@ -56218,7 +56224,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7401499803763220926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -154, y: 0.69, z: -584}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57651,7 +57657,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1017292057079682506, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
   m_audioClip: {fileID: 8300000, guid: e28324e7f23b3ae479bc7e006e3695db, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

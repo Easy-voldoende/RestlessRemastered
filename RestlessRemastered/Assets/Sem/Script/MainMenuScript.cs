@@ -16,8 +16,11 @@ public class MainMenuScript : MonoBehaviour
     public Image image;
     public bool canFade;
     public bool canSmoke;
+    public AudioSource[] sources;
+    public bool canMuteSources;
     float speed =20;
     Color color;
+    public LoadingScreen screen;
     private void Start()
     {
         subMenus[0].SetActive(true);
@@ -39,8 +42,11 @@ public class MainMenuScript : MonoBehaviour
         PlayOnce(aud2);
         canSmoke = true;
         canFade = true;
+        canMuteSources = true;
         yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene(1);
+        screen.enabled = true;
+        yield return new WaitForSeconds(Random.Range(3, 5));
+        SceneManager.LoadSceneAsync(1);
         
 
 
@@ -49,6 +55,13 @@ public class MainMenuScript : MonoBehaviour
     {
         FadeImage();
         Smoke();
+        if(canMuteSources == true)
+        {
+            foreach(AudioSource source in sources)
+            {
+                source.volume -= 0.2f * Time.deltaTime;
+            }
+        }
     }
     public void Smoke()
     {

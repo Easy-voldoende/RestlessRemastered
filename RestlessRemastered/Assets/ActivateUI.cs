@@ -37,7 +37,7 @@ public class ActivateUI : MonoBehaviour
             Quaternion q = cam.transform.rotation;
             previousvolume1 = source1.volume;
             previousvolume2 = source2.volume;
-            source1.Pause();
+            //source1.Pause();
             source2.Pause();
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
@@ -60,7 +60,7 @@ public class ActivateUI : MonoBehaviour
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
-            source1.Play();
+            //source1.Play();
             source2.Play();
             Cursor.visible = false;
             cam.GetComponent<CustomizableCamera>().enabled = true;

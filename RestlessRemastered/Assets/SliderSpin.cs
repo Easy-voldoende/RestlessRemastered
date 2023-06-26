@@ -80,17 +80,25 @@ public class SliderSpin : MonoBehaviour
     }
     public void NewInt()
     {
-        intCooldown -= 1 * Time.deltaTime;
-        if (intCooldown <= 0 && soundIndex ==0)
-        {
+        //intCooldown -= 1 * Time.deltaTime;
+        //if (intCooldown <= 0 && soundIndex ==0)
+        //{
 
-            soundIndex = 1;
-        }
-        else if(intCooldown <=0 && soundIndex == 1)
-        {
-            soundIndex = 0;
-        }
-        
+        //    soundIndex = 1;
+        //    intCooldown = 3;
+        //}
+
+        //if(intCooldown <=0 && soundIndex == 1)
+        //{
+        //    soundIndex = 2;
+        //    intCooldown = 3;
+        //}
+        //if (intCooldown <= 0 && soundIndex == 2)
+        //{
+        //    soundIndex = 0;
+        //    intCooldown = 3;
+        //}
+
     }
     public void SaveVolumeButton()
     {

@@ -5,8 +5,10 @@ public class HeadBob : MonoBehaviour
     public float bobbingSpeed = 0.1f;    // Speed of the head bobbing
     public float bobbingAmount = 0.1f;   // Amount of head bobbing
     public GameObject player;
+    public float horizontal;
+    public float vertical;
     public float speed;
-
+    public bool isCutscene;
     private float timer = 0.0f;
     private float midpoint = 0.0f;
     
@@ -15,17 +17,39 @@ public class HeadBob : MonoBehaviour
     private void Start()
     {
         originalPosition = transform.localPosition;
-        midpoint = 0.8f;
+        if(isCutscene == true)
+        {
+            midpoint = 0.11f;
+        }
+        else
+        {
+            midpoint = 0.8f;
+        }
     }
 
     private void Update()
     {
 
-        bobbingSpeed = player.GetComponent<Rigidbody>().velocity.magnitude * speed;
+        if(player != null)
+        {
+            bobbingSpeed = player.GetComponent<Rigidbody>().velocity.magnitude * speed;
+        }
+        else
+        {
+            bobbingSpeed = 0.03f;
+        }
         // Calculate the vertical position of the head based on a sine wave
         float waveslice = 0.0f;
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        if (!isCutscene)
+        {
+             horizontal = Input.GetAxis("Horizontal");
+             vertical = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            horizontal = 1;
+             vertical = 1;
+        }
 
         if (Mathf.Abs(horizontal) == 0 && Mathf.Abs(vertical) == 0)
         {

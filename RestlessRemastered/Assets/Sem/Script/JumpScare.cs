@@ -19,6 +19,7 @@ public class JumpScare : MonoBehaviour
     public float distanceTraveled;
     public AudioSource aud2;
     public float footstepDistance;
+    public AudioSource[] otherSources;
     bool canPlay = false;
     float rotate;
     bool soundPlayed;
@@ -28,6 +29,11 @@ public class JumpScare : MonoBehaviour
         shadow = transform.GetChild(0).gameObject;
     }
 
+
+    public void LowerSound()
+    {
+
+    }
     // Update is called once per frame
     void Update()
     {

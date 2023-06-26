@@ -10,6 +10,8 @@ public class NextScene : MonoBehaviour
     public AudioSource[] sounds;
     public bool crashed;
     public float stopTime;
+    public HeadBob hb;
+    
     void Start()
     {
         StartCoroutine(nameof(Nextscene));
@@ -42,6 +44,7 @@ public class NextScene : MonoBehaviour
     {
         yield return new WaitForSeconds(16f);
         PlayOnce(sounds[6], 1);
+        hb.enabled = false;
         yield return new WaitForSeconds(3.4f);
         PlayOnce(sounds[5], 1); 
     }
@@ -86,7 +89,7 @@ public class NextScene : MonoBehaviour
     public IEnumerator Nextscene()
     {
 
-        yield return new WaitForSeconds(25f);
+        yield return new WaitForSeconds(24f);
         SceneManager.LoadScene(2);
     }
 

@@ -91,7 +91,7 @@ public class OptionsMenuScript : MonoBehaviour
         ui.headBob.GetComponent<HeadBob>().enabled = true;
         ui.cam.GetComponent<CustomizableCamera>().sensitivity = ui.previousSens;
         ui.menuOpen = false;
-        ui.source1.Play();
+        //ui.source1.Play();
         ui.source2.Play();
         ui.biden.Play();
         Time.timeScale = 1.0f;

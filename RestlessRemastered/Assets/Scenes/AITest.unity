@@ -7137,6 +7137,7 @@ MonoBehaviour:
   - {fileID: 1556247459}
   crashed: 0
   stopTime: 0
+  hb: {fileID: 1247596829811935716}
 --- !u!1 &1415593707
 GameObject:
   m_ObjectHideFlags: 0
@@ -15356,6 +15357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1247596829811935715}
+  - component: {fileID: 1247596829811935716}
   m_Layer: 8
   m_Name: HolderHolder
   m_TagString: Untagged
@@ -15379,6 +15381,25 @@ Transform:
   m_Father: {fileID: 1247596828658143724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1247596829811935716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247596829811935714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fb8d1ee383dc4478e9dda6b12784bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobbingSpeed: 0.03
+  bobbingAmount: 0.005
+  player: {fileID: 0}
+  horizontal: 0
+  vertical: 0
+  speed: 0
+  isCutscene: 1
 --- !u!1 &1247596830051650410
 GameObject:
   m_ObjectHideFlags: 0
@@ -26074,6 +26095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  rotationAdjustment: 0
   eyes:
   - {fileID: 1105408757589353698}
   - {fileID: 1105408759347198055}
@@ -26109,6 +26131,7 @@ MonoBehaviour:
     m_Bits: 256
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
+  manual: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
