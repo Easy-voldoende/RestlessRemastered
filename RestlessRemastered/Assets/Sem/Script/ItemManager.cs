@@ -5,14 +5,18 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public GameObject[] itemSlots;
+    public AudioSource source;
     public int selectedItem;
     public int maxSlots;
 
     void Start()
     {
-        
+        source = GameObject.Find("JumpscareSound").GetComponent<AudioSource>();
     }
-
+    public void PlaySound()
+    {
+        source.Play();
+    }
     void Update()
     {
         if (Input.mouseScrollDelta.y > 0)

@@ -4,6 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
+using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR;
 
 public class PlayerMovementGrappling : MonoBehaviour
 {
@@ -74,7 +79,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     public float grappleFov = 95f;
 
     public Transform orientation;
-
+    public bool died;
     float horizontalInput;
     float verticalInput;
     public HeadBob headBob;
@@ -82,6 +87,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     public string curWalkingSurface;
     Rigidbody rb;
     float mass;
+    public GameObject shadowPrefab;
 
     public MovementState state;
     public enum MovementState
@@ -128,7 +134,6 @@ public class PlayerMovementGrappling : MonoBehaviour
         {
             curWalkingSurface = hitcast.transform.gameObject.tag;
         }
-
         MyInput();
         SpeedControl();
         StateHandler();
@@ -151,11 +156,18 @@ public class PlayerMovementGrappling : MonoBehaviour
     public void ManualJumpScare()
     {
         GameObject shadow = GameObject.Find("RealShadow");
-        shadow.GetComponent<EnemyPathfinding>().manual = true;
-        shadow.GetComponent<NavMeshAgent>().enabled = false;
-        enemySpawnPos = enemySpawn.transform.position;
-        shadow.transform.position = enemySpawnPos;
-        StartCoroutine(shadow.GetComponent<EnemyPathfinding>().DeathScene());
+        gameObject.GetComponent<ItemManager>().PlaySound();
+        //shadow.GetComponent<EnemyPathfinding>().manual = true;
+        //shadow.GetComponent<NavMeshAgent>().enabled = false;
+        //enemySpawnPos = enemySpawn.transform.position;
+        //shadow.transform.position = enemySpawnPos;
+        StartCoroutine(shadow.GetComponent<EnemyPathfinding>().DeathSceneManual());
+    }
+
+    public void ManualJumpScareInstantiate()
+    {
+        
+        gameObject.GetComponent<ItemManager>().PlaySound();
     }
     private void FixedUpdate()
     {

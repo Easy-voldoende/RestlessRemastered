@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
+using UnityEngine.Animations;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
 
 public class EnemyPathfinding : MonoBehaviour
 {
     public bool canRoam;
+    public AudioSource jumpscare;
     public float rotationAdjustment;
     public GameObject[] eyes;
     public NavMeshAgent agent;
@@ -43,6 +47,9 @@ public class EnemyPathfinding : MonoBehaviour
     private int lookState;
     public GameObject focus;
     public bool manual;
+    public AudioMixer audioMixer;
+    public GameObject shadowPrefab;
+    public bool test = false;
     public enum EnemyState
     {
         Roaming,
@@ -133,6 +140,7 @@ public class EnemyPathfinding : MonoBehaviour
                     {
                         StartCoroutine(nameof(DeathScene));
                         sceneStarted = false;
+                        
                     }
                 }                
 
@@ -152,6 +160,11 @@ public class EnemyPathfinding : MonoBehaviour
         {
             eye.GetComponent<LensFlareComponentSRP>().scale = 3;
         }
+        audioMixer.SetFloat("Ambient", -80);
+        if(jumpscare.isPlaying == false)
+        {
+            jumpscare.Play();
+        }
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         cameraObj.GetComponent<CustomizableCamera>().died = true;
@@ -168,11 +181,44 @@ public class EnemyPathfinding : MonoBehaviour
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         nav.acceleration = 100000;
         nav.speed = 0;
+        nav.enabled = false;
         cameraAnim.SetTrigger("Died");
         anim.SetTrigger("Died");
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
         
+
+    }
+    public IEnumerator DeathSceneManual()
+    {
+        foreach (GameObject eye in eyes)
+        {
+            eye.GetComponent<LensFlareComponentSRP>().scale = 3;
+        }
+        audioMixer.SetFloat("Ambient", -80);
+        jumpscare.Play();
+        cameraObj.GetComponent<CustomizableCamera>().died = true;
+        playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        playerObj.GetComponent<Rigidbody>().isKinematic = true;
+        playerObj.gameObject.transform.position = myPos.position;
+        playerObj.gameObject.transform.rotation = myPos.rotation;        
+        GetComponent<CameraShake>().shakeDuration = 10f;
+        GetComponent<CameraShake>().shakeMagnitude = 0.1f;
+        GetComponent<CameraShake>().dampingSpeed = 0.02f;
+        GameObject prefab = Instantiate(shadowPrefab, enemyPos);
+        prefab.transform.parent = null;
+        Vector3 scale = new Vector3(1.4f, 1.4f, 1.4f);
+        prefab.transform.localScale = scale;
+        Quaternion q = new Quaternion(enemyPos.rotation.x, prefab.transform.rotation.y, enemyPos.rotation.z, enemyPos.rotation.w);
+        prefab.transform.rotation = q;
+        playerObj.gameObject.transform.LookAt(prefab.transform.GetChild(0).transform.position);
+        //shadowPrefab.transform.rotation = enemyPos.rotation;        
+        cameraAnim.SetTrigger("Died");
+        anim.SetTrigger("Died");
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(2);
+
 
     }
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)

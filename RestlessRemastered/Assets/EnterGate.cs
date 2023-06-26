@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnterGate : MonoBehaviour
 {
     public Animator anim;
+    public GameObject player;
     void Start()
     {
         
@@ -15,11 +16,20 @@ public class EnterGate : MonoBehaviour
     {
         
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            anim.SetTrigger("CloseGate");
+            player = other.gameObject;
+            StartCoroutine(nameof(StartJumpscare));
         }
+    }
+    
+    public IEnumerator StartJumpscare()
+    {
+        anim.SetTrigger("CloseGate");
+        yield return new WaitForSeconds(2);
+        player.gameObject.GetComponent<PlayerMovementGrappling>().ManualJumpScare();
+
     }
 }
