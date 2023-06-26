@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -19,6 +20,7 @@ public class ActivateUI : MonoBehaviour
     public AudioSource biden;
     public AudioSource menuSound1;
     public AudioSource menuSound2;
+    public AudioMixer mix;
     public GameObject otherUI;
     void Start()
     {
@@ -38,11 +40,12 @@ public class ActivateUI : MonoBehaviour
             previousvolume1 = source1.volume;
             previousvolume2 = source2.volume;
             //source1.Pause();
-            source2.Pause();
+            //source2.Pause();
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             //volume.GetComponent<DepthOfField>().active = true;
+            mix.SetFloat("Lowpass Simple", 200f);
             previousSens = cam.GetComponent<CustomizableCamera>().sensitivity;
             cam.GetComponent<CustomizableCamera>().sensitivity = 0;
             headBob.GetComponent<HeadBob>().enabled = false;
@@ -60,8 +63,7 @@ public class ActivateUI : MonoBehaviour
             pauseMenu.SetActive(false);
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
-            //source1.Play();
-            source2.Play();
+            mix.SetFloat("Lowpass Simple", 20000f);
             Cursor.visible = false;
             cam.GetComponent<CustomizableCamera>().enabled = true;
             cam.GetComponent<CustomizableCamera>().sensitivity = previousSens;

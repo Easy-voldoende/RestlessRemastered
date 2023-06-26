@@ -46,7 +46,7 @@ public class JumpScare : MonoBehaviour
             {
                 if (angleToScare <= 60 && !jumpscareActivated)
                 {
-                    PlayOnce(jumpscareAudioSource, Random.Range(1.1f, 1.3f));
+                    PlayOnce(jumpscareAudioSource, Random.Range(1f, 1f));
                     StartCoroutine(nameof(Scare));
                     jumpscareActivated = true;
                 }
