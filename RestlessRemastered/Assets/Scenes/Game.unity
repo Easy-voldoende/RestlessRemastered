@@ -14,11 +14,11 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.02
-  m_LinearFogStart: 0
+  m_LinearFogStart: 10
   m_LinearFogEnd: 100
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
@@ -3767,6 +3767,7 @@ MonoBehaviour:
   manual: 0
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -15732,11 +15733,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bobbingSpeed: 0
-  bobbingAmount: 0.05
+  bobbingAmount: 0.03
   player: {fileID: 7401499803763220926}
   horizontal: 0
   vertical: 0
-  speed: 0.02
+  speed: 0.035
   isCutscene: 0
 --- !u!95 &1280921454
 Animator:
@@ -28455,6 +28456,7 @@ MonoBehaviour:
   manual: 0
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -47871,7 +47873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d64e6e62a0fe4ea02ff8a07c932af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderValue: 0
+  sliderValue: 0.999
   spinSpeed: 600
   handle: {fileID: 3420985877429996150}
   isPlaying: 0
@@ -47880,15 +47882,16 @@ MonoBehaviour:
   sfxSlider: {fileID: 3420985876959075721}
   musicSlider: {fileID: 3420985876547165532}
   ambientSlider: {fileID: 3420985877036884900}
-  volumeValue: 0
+  volumeValue: 0.999
   volumeText: {fileID: 3420985877372921239}
   boogersounds:
   - {fileID: 3420985876477623390}
   - {fileID: 3420985877628490842}
   - {fileID: 3420985876966030220}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
+  isMainGame: 1
+  i: 0
 --- !u!224 &3420985876604800438
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48480,7 +48483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d64e6e62a0fe4ea02ff8a07c932af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderValue: 0
+  sliderValue: 0.999
   spinSpeed: 600
   handle: {fileID: 3420985877797308533}
   isPlaying: 0
@@ -48489,15 +48492,16 @@ MonoBehaviour:
   sfxSlider: {fileID: 3420985876959075721}
   musicSlider: {fileID: 3420985876547165532}
   ambientSlider: {fileID: 3420985877036884900}
-  volumeValue: 0
+  volumeValue: 0.999
   volumeText: {fileID: 3420985878134410837}
   boogersounds:
   - {fileID: 3420985876477623390}
   - {fileID: 3420985877628490842}
   - {fileID: 3420985876966030220}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
+  isMainGame: 1
+  i: 0
 --- !u!224 &3420985876959075727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48534,7 +48538,7 @@ GameObject:
   - component: {fileID: 3420985876966030221}
   - component: {fileID: 3420985876966030220}
   m_Layer: 5
-  m_Name: Sound1 (2)
+  m_Name: SOund3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48875,8 +48879,9 @@ MonoBehaviour:
   - {fileID: 3420985877628490842}
   - {fileID: 3420985876966030220}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
+  isMainGame: 1
+  i: 0
 --- !u!224 &3420985877036884922
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49998,7 +50003,7 @@ GameObject:
   - component: {fileID: 3420985877628490843}
   - component: {fileID: 3420985877628490842}
   m_Layer: 5
-  m_Name: Sound1 (1)
+  m_Name: Sound2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50014,7 +50019,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1017292057079682506, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 98e4be6f8241b484d995fe245c9602df, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c14b2452f83b4974f9677ec72d6445b2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -55144,6 +55149,7 @@ MonoBehaviour:
   manual: 0
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -57508,6 +57514,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   grappleFov: 95
   orientation: {fileID: 7401499803634251509}
+  died: 0
   headBob: {fileID: 0}
   curWalkingSurface: 
   shadowPrefab: {fileID: 0}
@@ -58760,6 +58767,7 @@ MonoBehaviour:
   manual: 0
   audioMixer: {fileID: 24100000, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
   shadowPrefab: {fileID: 6083917459202418200, guid: 9503f0e194d020a44b24b05029f9bf8e, type: 3}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

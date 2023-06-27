@@ -24,7 +24,7 @@ public class CheckForLock : MonoBehaviour
     }
     public IEnumerator FlashLightUI()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(12);
         UI.GetComponent<Animator>().SetTrigger("Text");
         text.text = "Press 'F' to activate your flashlight";
     }

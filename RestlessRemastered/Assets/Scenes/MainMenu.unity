@@ -12287,6 +12287,7 @@ GameObject:
   - component: {fileID: 1084065868}
   - component: {fileID: 1084065870}
   - component: {fileID: 1084065869}
+  - component: {fileID: 1084065871}
   m_Layer: 5
   m_Name: SoundSliders
   m_TagString: Untagged
@@ -12416,6 +12417,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084065867}
   m_CullTransparentMesh: 1
+--- !u!114 &1084065871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084065867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881bfaf71b43dc4abb648ce55a4c18a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
+  mixerParameters:
+  - Ambient
+  - Master
+  - SFX
 --- !u!1 &1087071719
 GameObject:
   m_ObjectHideFlags: 0
@@ -14056,6 +14074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  jumpscare: {fileID: 0}
   rotationAdjustment: 0
   eyes:
   - {fileID: 1191719945}
@@ -14093,6 +14112,9 @@ MonoBehaviour:
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
   manual: 0
+  audioMixer: {fileID: 0}
+  shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -15705,6 +15727,7 @@ GameObject:
   - component: {fileID: 1520342234}
   - component: {fileID: 1520342236}
   - component: {fileID: 1520342235}
+  - component: {fileID: 1520342237}
   m_Layer: 5
   m_Name: SFXSlider
   m_TagString: Untagged
@@ -15749,7 +15772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d64e6e62a0fe4ea02ff8a07c932af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderValue: 0
+  sliderValue: 0.999
   spinSpeed: 600
   handle: {fileID: 686031136}
   isPlaying: 0
@@ -15758,7 +15781,7 @@ MonoBehaviour:
   sfxSlider: {fileID: 1520342236}
   musicSlider: {fileID: 1650480137}
   ambientSlider: {fileID: 1563552497}
-  volumeValue: 0
+  volumeValue: 0.999
   volumeText: {fileID: 478988032}
   boogersounds:
   - {fileID: 2118857995}
@@ -15767,6 +15790,7 @@ MonoBehaviour:
   soundIndex: 0
   previousIndex: 1
   intCooldown: 3
+  isMainGame: 0
 --- !u!114 &1520342236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15830,6 +15854,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1520342237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520342233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1520342235}
+          m_TargetAssemblyTypeName: SliderSpin, Assembly-CSharp
+          m_MethodName: StopSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1534623674
 GameObject:
   m_ObjectHideFlags: 0
@@ -15917,6 +15970,7 @@ GameObject:
   - component: {fileID: 1563552495}
   - component: {fileID: 1563552497}
   - component: {fileID: 1563552496}
+  - component: {fileID: 1563552498}
   m_Layer: 5
   m_Name: AmbientSlider
   m_TagString: Untagged
@@ -15979,6 +16033,7 @@ MonoBehaviour:
   soundIndex: 0
   previousIndex: 1
   intCooldown: 3
+  isMainGame: 0
 --- !u!114 &1563552497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16042,6 +16097,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1563552498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563552494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1563552496}
+          m_TargetAssemblyTypeName: SliderSpin, Assembly-CSharp
+          m_MethodName: StopSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1576653915
 GameObject:
   m_ObjectHideFlags: 0
@@ -16403,7 +16487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81d64e6e62a0fe4ea02ff8a07c932af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderValue: 0
+  sliderValue: 0.999
   spinSpeed: 600
   handle: {fileID: 915358499}
   isPlaying: 0
@@ -16412,7 +16496,7 @@ MonoBehaviour:
   sfxSlider: {fileID: 1520342236}
   musicSlider: {fileID: 1650480137}
   ambientSlider: {fileID: 1563552497}
-  volumeValue: 0
+  volumeValue: 0.999
   volumeText: {fileID: 824732866}
   boogersounds:
   - {fileID: 2118857995}
@@ -16421,6 +16505,7 @@ MonoBehaviour:
   soundIndex: 0
   previousIndex: 1
   intCooldown: 3
+  isMainGame: 0
 --- !u!114 &1650480140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33895,6 +33980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  jumpscare: {fileID: 0}
   rotationAdjustment: 0
   eyes:
   - {fileID: 1966242331557106157}
@@ -33932,6 +34018,9 @@ MonoBehaviour:
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
   manual: 0
+  audioMixer: {fileID: 0}
+  shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

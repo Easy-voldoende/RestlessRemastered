@@ -36,7 +36,7 @@ public class HeadBob : MonoBehaviour
         }
         else
         {
-            bobbingSpeed = 0.03f;
+            bobbingSpeed = 0.035f;  
         }
         // Calculate the vertical position of the head based on a sine wave
         float waveslice = 0.0f;

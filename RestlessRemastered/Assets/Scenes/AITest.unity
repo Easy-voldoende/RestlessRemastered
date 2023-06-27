@@ -15040,7 +15040,7 @@ AudioSource:
   m_GameObject: {fileID: 1247596828268330301}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7018244060756085278, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
   m_audioClip: {fileID: 8300000, guid: 873992e561f05a4409bea397c7855ff1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
@@ -26311,6 +26311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canRoam: 0
+  jumpscare: {fileID: 0}
   rotationAdjustment: 0
   eyes:
   - {fileID: 1105408757589353698}
@@ -26348,6 +26349,9 @@ MonoBehaviour:
   origin: {x: -8, y: -4, z: -17}
   focus: {fileID: 0}
   manual: 0
+  audioMixer: {fileID: 0}
+  shadowPrefab: {fileID: 0}
+  test: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -26436,7 +26440,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 15332cb90e922844191c6caa2244def8, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.498
   m_Pitch: 1
   Loop: 0

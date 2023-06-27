@@ -45,7 +45,7 @@ public class ActivateUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             //volume.GetComponent<DepthOfField>().active = true;
-            mix.SetFloat("Lowpass Simple", 200f);
+            mix.SetFloat("Lowpass Simple", 100f);
             previousSens = cam.GetComponent<CustomizableCamera>().sensitivity;
             cam.GetComponent<CustomizableCamera>().sensitivity = 0;
             headBob.GetComponent<HeadBob>().enabled = false;
@@ -65,7 +65,6 @@ public class ActivateUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             mix.SetFloat("Lowpass Simple", 20000f);
             Cursor.visible = false;
-            cam.GetComponent<CustomizableCamera>().enabled = true;
             cam.GetComponent<CustomizableCamera>().sensitivity = previousSens;
             headBob.GetComponent<HeadBob>().enabled = true;
             //volume.GetComponent<DepthOfField>().active = false;

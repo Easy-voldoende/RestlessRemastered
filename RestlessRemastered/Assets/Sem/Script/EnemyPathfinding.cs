@@ -133,7 +133,7 @@ public class EnemyPathfinding : MonoBehaviour
                 anim.SetInteger("State", shadowState);
                 target = player.position;
                 agent.SetDestination(target);
-                if (Vector3.Distance(myPos.position, player.position) < 3f)
+                if (Vector3.Distance(myPos.position, player.position) < 4f)
                 {
                     Debug.Log("You died");
                     if(sceneStarted == false)
@@ -217,7 +217,7 @@ public class EnemyPathfinding : MonoBehaviour
         anim.SetTrigger("Died");
 
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
 
 
     }
@@ -232,13 +232,20 @@ public class EnemyPathfinding : MonoBehaviour
         return navHit.position;
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Wood" && state == EnemyState.Roaming)
+        {
+            target = RandomNavSphere(origin, roamRadius, -1);
+            agent.SetDestination(target);
+        }
+    }
     public float detectionRange;
     public float detectionAngle;
     public RaycastHit hit;
     public void Detect()
     {
-        if (Vector3.Distance(transform.position, player.position) < 4)
+        if (Vector3.Distance(transform.position, player.position) < 7)
         {
             state = EnemyState.Chasing;
         }

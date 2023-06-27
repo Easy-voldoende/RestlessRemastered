@@ -83,16 +83,17 @@ public class OptionsMenuScript : MonoBehaviour
     public void OptionsBack()
     {
         PlayOnce(aud2);
+        ui.menuSound1.Play();
         ui.otherUI.SetActive(true);
         subMenus[0].SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        ui.cam.GetComponent<CustomizableCamera>().enabled = true;
         ui.headBob.GetComponent<HeadBob>().enabled = true;
         ui.cam.GetComponent<CustomizableCamera>().sensitivity = ui.previousSens;
+        ui.mix.SetFloat("Lowpass Simple", 20000);
         ui.menuOpen = false;
         //ui.source1.Play();
-        ui.source2.Play();
+        //ui.source2.Play();
         ui.biden.Play();
         Time.timeScale = 1.0f;
     }
@@ -100,6 +101,7 @@ public class OptionsMenuScript : MonoBehaviour
     public void ReturnToMain()
     {
         Time.timeScale = 1;
+        
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(0);

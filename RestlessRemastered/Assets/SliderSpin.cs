@@ -27,12 +27,15 @@ public class SliderSpin : MonoBehaviour
     const string MIXER_AMBIENT = "Ambient";
     const string MIXER_SFX = "SFX";
     public int soundIndex;
-    public int previousIndex;
     public float intCooldown = 3;
+    public bool isMainGame;
+    public int i;
+    private int previousIndex = -1;
 
     private void Start()
     {
         slider = GetComponent<Slider>();
+        LoadValues();
     }
     public void Awake()
     {
@@ -45,16 +48,19 @@ public class SliderSpin : MonoBehaviour
     {
         mixer.SetFloat(MIXER_MASTER, Mathf.Log10(value) * 20);
         isPlaying = true;
+        SaveVolumeButton();
     }
     public void SetAmbientVolume(float value)
     {
         mixer.SetFloat(MIXER_AMBIENT, Mathf.Log10(value) * 20);
         isPlaying = true;
+        SaveVolumeButton();
     }
     public void SetSFXVolume(float value)
     {
         mixer.SetFloat(MIXER_SFX, Mathf.Log10(value) * 20);
         isPlaying = true;
+        SaveVolumeButton();
 
     }
     private void Update()
@@ -66,61 +72,75 @@ public class SliderSpin : MonoBehaviour
         volumeText.GetComponent<TextMeshProUGUI>().text = actualValue.ToString("F0");
         Vector3 rot = new Vector3(0, 0, sliderValue * -spinSpeed);
         handle.GetComponent<RectTransform>().localEulerAngles = rot;
+
         
-        if(isPlaying == true)
+        if (isPlaying == true && Input.GetMouseButton(0))
         {
-            PlaySound(boogersounds[soundIndex]);
+            if (isPlaying && Input.GetMouseButton(0))
+            {
+                if (i != previousIndex)
+                {
+                    previousIndex = i;
+                    PlaySound(boogersounds[i]);
+                    i += 1;
+                    if (i > boogersounds.Length - 1)
+                    {
+                        i = 0;
+                    }
+                }
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             StopSound();
         }
-        NewInt();
-    }
-    public void NewInt()
-    {
-        //intCooldown -= 1 * Time.deltaTime;
-        //if (intCooldown <= 0 && soundIndex ==0)
-        //{
-
-        //    soundIndex = 1;
-        //    intCooldown = 3;
-        //}
-
-        //if(intCooldown <=0 && soundIndex == 1)
-        //{
-        //    soundIndex = 2;
-        //    intCooldown = 3;
-        //}
-        //if (intCooldown <= 0 && soundIndex == 2)
-        //{
-        //    soundIndex = 0;
-        //    intCooldown = 3;
-        //}
-
+        
     }
     public void SaveVolumeButton()
     {
-        float volumeValue = slider.value;
-        PlayerPrefs.SetFloat("VolumeValue", volumeValue);
-        LoadValues();
+        if(gameObject.name == "AmbientSlider")
+        {
+            PlayerPrefs.SetFloat("AmbientSlider",slider.value);
+        }
+        if (gameObject.name == "MusicSlider")
+        {
+            PlayerPrefs.SetFloat("MusicValue", slider.value);
+        }
+        if (gameObject.name == "SFXSlider")
+        {
+            PlayerPrefs.SetFloat("SFXSlider",slider.value);
+        }
     }
 
     public void LoadValues()
     {
-        float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
-        slider.value = volumeValue;
-        AudioListener.volume = volumeValue;
+        if(isMainGame == true)
+        {
+            if (gameObject.name == "MusicSlider")
+            {
+                slider = GetComponent<Slider>();
+                slider.value = PlayerPrefs.GetFloat("MusicValue");
+            }
+            if (gameObject.name == "AmbientSlider")
+            {
+                slider = GetComponent<Slider>();
+                slider.value = PlayerPrefs.GetFloat("AmbientSlider");
+            }
+            if (gameObject.name == "SFXSlider")
+            {
+                slider = GetComponent<Slider>();
+                slider.value = PlayerPrefs.GetFloat("SFXSlider");
+
+            }
+        }
+       
+        
     }
 
 
     public void PlaySound(AudioSource source)
     {
-        if (boogersounds[previousIndex].isPlaying == true)
-        {
-            boogersounds[previousIndex].Stop();
-        }
 
         if (source.isPlaying == false)
         {

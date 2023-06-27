@@ -232,7 +232,7 @@ public class PlayerMovementGrappling : MonoBehaviour
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
             GetComponent<Rigidbody>().mass = mass;
-            headBob.bobbingAmount = 0.05f;
+            headBob.bobbingAmount = 0.025f;
         }
 
         // Mode - Walking
@@ -241,7 +241,7 @@ public class PlayerMovementGrappling : MonoBehaviour
             state = MovementState.walking;
             moveSpeed = walkSpeed;
             GetComponent<Rigidbody>().mass = mass;
-            headBob.bobbingAmount = 0.05f;
+            headBob.bobbingAmount = 0.025f;
         }
 
         // Mode - Air
