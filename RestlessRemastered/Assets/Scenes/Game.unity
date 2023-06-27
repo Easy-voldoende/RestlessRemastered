@@ -3768,6 +3768,8 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
   test: 0
+  spins: []
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -16099,7 +16101,7 @@ Transform:
   m_GameObject: {fileID: 1300960529}
   m_LocalRotation: {x: -0, y: 0.02862178, z: -0, w: 0.99959034}
   m_LocalPosition: {x: 175.98532, y: -0.0069999695, z: 434.47577}
-  m_LocalScale: {x: 1.5745, y: 1.5745, z: 1.5745}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 394370330}
@@ -17865,7 +17867,7 @@ Transform:
   m_GameObject: {fileID: 1428104875}
   m_LocalRotation: {x: -0, y: -0.35402802, z: -0, w: 0.9352349}
   m_LocalPosition: {x: 209.27533, y: -0.0069999695, z: 491.92578}
-  m_LocalScale: {x: 1.5745001, y: 1.5745, z: 1.5745001}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1179984470}
@@ -28457,6 +28459,8 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
   test: 0
+  spins: []
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -47123,6 +47127,7 @@ MonoBehaviour:
   aud: {fileID: 0}
   aud2: {fileID: 0}
   particle1: {fileID: 0}
+  spins: []
   particle2: {fileID: 0}
   light: {fileID: 0}
   image: {fileID: 0}
@@ -55150,6 +55155,8 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
   test: 0
+  spins: []
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -57518,6 +57525,7 @@ MonoBehaviour:
   headBob: {fileID: 0}
   curWalkingSurface: 
   shadowPrefab: {fileID: 0}
+  canJumpScare: 1
   state: 0
   freeze: 0
 --- !u!95 &7725004338951610645
@@ -58768,6 +58776,11 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 7b2ef73675ac9994d9639c6e53f1f564, type: 2}
   shadowPrefab: {fileID: 6083917459202418200, guid: 9503f0e194d020a44b24b05029f9bf8e, type: 3}
   test: 0
+  spins:
+  - {fileID: 3420985876547165534}
+  - {fileID: 3420985876959075726}
+  - {fileID: 3420985877036884901}
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

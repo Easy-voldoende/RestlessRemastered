@@ -7,6 +7,7 @@ using UnityEngine.Animations;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class EnemyPathfinding : MonoBehaviour
 {
@@ -50,6 +51,8 @@ public class EnemyPathfinding : MonoBehaviour
     public AudioMixer audioMixer;
     public GameObject shadowPrefab;
     public bool test = false;
+    public SliderSpin[] spins;
+    public bool isMain;
     public enum EnemyState
     {
         Roaming,
@@ -100,7 +103,10 @@ public class EnemyPathfinding : MonoBehaviour
                 if(chasing == true)
                 {
                     lookState = 1;
-
+                    foreach (GameObject eyes in eyes)
+                    {
+                        eyes.GetComponent<LensFlareComponentSRP>().enabled = false;
+                    }
                     shadowState = 2;
                     anim.SetInteger("State", shadowState);
                     nav.speed = 0;
@@ -156,36 +162,43 @@ public class EnemyPathfinding : MonoBehaviour
     }
     public IEnumerator DeathScene()
     {
-        foreach(GameObject eye in eyes)
+        if(isMain == true)
         {
-            eye.GetComponent<LensFlareComponentSRP>().scale = 3;
-        }
-        audioMixer.SetFloat("Ambient", -80);
-        if(jumpscare.isPlaying == false)
-        {
-            jumpscare.Play();
-        }
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        cameraObj.GetComponent<CustomizableCamera>().died = true;
-        playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        playerObj.gameObject.transform.position = myPos.position;
-        playerObj.gameObject.transform.rotation = myPos.rotation;
-        playerObj.gameObject.transform.LookAt(focus.transform.position);
-        GetComponent<CameraShake>().shakeDuration = 10f;
-        GetComponent<CameraShake>().shakeMagnitude = 0.1f;
-        
-        GetComponent<CameraShake>().dampingSpeed = 0.02f;
+            foreach (GameObject eye in eyes)
+            {
+                eye.GetComponent<LensFlareComponentSRP>().scale = 3;
+            }
+            audioMixer.SetFloat("Ambient", -80);
+            if (jumpscare.isPlaying == false)
+            {
+                jumpscare.Play();
+            }
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            cameraObj.GetComponent<CustomizableCamera>().died = true;
+            playerObj.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            playerObj.gameObject.transform.position = myPos.position;
+            playerObj.gameObject.transform.rotation = myPos.rotation;
+            playerObj.gameObject.transform.LookAt(focus.transform.position);
+            GetComponent<CameraShake>().shakeDuration = 10f;
+            GetComponent<CameraShake>().shakeMagnitude = 0.1f;
 
-        transform.rotation = enemyPos.rotation;
-        NavMeshAgent nav = GetComponent<NavMeshAgent>();
-        nav.acceleration = 100000;
-        nav.speed = 0;
-        nav.enabled = false;
-        cameraAnim.SetTrigger("Died");
-        anim.SetTrigger("Died");
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(3);
+            GetComponent<CameraShake>().dampingSpeed = 0.02f;
+
+            transform.rotation = enemyPos.rotation;
+            NavMeshAgent nav = GetComponent<NavMeshAgent>();
+            nav.acceleration = 100000;
+            nav.speed = 0;
+            nav.enabled = false;
+            cameraAnim.SetTrigger("Died");
+            anim.SetTrigger("Died");
+            foreach (SliderSpin spin in spins)
+            {
+                spin.SaveVolumeButton();
+            }
+            yield return new WaitForSeconds(2);
+            SceneManager.LoadScene(3);
+        }
         
 
     }
@@ -215,7 +228,10 @@ public class EnemyPathfinding : MonoBehaviour
         //shadowPrefab.transform.rotation = enemyPos.rotation;        
         cameraAnim.SetTrigger("Died");
         anim.SetTrigger("Died");
-
+        foreach (SliderSpin spin in spins)
+        {
+            spin.SaveVolumeButton();
+        }        
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(3);
 

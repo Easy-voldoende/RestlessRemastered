@@ -11,6 +11,7 @@ public class MainMenuScript : MonoBehaviour
     public AudioSource aud;
     public AudioSource aud2;
     public ParticleSystem particle1;
+    public SliderSpin[] spins;
     public ParticleSystem particle2;
     public Light light;
     public Image image;
@@ -45,6 +46,10 @@ public class MainMenuScript : MonoBehaviour
         canMuteSources = true;
         yield return new WaitForSeconds(2.5f);
         screen.enabled = true;
+        foreach(SliderSpin spin in spins)
+        {
+            spin.SaveVolumeButton();
+        }
         yield return new WaitForSeconds(Random.Range(3, 5));
         SceneManager.LoadSceneAsync(1);
         

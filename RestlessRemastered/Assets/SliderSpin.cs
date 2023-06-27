@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SliderSpin : MonoBehaviour
 {
@@ -83,7 +84,7 @@ public class SliderSpin : MonoBehaviour
                     previousIndex = i;
                     PlaySound(boogersounds[i]);
                     i += 1;
-                    if (i > boogersounds.Length - 1)
+                    if (i > boogersounds.Length - 1)    
                     {
                         i = 0;
                     }
@@ -101,14 +102,20 @@ public class SliderSpin : MonoBehaviour
     {
         if(gameObject.name == "AmbientSlider")
         {
+            slider = GetComponent<Slider>();
             PlayerPrefs.SetFloat("AmbientSlider",slider.value);
+            mixer.SetFloat(MIXER_AMBIENT, Mathf.Log10(slider.value) * 20);
         }
         if (gameObject.name == "MusicSlider")
         {
+            slider = GetComponent<Slider>();
             PlayerPrefs.SetFloat("MusicValue", slider.value);
+            mixer.SetFloat(MIXER_MASTER, Mathf.Log10(slider.value) * 20);
         }
         if (gameObject.name == "SFXSlider")
         {
+            slider = GetComponent<Slider>();
+            mixer.SetFloat(MIXER_SFX, Mathf.Log10(slider.value) * 20);
             PlayerPrefs.SetFloat("SFXSlider",slider.value);
         }
     }
@@ -121,16 +128,22 @@ public class SliderSpin : MonoBehaviour
             {
                 slider = GetComponent<Slider>();
                 slider.value = PlayerPrefs.GetFloat("MusicValue");
+                mixer.SetFloat(MIXER_MASTER, Mathf.Log10(slider.value) * 20);
+                
             }
             if (gameObject.name == "AmbientSlider")
             {
                 slider = GetComponent<Slider>();
                 slider.value = PlayerPrefs.GetFloat("AmbientSlider");
+                mixer.SetFloat(MIXER_AMBIENT, Mathf.Log10(slider.value) * 20);
+                
             }
             if (gameObject.name == "SFXSlider")
             {
                 slider = GetComponent<Slider>();
                 slider.value = PlayerPrefs.GetFloat("SFXSlider");
+                mixer.SetFloat(MIXER_SFX, Mathf.Log10(slider.value) * 20);
+                
 
             }
         }

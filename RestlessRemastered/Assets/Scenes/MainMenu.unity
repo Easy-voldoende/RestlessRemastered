@@ -1420,7 +1420,7 @@ GameObject:
   - component: {fileID: 200798726}
   - component: {fileID: 199851228}
   m_Layer: 0
-  m_Name: Fire_Orange_BigFire
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14115,6 +14115,8 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
   test: 0
+  spins: []
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30
@@ -15788,9 +15790,9 @@ MonoBehaviour:
   - {fileID: 586423567}
   - {fileID: 1500033753}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
   isMainGame: 0
+  i: 0
 --- !u!114 &1520342236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16031,9 +16033,9 @@ MonoBehaviour:
   - {fileID: 586423567}
   - {fileID: 1500033753}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
   isMainGame: 0
+  i: 0
 --- !u!114 &1563552497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16503,9 +16505,9 @@ MonoBehaviour:
   - {fileID: 586423567}
   - {fileID: 1500033753}
   soundIndex: 0
-  previousIndex: 1
   intCooldown: 3
   isMainGame: 0
+  i: 0
 --- !u!114 &1650480140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18708,6 +18710,10 @@ MonoBehaviour:
   aud: {fileID: 1024625479}
   aud2: {fileID: 931194453}
   particle1: {fileID: 200798726}
+  spins:
+  - {fileID: 1650480139}
+  - {fileID: 1520342235}
+  - {fileID: 1563552496}
   particle2: {fileID: 2123489768}
   light: {fileID: 1936482570}
   image: {fileID: 322055073}
@@ -24966,7 +24972,7 @@ GameObject:
   - component: {fileID: 2123489768}
   - component: {fileID: 2123314060}
   m_Layer: 0
-  m_Name: Smoke_Chimny
+  m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34021,6 +34027,8 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   shadowPrefab: {fileID: 0}
   test: 0
+  spins: []
+  isMain: 0
   state: 0
   lookingAtPlayer: 0
   detectionRange: 30

@@ -15,6 +15,8 @@ public class CheckForLock : MonoBehaviour
     public GameObject UI;
     public TextMeshProUGUI text;
     public bool hidden;
+    public float maxCooldown = 4;
+    public float cooldown;
 
     public GameObject player;
     RaycastHit hit;
@@ -30,6 +32,7 @@ public class CheckForLock : MonoBehaviour
     }
     void Update()
     {
+        cooldown -= 1 * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit,3f))
@@ -46,8 +49,12 @@ public class CheckForLock : MonoBehaviour
                     {
                         AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
                         PlayOnce(door, Random.Range(0.9f, 1.1f));
-                        text.text = "Find something to open the noor with...";
-                        UI.GetComponent<Animator>().SetTrigger("Text");
+                        if (cooldown <= 0)
+                        {
+                            text.text = "Find something to open the noor with...";
+                            UI.GetComponent<Animator>().SetTrigger("Text");
+                            cooldown = maxCooldown;
+                        }
                     }
                 }
                 if (hit.transform.CompareTag("Hide") && hidden ==false)

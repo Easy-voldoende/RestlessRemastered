@@ -88,7 +88,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     Rigidbody rb;
     float mass;
     public GameObject shadowPrefab;
-
+    public bool canJumpScare;
     public MovementState state;
     public enum MovementState
     {
@@ -118,7 +118,7 @@ public class PlayerMovementGrappling : MonoBehaviour
     RaycastHit hitcast;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && canJumpScare == true)
         {
             ManualJumpScare();
 
@@ -193,7 +193,7 @@ public class PlayerMovementGrappling : MonoBehaviour
         if (Input.GetKeyDown(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            rb.AddForce(Vector3.down * 15f, ForceMode.Impulse);
         }
 
         // stop crouch
@@ -222,10 +222,7 @@ public class PlayerMovementGrappling : MonoBehaviour
             GetComponent<Rigidbody>().mass = mass;
             moveSpeed = crouchSpeed;
         }
-        if (Input.GetKeyDown(crouchKey))
-        {
-            rb.AddForce(Vector3.down* 5f, ForceMode.Impulse);
-        }
+        
         // Mode - Sprinting
         else if (grounded && Input.GetKey(sprintKey))
         {
