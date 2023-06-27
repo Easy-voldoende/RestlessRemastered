@@ -16,24 +16,18 @@ public class SpawnRandomly : MonoBehaviour
     {
         if(objectsSpawned == 0)
         {
-            spawnSpot = Random.Range(0, spawnObjects.Length);
-            
-            Instantiate(ScrewDriver, spawnObjects[Random.Range(0,spawnSpot)].transform);
+            spawnSpot = 9;//Random.Range(0, spawnObjects.Length);
+            Instantiate(ScrewDriver, spawnObjects[spawnSpot].transform);
             objectsSpawned = 1;
             usedSpot = spawnSpot;
             spawnSpot = Random.Range(0, spawnObjects.Length);
-            if(spawnSpot == usedSpot)
+            
+            if (spawnSpot == usedSpot)
             {
-                spawnSpot = Random.Range(0, spawnObjects.Length);
+                spawnSpot = usedSpot+1;
             }
-            Instantiate(Pin, spawnObjects[Random.Range(0,spawnSpot)].transform);
+            Instantiate(Pin, spawnObjects[spawnSpot].transform);
             objectsSpawned = 2;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

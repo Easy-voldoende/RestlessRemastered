@@ -6,6 +6,7 @@ using UnityEngine;
 public class CheckForLock : MonoBehaviour
 {
     public GameObject maincam;
+    public LayerMask layerMask;
     public GameObject mainHolder;
     public Transform lastPos;
     public Vector3 lastPosVector;
@@ -35,7 +36,7 @@ public class CheckForLock : MonoBehaviour
         cooldown -= 1 * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit,3f))
+            if(Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit,3f, layerMask))
             {
                 if (hit.transform.gameObject.CompareTag("Lock"))
                 {
@@ -71,7 +72,7 @@ public class CheckForLock : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f))
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
             {
                 if (hit.transform.gameObject.CompareTag("Pin"))
                 {
@@ -83,7 +84,7 @@ public class CheckForLock : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f))
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
             {
                 if (hit.transform.gameObject.CompareTag("Screwdriver"))
                 {
@@ -95,7 +96,7 @@ public class CheckForLock : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f))
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
             {
                 if (hit.transform.gameObject.CompareTag("Screen"))
                 {
