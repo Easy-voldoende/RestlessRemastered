@@ -19,6 +19,8 @@ TagManager:
   - Hide
   - Screen
   - SlotHanger
+  - GateKey
+  - Curtain
   layers:
   - Default
   - TransparentFX

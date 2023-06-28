@@ -113,6 +113,13 @@ public class CheckForLock : MonoBehaviour
 
 
                 }
+                if (hit.transform.gameObject.CompareTag("Curtain"))
+                {
+                    hit.transform.gameObject.GetComponentInParent<Animator>().SetTrigger("Curtain");
+
+                }
+
+
             }
         }
 
