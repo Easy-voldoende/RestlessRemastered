@@ -6,6 +6,7 @@ public class AnimationStart : MonoBehaviour
 {
     public Animator animator;
     public MeshRenderer meshRenderer;
+    public Light light;
     public CustomizableCamera cameraScript;
     public PlayerMovementGrappling pm;
     public bool b = true;
@@ -34,6 +35,7 @@ public class AnimationStart : MonoBehaviour
     {
         yield return new WaitForSeconds(6.6f);
         cameraScript.enabled = true;
+        light.enabled = true;
         meshRenderer.enabled = true;
         b = false;
         animator.SetBool("StartOfMain", b);
