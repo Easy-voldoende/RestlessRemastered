@@ -64,23 +64,9 @@ public class EnemyPathfinding : MonoBehaviour
     public EnemyState state;
     public bool lookingAtPlayer;
     
-    public IEnumerator NewTarget()
-    {
-        yield return new WaitForSeconds(Random.Range(5, 10));
-        target = RandomNavSphere(origin, roamRadius, -1);
-        agent.SetDestination(target);
-        StartCoroutine(SetNew());
 
-    }
-    public IEnumerator SetNew()
-    {
-        yield return new WaitForSeconds(Random.Range(5, 10));
-        StartCoroutine(NewTarget());
-
-    }
     private void Start()
     {
-        StartCoroutine(NewTarget());
         shadowState = 0;
         chasing = false;
         state = EnemyState.Roaming;
@@ -137,7 +123,7 @@ public class EnemyPathfinding : MonoBehaviour
                     nav.speed = walkingSpeed;
                     shadowState = 0;
                     anim.SetInteger("State", shadowState);
-                    if (Vector3.Distance(myPos.position, target) < 4f)
+                    if (Vector3.Distance(myPos.position, target) < 2.5f)
                     {
                         target = RandomNavSphere(origin, roamRadius, -1);
                         agent.SetDestination(target);
