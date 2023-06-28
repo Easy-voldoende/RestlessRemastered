@@ -498,12 +498,12 @@ public class PlayerMovementGrappling : MonoBehaviour
     }
     public void ChangeSpeed()
     {
-        if(sprintSpeed == 9.45f)
+        if(sprintSpeed == 10.6f)
         {
-            sprintSpeed = 20;
-        }else if(sprintSpeed == 20)
+            sprintSpeed = 30;
+        }else if(sprintSpeed == 30)
         {
-            sprintSpeed = 9.45f;
+            sprintSpeed = 10.6f;
         }
     }
     public IEnumerator SecondStep()
