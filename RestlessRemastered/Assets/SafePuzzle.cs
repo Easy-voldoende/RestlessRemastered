@@ -7,6 +7,7 @@ using UnityEngine;
 public class SafePuzzle : MonoBehaviour
 {
     public AudioSource source;
+    public TextMeshProUGUI[] mannequins;
     public GameObject ai;
     public Animator door;
     public AudioSource source2;
@@ -35,6 +36,7 @@ public class SafePuzzle : MonoBehaviour
             int digit = Random.Range(1, 9);
             
             correctCombination[i] = digit;
+            mannequins[i].text = digit.ToString();
         }
         text.text = correctCombination[0].ToString() + correctCombination[1].ToString() + correctCombination[2].ToString() + correctCombination[3].ToString();
     }
@@ -101,6 +103,6 @@ public class SafePuzzle : MonoBehaviour
         Debug.Log("Open the noor");
         PlayOnce(source, 1.4f);
         door.SetTrigger("Door");
-        numbersEntered = 0;
+        numbersEntered = 0;     
     }
 }

@@ -21,11 +21,12 @@ public class SpawnRandomly : MonoBehaviour
             objectsSpawned = 1;
             usedSpot = spawnSpot;
             spawnSpot = Random.Range(0, spawnObjects.Length);
-            
-            if (spawnSpot == usedSpot)
+            if(spawnSpot == usedSpot)
             {
-                spawnSpot = usedSpot+1;
+                spawnSpot -= 2;
             }
+            
+            
             Instantiate(Pin, spawnObjects[spawnSpot].transform);
             objectsSpawned = 2;
         }
