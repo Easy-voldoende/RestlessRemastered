@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CheckForLock : MonoBehaviour
@@ -19,7 +18,7 @@ public class CheckForLock : MonoBehaviour
     public bool hidden;
     public float maxCooldown = 4;
     public float cooldown;
-    public bool gotKey;
+
     public GameObject player;
     RaycastHit hit;
     void Start()
@@ -39,12 +38,6 @@ public class CheckForLock : MonoBehaviour
         {
             if(Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit,3f, layerMask))
             {
-                if (hit.transform.gameObject.CompareTag("Pin"))
-                {
-                    pickedUpPin = true;
-                    hit.transform.gameObject.SetActive(false);
-                }
-
                 if (hit.transform.gameObject.CompareTag("Lock"))
                 {
                     LockPick pick = GameObject.Find("LockPickObj").GetComponent<LockPick>();
@@ -57,10 +50,8 @@ public class CheckForLock : MonoBehaviour
                     {
                         AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
                         PlayOnce(door, Random.Range(0.9f, 1.1f));
-                        hit.transform.gameObject.transform.parent.GetComponent<Animator>().SetTrigger("Budge");
                         if (cooldown <= 0)
                         {
-                            
                             text.text = "Find something to open the noor with...";
                             UI.GetComponent<Animator>().SetTrigger("Text");
                             cooldown = maxCooldown;
@@ -76,19 +67,43 @@ public class CheckForLock : MonoBehaviour
                     player.transform.position = hit.transform.gameObject.transform.GetChild(0).transform.position;
 
                 }
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
+            {
+                if (hit.transform.gameObject.CompareTag("Pin"))
+                {
+                    pickedUpPin = true;
+                    hit.transform.gameObject.SetActive(false);
+                }
+            }
+        }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
+            {
                 if (hit.transform.gameObject.CompareTag("Screwdriver"))
                 {
                     pickedUpScrewDriver = true;
                     hit.transform.gameObject.SetActive(false);
                 }
+            }
+        }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Physics.Raycast(maincam.transform.position, maincam.transform.forward, out hit, 3f, layerMask))
+            {
                 if (hit.transform.gameObject.CompareTag("Screen"))
                 {
 
                     TurnOffScreen screen = hit.transform.gameObject.GetComponent<TurnOffScreen>();
 
-                    if (screen.switched == true)
+                    if(screen.switched == true)
                     {
                         screen.switched = false;
                     }
@@ -97,25 +112,10 @@ public class CheckForLock : MonoBehaviour
                         screen.switched = true;
                     }
 
-
-                }
-                if (hit.transform.gameObject.CompareTag("SlotHanger") && gotKey == true)
-                {
-                    hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    GameObject.Find("Hek Gate").GetComponent<Animator>().SetTrigger("OpenGate");
-
-
-                }
-                if (hit.transform.gameObject.CompareTag("GateKey"))
-                {
-                    gotKey = true;
-                    hit.transform.gameObject.SetActive(false);
-
-
+                    
                 }
             }
         }
-
         if (hidden == true && Input.GetKeyDown(KeyCode.Escape))
         {
             //UnHide();
