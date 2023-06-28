@@ -18,7 +18,6 @@ TagManager:
   - Door
   - Hide
   - Screen
-  - SlotHanger
   layers:
   - Default
   - TransparentFX

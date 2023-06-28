@@ -28,12 +28,6 @@ public class MainMenuScript : MonoBehaviour
         subMenus[1].SetActive(false);
         subMenus[2].SetActive(false);
         color.a = 0;
-        foreach(SliderSpin spin in spins)
-        {
-            spin.mixer.SetFloat("Master", Mathf.Log10(1) * 20);
-        }
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
     public void StartGame()
     {
