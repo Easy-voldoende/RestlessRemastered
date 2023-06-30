@@ -46,7 +46,7 @@ public class ActivateUI : MonoBehaviour
             Cursor.visible = true;
             //volume.GetComponent<DepthOfField>().active = true;
             mix.SetFloat("Lowpass Simple", 100f);
-            previousSens = cam.GetComponent<CustomizableCamera>().sensitivity;
+            previousSens = cam.GetComponent<CustomizableCamera>().sensitivity;  
             cam.GetComponent<CustomizableCamera>().sensitivity = 0;
             headBob.GetComponent<HeadBob>().enabled = false;
             pauseMenu.SetActive(true);

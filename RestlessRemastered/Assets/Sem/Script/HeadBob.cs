@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class HeadBob : MonoBehaviour
 {
-    public float bobbingSpeed = 0.1f;    // Speed of the head bobbing
-    public float bobbingAmount = 0.1f;   // Amount of head bobbing
+    public float bobbingSpeed = 0.3f;
+    public float bobbingAmount = 0.25f;
     public GameObject player;
     public float horizontal;
     public float vertical;
@@ -11,13 +11,14 @@ public class HeadBob : MonoBehaviour
     public bool isCutscene;
     private float timer = 0.0f;
     private float midpoint = 0.0f;
-    
+
     private Vector3 originalPosition;
+    public float baseBobbingSpeed;
 
     private void Start()
     {
         originalPosition = transform.localPosition;
-        if(isCutscene == true)
+        if (isCutscene == true)
         {
             midpoint = 0.11f;
         }
@@ -25,30 +26,32 @@ public class HeadBob : MonoBehaviour
         {
             midpoint = 0.8f;
         }
+
+        baseBobbingSpeed = 55;
     }
 
     private void Update()
     {
-
-        if(player != null)
+        if (player != null)
         {
-            bobbingSpeed = player.GetComponent<Rigidbody>().velocity.magnitude * speed;
+            bobbingSpeed = baseBobbingSpeed * player.GetComponent<Rigidbody>().velocity.magnitude * speed;
         }
         else
         {
-            bobbingSpeed = 0.035f;  
+            bobbingSpeed = 0.035f;
         }
-        // Calculate the vertical position of the head based on a sine wave
+
         float waveslice = 0.0f;
+
         if (!isCutscene)
         {
-             horizontal = Input.GetAxis("Horizontal");
-             vertical = Input.GetAxis("Vertical");
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
         }
         else
         {
             horizontal = 1;
-             vertical = 1;
+            vertical = 1;
         }
 
         if (Mathf.Abs(horizontal) == 0 && Mathf.Abs(vertical) == 0)
@@ -57,31 +60,30 @@ public class HeadBob : MonoBehaviour
         }
         else
         {
-            waveslice = Mathf.Sin(timer);
-            timer += bobbingSpeed;
+            float wavesliceSpeed = bobbingSpeed * Time.deltaTime;
+            timer += wavesliceSpeed;
             if (timer > Mathf.PI * 2)
             {
                 timer -= Mathf.PI * 2;
             }
         }
 
-        if (waveslice != 0)
+        if (timer != 0)
         {
+            waveslice = Mathf.Sin(timer);
             float translateChange = waveslice * bobbingAmount;
+
             float totalAxes = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
             totalAxes = Mathf.Clamp(totalAxes, 0.0f, 1.0f);
             translateChange *= totalAxes;
-            
-            // Apply the head bobbing effect
+
             Vector3 localPosition = originalPosition;
             localPosition.y = midpoint + translateChange;
             transform.localPosition = localPosition;
         }
         else
         {
-            // Reset the head position
             transform.localPosition = originalPosition;
         }
     }
-
 }
