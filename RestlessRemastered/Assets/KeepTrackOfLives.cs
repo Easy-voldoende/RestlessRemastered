@@ -11,10 +11,10 @@ public class KeepTrackOfLives : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(nameof(TimesDied));
+        StartCoroutine(nameof(TimesDied)); 
         sceneLoadCount = PlayerPrefs.GetInt(SceneLoadCountKey, 0);
 
-        if (SceneManager.GetActiveScene().name == "Game 1")
+        if (SceneManager.GetActiveScene().name == "CabinScene")
         {
             sceneLoadCount++;
         }

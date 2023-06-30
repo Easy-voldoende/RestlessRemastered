@@ -160,7 +160,10 @@ public class EnemyPathfinding : MonoBehaviour
                 shadowState = 1;
                 anim.SetInteger("State", shadowState);
                 target = player.position;
-                agent.SetDestination(target);
+                if (agent.enabled == true)
+                {
+                    agent.SetDestination(target);
+                }
                 if (Vector3.Distance(myPos.position, player.position) < 4f)
                 {
                     Debug.Log("You died");
@@ -220,7 +223,14 @@ public class EnemyPathfinding : MonoBehaviour
                 spin.SaveVolumeButton();
             }
             yield return new WaitForSeconds(2);
-            SceneManager.LoadScene(3);
+            if(playerObj.GetComponent<KeepTrackOfLives>().sceneLoadCount ==3)
+            {
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                SceneManager.LoadScene(3);
+            }
         }
         
 
