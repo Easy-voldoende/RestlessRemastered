@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using Newtonsoft.Json.Serialization;
 
 public class EnemyPathfinding : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class EnemyPathfinding : MonoBehaviour
     public float distanceToTarget;
     public LayerMask layerMask;
     public Vector3 origin;
-    private int lookState;
+    public int lookState;
     public GameObject focus;
     public bool manual;
     public AudioMixer audioMixer;
@@ -53,6 +54,8 @@ public class EnemyPathfinding : MonoBehaviour
     public bool test = false;
     public SliderSpin[] spins;
     public bool isMain;
+    public int died;
+    public bool canAnimateEye;
     public enum EnemyState
     {
         Roaming,
@@ -80,6 +83,8 @@ public class EnemyPathfinding : MonoBehaviour
     }
     private void Start()
     {
+        lookState = -1;
+        died = PlayerPrefs.GetInt("Died");
         StartCoroutine(NewTarget());
         shadowState = 0;
         chasing = false;
@@ -103,7 +108,10 @@ public class EnemyPathfinding : MonoBehaviour
             GetComponent<EnemyPathfinding>().enabled = false;
             lookState = 0;
         }
-        Ui.SetInteger("LookState", lookState);
+        if(canAnimateEye == true)
+        {
+            Ui.SetInteger("LookState", lookState);
+        }
     }
 
     public void SwitchStates()
@@ -178,6 +186,7 @@ public class EnemyPathfinding : MonoBehaviour
     {
         if(isMain == true)
         {
+            PlayerPrefs.SetInt("Died", died+1);
             foreach (GameObject eye in eyes)
             {
                 eye.GetComponent<LensFlareComponentSRP>().scale = 3;
@@ -278,6 +287,7 @@ public class EnemyPathfinding : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) < 7)
         {
             state = EnemyState.Chasing;
+            canAnimateEye = true;
         }
 
         Vector3 targetDir = playerPos - transform.position;
@@ -297,6 +307,7 @@ public class EnemyPathfinding : MonoBehaviour
                     }
                     Debug.Log("Looking at player");
                     state = EnemyState.Chasing;
+                    canAnimateEye = true;
                     chasing = true;
                     i = 3;
                     lastPlayerPos = player.transform;

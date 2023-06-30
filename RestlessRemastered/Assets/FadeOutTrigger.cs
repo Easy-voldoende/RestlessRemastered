@@ -17,6 +17,7 @@ public class FadeOutTrigger : MonoBehaviour
     public float volume;
     public float maxvolume = 0.999f;
     public Image image;
+    public bool faded;
     void Start()
     {
         color.a = 0;
@@ -32,10 +33,11 @@ public class FadeOutTrigger : MonoBehaviour
             volume = maxvolume - color.a;
             audioMixer.SetFloat("Master",Mathf.Log10(volume)*20);
         }
-        if (color.a >= 0.99f)
+        if (color.a >= 0.99f && faded == false)
         {
-            SceneManager.LoadScene(0);
-            
+            StartCoroutine(GameObject.Find("OptionsFadeOut").GetComponent<LetterFadeIn>().FadeInLetters());
+            StartCoroutine(GameObject.Find("OptionsFadeOut").GetComponent<LetterFadeIn>().FadeInLetters2());
+            faded = true;
 
         }
     }

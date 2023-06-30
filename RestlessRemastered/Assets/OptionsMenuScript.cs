@@ -9,6 +9,7 @@ public class OptionsMenuScript : MonoBehaviour
     public GameObject[] subMenus;
     public AudioSource aud;
     public AudioSource aud2;
+    public AudioSource aud3;
     public ParticleSystem particle1;
     public ParticleSystem particle2;
     public ActivateUI ui;
@@ -101,7 +102,7 @@ public class OptionsMenuScript : MonoBehaviour
     public void ReturnToMain()
     {
         Time.timeScale = 1;
-        
+        PlayOnce(aud3);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(0);
