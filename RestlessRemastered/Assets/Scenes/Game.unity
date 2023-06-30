@@ -54446,7 +54446,7 @@ MonoBehaviour:
     m_Bits: 8
   inFootstepArea: 0
   walkSpeed: 6.3
-  sprintSpeed: 9.45
+  sprintSpeed: 10.6
   gravelFootstepClips:
   - {fileID: 1494433559}
   - {fileID: 1360619512}
