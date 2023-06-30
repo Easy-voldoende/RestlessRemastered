@@ -19,14 +19,12 @@ public class ResolutionManager : MonoBehaviour
         filteredResolutions = new List<Resolution>();
 
         resolutionDropdown.ClearOptions();
-        //this first line is a reference of where to add it in the script
         currentRefreshRate = Screen.currentResolution.refreshRate;
-        //this is the actual loop check
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (!filteredResolutions.Any(x => x.width == resolutions[i].width && x.height == resolutions[i].height))  //check if resolution already exists in list
+            if (!filteredResolutions.Any(x => x.width == resolutions[i].width && x.height == resolutions[i].height))
             {
-                filteredResolutions.Add(resolutions[i]);  //add resolution to list if it doesn't exist yet
+                filteredResolutions.Add(resolutions[i]);
             }
         }
 
