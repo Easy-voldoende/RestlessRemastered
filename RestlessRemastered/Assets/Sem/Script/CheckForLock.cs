@@ -61,7 +61,23 @@ public class CheckForLock : MonoBehaviour
                         if (cooldown <= 0)
                         {
                             
-                            text.text = "Find something to open the noor with...";
+                            text.text = "Find something to open the door with...";
+                            UI.GetComponent<Animator>().SetTrigger("Text");
+                            cooldown = maxCooldown;
+                        }
+                    }
+                }
+
+                if (hit.transform.gameObject.CompareTag("LockedDoor"))
+                {                                        
+                    {
+                        AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
+                        PlayOnce(door, Random.Range(0.9f, 1.1f));
+                        hit.transform.gameObject.transform.parent.GetComponent<Animator>().SetTrigger("Budge");
+                        if (cooldown <= 0)
+                        {
+
+                            text.text = "Find a way to open the door...";
                             UI.GetComponent<Animator>().SetTrigger("Text");
                             cooldown = maxCooldown;
                         }

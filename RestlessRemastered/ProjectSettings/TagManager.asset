@@ -21,6 +21,7 @@ TagManager:
   - SlotHanger
   - GateKey
   - Curtain
+  - LockedDoor
   layers:
   - Default
   - TransparentFX

@@ -9,9 +9,8 @@ public class KeepTrackOfLives : MonoBehaviour
     public int sceneLoadCount = 0;
     public Animator anim;
 
-    private void Start()
+    private void Awake()
     {
-        StartCoroutine(nameof(TimesDied)); 
         sceneLoadCount = PlayerPrefs.GetInt(SceneLoadCountKey, 0);
 
         if (SceneManager.GetActiveScene().name == "CabinScene")
@@ -21,6 +20,7 @@ public class KeepTrackOfLives : MonoBehaviour
 
         PlayerPrefs.SetInt(SceneLoadCountKey, sceneLoadCount);
         PlayerPrefs.Save();
+        StartCoroutine(nameof(TimesDied));
     }
     public IEnumerator TimesDied()
     {

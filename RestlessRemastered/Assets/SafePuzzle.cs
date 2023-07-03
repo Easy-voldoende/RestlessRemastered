@@ -38,7 +38,7 @@ public class SafePuzzle : MonoBehaviour
             correctCombination[i] = digit;
             mannequins[i].text = digit.ToString();
         }
-        text.text = correctCombination[0].ToString() + correctCombination[1].ToString() + correctCombination[2].ToString() + correctCombination[3].ToString();
+        //text.text = correctCombination[0].ToString() + correctCombination[1].ToString() + correctCombination[2].ToString() + correctCombination[3].ToString();
     }
 
     private void Update()

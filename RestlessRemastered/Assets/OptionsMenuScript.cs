@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,12 +14,16 @@ public class OptionsMenuScript : MonoBehaviour
     public ParticleSystem particle1;
     public ParticleSystem particle2;
     public ActivateUI ui;
+    public GameObject blackImage;
     public Light light;
     public Image image;
     public bool canFade;
     public bool canSmoke;
     float speed = 20;
     Color color;
+    public TextMeshProUGUI[] texts;
+    public bool canFadeout;
+    Color colorText;
     private void Start()
     {
 
@@ -48,6 +53,14 @@ public class OptionsMenuScript : MonoBehaviour
     {
         FadeImage();
         Smoke();
+        if(canFadeout == true)
+        {
+            foreach(TextMeshProUGUI text in texts)
+            {
+                colorText.a -= 1 * Time.deltaTime;
+                text.color = colorText;
+            }
+        }
     }
     public void Smoke()
     {
@@ -101,19 +114,41 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void ReturnToMain()
     {
-        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
-        GameObject black = GameObject.Find("BlackImage");
-        if(black != null)
+        if (texts[0] != null)
         {
-            black.GetComponent<Image>().color = Color.black;
+            canFadeout = true;
+            colorText = texts[1].color;
         }
-        GameObject.Find("OptionsMenu").SetActive(false);
+        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
+        if(blackImage != null)
+        {
+            Color color2 = Color.black;
+            blackImage.GetComponent<Image>().color = color2;
+        }
+        //GameObject.Find("OptionsMenu").SetActive(false);
         Time.timeScale = 1;
         PlayOnce(aud3);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         StartCoroutine(ReturnToMainMenu());
         
+    }
+    public void ReturnToMainFromFade()
+    {
+        
+        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
+        GameObject black = GameObject.Find("BlackImage");
+        if (black != null)
+        {
+            black.GetComponent<Image>().color = Color.black;
+        }
+        //GameObject.Find("OptionsMenu").SetActive(false);
+        Time.timeScale = 1;
+        PlayOnce(aud3);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        StartCoroutine(ReturnToMainMenu());
+
     }
     public IEnumerator ReturnToMainMenu()
     {

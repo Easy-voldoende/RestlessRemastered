@@ -7,7 +7,10 @@ public class PictureShift : MonoBehaviour
     private bool hasRotated;
     public bool solved;
     public LayerMask mask;
+    public bool openedDoor;
     public AudioSource source;
+    public GameObject door;
+    public GameObject doorBody;
 
     private void Start()
     {
@@ -38,10 +41,15 @@ public class PictureShift : MonoBehaviour
         if (hasRotated && CheckPuzzleSolved())
         {
             
-            if(solved == true)
+            if(solved == true && openedDoor == false)
             {
                 Debug.Log("Puzzle Solved!");
                 solved = false;
+                openedDoor = true;
+                door.GetComponent<Animator>().SetTrigger("Door");
+                
+                doorBody.GetComponent<Rigidbody>().isKinematic = false;
+
             }
         }
 
@@ -71,13 +79,19 @@ public class PictureShift : MonoBehaviour
     }
     public bool CheckPuzzleSolved()
     {
+        float threshold = 0.01f;
+
         for (int i = 0; i < transform.childCount; i++)
         {
             GameObject puzzlePiece = transform.GetChild(i).gameObject;
-            if (puzzlePiece.transform.localEulerAngles != Vector3.zero)
+            Vector3 rotation = puzzlePiece.transform.localEulerAngles;
+
+            if (Mathf.Abs(rotation.x) > threshold ||
+                Mathf.Abs(rotation.y) > threshold ||
+                Mathf.Abs(rotation.z) > threshold)
             {
                 solved = false;
-                return false;                
+                return false;
             }
         }
 

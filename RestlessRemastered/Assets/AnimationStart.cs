@@ -33,7 +33,7 @@ public class AnimationStart : MonoBehaviour
 
     public IEnumerator WaitForSet()
     {
-        yield return new WaitForSeconds(6.6f);
+        yield return new WaitForSeconds(6.3f);
         cameraScript.enabled = true;
         light.enabled = true;
         meshRenderer.enabled = true;
