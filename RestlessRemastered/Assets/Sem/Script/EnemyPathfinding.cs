@@ -9,10 +9,12 @@ using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Serialization;
+using UnityEngine.UI;
 
 public class EnemyPathfinding : MonoBehaviour
 {
     public bool canRoam;
+    public AudioMixer mixer;
     public AudioSource jumpscare;
     public float rotationAdjustment;
     public GameObject[] eyes;
@@ -264,8 +266,14 @@ public class EnemyPathfinding : MonoBehaviour
         foreach (SliderSpin spin in spins)
         {
             spin.SaveVolumeButton();
-        }        
-        yield return new WaitForSeconds(2);
+        }
+        
+        yield return new WaitForSeconds(2f);
+        jumpscare.volume = 0;
+        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
+        Color color = Color.black;
+        GameObject.Find("BlackImage").GetComponent<Image>().color = color;
+        yield return new WaitForSeconds(Random.Range(3,6));
         SceneManager.LoadScene(3);
 
 

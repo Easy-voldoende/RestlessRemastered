@@ -83,7 +83,7 @@ public class OptionsMenuScript : MonoBehaviour
     }
     public void OptionsBack()
     {
-        PlayOnce(aud2);
+        //PlayOnce(aud2);
         ui.menuSound1.Play();
         ui.otherUI.SetActive(true);
         subMenus[0].SetActive(false);
@@ -101,10 +101,23 @@ public class OptionsMenuScript : MonoBehaviour
 
     public void ReturnToMain()
     {
+        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
+        GameObject black = GameObject.Find("BlackImage");
+        if(black != null)
+        {
+            black.GetComponent<Image>().color = Color.black;
+        }
+        GameObject.Find("OptionsMenu").SetActive(false);
         Time.timeScale = 1;
         PlayOnce(aud3);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        StartCoroutine(ReturnToMainMenu());
+        
+    }
+    public IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(Random.Range(3, 6));
         SceneManager.LoadScene(0);
     }
     public void Quit()
