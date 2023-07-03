@@ -12,16 +12,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.269981
+      value: -2.6870112
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000000024936545
+      value: -0.000005086263
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 69.89372
+      value: 1.3928529
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_LocalRotation.y
@@ -61,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bde4633d321b90c418c9160d08de1b10, type: 2}
     - target: {fileID: 919132149155446097, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
       propertyPath: m_Name
-      value: Paddo Variant
+      value: Paddo Variant (18)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9954143f2e0274dadbeef733a6c5d6, type: 3}
