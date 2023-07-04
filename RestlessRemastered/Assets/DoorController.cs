@@ -2,63 +2,39 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    public HingeJoint hingeJoint;
-    public float dragSpeed = 2f;
-    public float rotationThreshold = 0.1f;
-    public Vector3 dragStartPosition;
-    public Quaternion initialRotation;
-    public bool isDragging = false;
+    private Quaternion initialRotation;
+    private Quaternion targetRotation;
+    private bool isOpen = false;
+    RaycastHit hit;
+    [SerializeField] private float openAngle = 90f;
+    [SerializeField] private float openSpeed = 2f;
 
     private void Start()
     {
-        hingeJoint = GetComponent<HingeJoint>();
         initialRotation = transform.rotation;
+        //targetRotation = initialRotation * Quaternion.Euler(0f, openAngle, 0f);
     }
 
     private void Update()
     {
-        if (isDragging)
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector3 dragCurrentPosition = Input.mousePosition;
-            float dragDistance = dragCurrentPosition.x - dragStartPosition.x;
-
-            // Calculate the rotation angle based on the drag distance
-            float rotationAngle = dragDistance * dragSpeed;
-
-            // Apply the rotation to the door around the hinge axis
-            Quaternion newRotation = initialRotation * Quaternion.Euler(0f, rotationAngle, 0f);
-            hingeJoint.transform.rotation = newRotation;
-
-            // Update the door's angle limits to prevent it from rotating beyond the desired range
-            JointLimits limits = hingeJoint.limits;
-            limits.min = hingeJoint.angle;
-            limits.max = hingeJoint.angle;
-            hingeJoint.limits = limits;
-
-            // Update the drag start position for the next frame
-            dragStartPosition = dragCurrentPosition;
+            if(Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out hit, 5f))
+            {
+                if(hit.transform.gameObject == gameObject)
+                {
+                    ToggleDoor();
+                }
+            }
         }
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, openSpeed * Time.deltaTime);
     }
 
-    private void OnMouseDown()
+    private void ToggleDoor()
     {
-        if (Input.GetMouseButton(0))
-        {
-            isDragging = true;
-            dragStartPosition = Input.mousePosition;
-
-            // Disable physics on the door while dragging
-            hingeJoint.useMotor = false;
-            hingeJoint.useLimits = false;
-        }
-    }
-
-    private void OnMouseUp()
-    {
-        isDragging = false;
-
-        // Re-enable physics on the door
-        hingeJoint.useMotor = true;
-        hingeJoint.useLimits = true;
+        isOpen = !isOpen;
+        targetRotation = isOpen ? initialRotation * Quaternion.Euler(0f, openAngle, 0f) : initialRotation;
     }
 }
