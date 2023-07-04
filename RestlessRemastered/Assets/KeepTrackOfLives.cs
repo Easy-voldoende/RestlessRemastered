@@ -8,6 +8,7 @@ public class KeepTrackOfLives : MonoBehaviour
     private const string SceneLoadCountKey = "SceneLoadCount";
     public int sceneLoadCount = 0;
     public AudioSource[] audioSource;
+    public AudioSource clip;
     public Animator anim;
 
     private void Awake()
@@ -39,6 +40,10 @@ public class KeepTrackOfLives : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(3.6f);
+        }
+        if (sceneLoadCount > 1)
+        {
+            clip.Play();
         }
         source.Play();
         
