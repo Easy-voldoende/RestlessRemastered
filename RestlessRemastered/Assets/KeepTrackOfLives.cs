@@ -7,6 +7,7 @@ public class KeepTrackOfLives : MonoBehaviour
 {
     private const string SceneLoadCountKey = "SceneLoadCount";
     public int sceneLoadCount = 0;
+    public AudioSource[] audioSource;
     public Animator anim;
 
     private void Awake()
@@ -21,11 +22,26 @@ public class KeepTrackOfLives : MonoBehaviour
         PlayerPrefs.SetInt(SceneLoadCountKey, sceneLoadCount);
         PlayerPrefs.Save();
         StartCoroutine(nameof(TimesDied));
+        StartCoroutine(PlaySound(audioSource[sceneLoadCount-1]));
     }
     public IEnumerator TimesDied()
     {
         yield return new WaitForSeconds(2);
         anim.SetInteger("Died", sceneLoadCount);
+
+    }
+    public IEnumerator PlaySound(AudioSource source)
+    {
+        if(sceneLoadCount == 1)
+        {
+            yield return new WaitForSeconds(2.45f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(3.6f);
+        }
+        source.Play();
+        
 
     }
     private void OnApplicationQuit()

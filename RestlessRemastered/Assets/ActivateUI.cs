@@ -22,14 +22,21 @@ public class ActivateUI : MonoBehaviour
     public AudioSource menuSound2;
     public AudioMixer mix;
     public GameObject otherUI;
+    public Volume v;
+    DepthOfField depthOfField;
     void Start()
     {
         pauseMenu.SetActive(false);
+        v.profile.TryGet<DepthOfField>(out depthOfField);
     }
 
     // Update is called once per frame
     void Update()
     {
+        depthOfField.active = menuOpen;
+
+
+
         if (Input.GetKeyDown(KeyCode.Escape) && menuOpen == false)
         {
             menuSound2.Play();

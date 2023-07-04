@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckForLock : MonoBehaviour
 {
@@ -16,12 +17,20 @@ public class CheckForLock : MonoBehaviour
     public AudioSource doorSound;
     public GameObject UI;
     public TextMeshProUGUI text;
+    
     public bool hidden;
     public float maxCooldown = 4;
+    public bool canFade;
     public float cooldown;
+    public bool canFadeOut;
+    public GameObject canvas;
+    public TextMeshProUGUI itemsText;
+
+    public TextMeshProUGUI itemsText2;
     public bool gotKey;
     public GameObject player;
     RaycastHit hit;
+    public int itemsPickedUp = 0;
     void Start()
     {
         StartCoroutine(nameof(FlashLightUI));
@@ -34,6 +43,15 @@ public class CheckForLock : MonoBehaviour
     }
     void Update()
     {
+        if (canFadeOut == true)
+        {
+            FadeOutText();
+        }
+
+        if (canFade == true)
+        {
+            FadeInText();
+        }
         cooldown -= 1 * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -42,6 +60,9 @@ public class CheckForLock : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Pin"))
                 {
                     pickedUpPin = true;
+                    itemsPickedUp++;
+                    
+                    itemsText.text = itemsPickedUp.ToString() +"/2";
                     hit.transform.gameObject.SetActive(false);
                 }
 
@@ -62,6 +83,7 @@ public class CheckForLock : MonoBehaviour
                         {
                             
                             text.text = "Find something to open the door with...";
+                            canFade = true;
                             UI.GetComponent<Animator>().SetTrigger("Text");
                             cooldown = maxCooldown;
                         }
@@ -96,6 +118,9 @@ public class CheckForLock : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Screwdriver"))
                 {
                     pickedUpScrewDriver = true;
+                    itemsPickedUp++;
+                    
+                    itemsText.text = itemsPickedUp.ToString() + "/2";
                     hit.transform.gameObject.SetActive(false);
                 }
 
@@ -148,6 +173,65 @@ public class CheckForLock : MonoBehaviour
             hidden = true;
         }
     }
+    public void FadeInText()
+    {
+        
+        if(itemsText.color.a < 0.99f)
+        {
+            Color color = itemsText.color;
+            color.a += 1 * Time.deltaTime;
+            itemsText.color = color;
+            
+            
+        }
+        if (itemsText2.color.a < 0.99f)
+        {
+            Color color = itemsText2.color;
+            color.a += 1 * Time.deltaTime;
+            itemsText2.color = color;
+            
+        }
+        if (canvas.GetComponent<Image>().color.a < 0.65f)
+        {
+            Color color = canvas.GetComponent<Image>().color;
+            color.a += 0.65f * Time.deltaTime;
+            canvas.GetComponent<Image>().color = color;
+            
+        }
+
+        if (itemsText.color.a >= 0.99f)
+        {
+            canFade = false;
+        }
+    }
+
+    public void FadeOutText()
+    {
+
+        if (itemsText.color.a > 0f)
+        {
+            Color color = itemsText.color;
+            color.a -= 1 * Time.deltaTime;
+            itemsText.color = color;
+        }
+        if (itemsText2.color.a > 0f)
+        {
+            Color color = itemsText2.color;
+            color.a -= 1 * Time.deltaTime;
+            itemsText2.color = color;
+        }
+        if (canvas.GetComponent<Image>().color.a > 0)
+        {
+            Color color = canvas.GetComponent<Image>().color;
+            color.a -= 0.65f * Time.deltaTime;
+            canvas.GetComponent<Image>().color = color;
+        }
+
+        if (itemsText.color.a <= 0.01f)
+        {
+            canFadeOut = false;
+        }
+    }
     public void UnHide()
     {
         if(hidden == true)
@@ -166,6 +250,7 @@ public class CheckForLock : MonoBehaviour
     }
     public void StartPicking()
     {
+        canFadeOut = true;
         lastPos = player.transform;
         hit.transform.gameObject.transform.GetComponent<GetGameObject>().obj.GetComponent<LockPick>().startedPicking = true;
         hit.transform.gameObject.transform.GetComponent<GetGameObject>().obj.GetComponent<LockPick>().pin.SetActive(true);
