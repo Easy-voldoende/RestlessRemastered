@@ -17142,9 +17142,15 @@ MonoBehaviour:
   text: {fileID: 0}
   hidden: 0
   maxCooldown: 4
+  canFade: 0
   cooldown: 0
+  canFadeOut: 0
+  canvas: {fileID: 0}
+  itemsText: {fileID: 0}
+  itemsText2: {fileID: 0}
   gotKey: 0
   player: {fileID: 3354176333001246096}
+  itemsPickedUp: 0
 --- !u!124 &3354176334542296847
 Behaviour:
   m_ObjectHideFlags: 0
