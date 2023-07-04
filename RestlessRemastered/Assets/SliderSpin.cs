@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
 using static UnityEngine.Rendering.DebugUI;
@@ -20,6 +22,7 @@ public class SliderSpin : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider ambientSlider;
+    [SerializeField] private Slider GammaSlider;
     public float volumeValue;
     float actualValue;
     [SerializeField] private GameObject volumeText;
@@ -32,11 +35,17 @@ public class SliderSpin : MonoBehaviour
     public bool isMainGame;
     public int i;
     private int previousIndex = -1;
+    private LiftGammaGain gamma;
+    public Volume v;
 
     private void Start()
     {
         slider = GetComponent<Slider>();
-        LoadValues();
+        if(v!= null)
+        {
+            v.profile.TryGet<LiftGammaGain>(out gamma);
+        }
+
     }
     public void Awake()
     {
@@ -44,7 +53,12 @@ public class SliderSpin : MonoBehaviour
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
         ambientSlider.onValueChanged.AddListener(SetAmbientVolume);
     }
+    public void SetGammaValue(float value)
+    {
 
+        gamma.gamma.value = new Vector4(value, value, value, value);
+        isPlaying = true;
+    }
     public void SetMusicVolume(float value)
     {
         mixer.SetFloat(MIXER_MASTER, Mathf.Log10(value) * 20);
