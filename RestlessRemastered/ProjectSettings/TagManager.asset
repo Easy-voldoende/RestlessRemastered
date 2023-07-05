@@ -22,6 +22,7 @@ TagManager:
   - GateKey
   - Curtain
   - LockedDoor
+  - Paper
   layers:
   - Default
   - TransparentFX

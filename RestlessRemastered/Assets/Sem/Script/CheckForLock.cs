@@ -15,9 +15,10 @@ public class CheckForLock : MonoBehaviour
     public bool pickedUpPin;
     public bool pickedUpScrewDriver;
     public AudioSource doorSound;
+    public GameObject mainMenu;
     public GameObject UI;
     public TextMeshProUGUI text;
-    
+    public bool paper;
     public bool hidden;
     public float maxCooldown = 4;
     public bool canFade;
@@ -25,7 +26,7 @@ public class CheckForLock : MonoBehaviour
     public bool canFadeOut;
     public GameObject canvas;
     public TextMeshProUGUI itemsText;
-
+    public GameObject paperUI;
     public TextMeshProUGUI itemsText2;
     public bool gotKey;
     public GameObject player;
@@ -159,9 +160,24 @@ public class CheckForLock : MonoBehaviour
                     hit.transform.gameObject.GetComponentInParent<Animator>().SetTrigger("Curtain");
 
                 }
+                if (hit.transform.gameObject.CompareTag("Paper"))
+                {
+                    if(paper == false)
+                    {
+                        GameObject note = GameObject.Find("Note").gameObject;
+                        note.GetComponent<MeshRenderer>().enabled = false;
+                        paperUI.SetActive(true);
+                        mainMenu.GetComponent<ActivateUI>().menuOpen = true;
+                        StartCoroutine(PaperShit());
+                    }
+                    
+
+                }
 
 
             }
+            
+
         }
 
         if (hidden == true && Input.GetKeyDown(KeyCode.Escape))
@@ -172,6 +188,20 @@ public class CheckForLock : MonoBehaviour
         {
             hidden = true;
         }
+        if (paper == true && Input.GetKeyDown(KeyCode.E))
+        {
+            paperUI.SetActive(false);
+            GameObject note = GameObject.Find("Note").gameObject;
+            note.GetComponent<MeshRenderer>().enabled = true;
+            mainMenu.GetComponent<ActivateUI>().menuOpen = false;
+            paper = false;
+        }
+    }
+    public IEnumerator PaperShit()
+    {
+        yield return new WaitForSeconds(0.1f);
+        paper = true;
+        
     }
     public void FadeInText()
     {
