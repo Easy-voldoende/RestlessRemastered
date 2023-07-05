@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CabinScene.unity
     guid: dba97eaf7d1da9c4ab28a987fd1d4432
+  - enabled: 1
+    path: Assets/Scenes/Death2.unity
+    guid: 9ef118cdbe9c7234ba9fe8ef528f4d2b
   m_configObjects: {}
