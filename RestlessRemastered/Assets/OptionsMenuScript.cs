@@ -61,6 +61,7 @@ public class OptionsMenuScript : MonoBehaviour
                 text.color = colorText;
             }
         }
+        Fading();
     }
     public void Smoke()
     {
@@ -133,9 +134,9 @@ public class OptionsMenuScript : MonoBehaviour
         StartCoroutine(ReturnToMainMenu());
         
     }
+    
     public void ReturnToMainFromFade()
     {
-        
         GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
         GameObject black = GameObject.Find("BlackImage");
         if (black != null)
@@ -149,6 +150,32 @@ public class OptionsMenuScript : MonoBehaviour
         Cursor.visible = true;
         StartCoroutine(ReturnToMainMenu());
 
+    }
+    bool fading = false;
+    public void ReturnToMainFromFade2()
+    {
+        fading = true;
+        GameObject.Find("LoadingScreenObj").GetComponent<LoadingScreen>().enabled = true;
+        //GameObject.Find("OptionsMenu").SetActive(false);
+        Time.timeScale = 1;
+        PlayOnce(aud3);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        StartCoroutine(ReturnToMainMenu());
+
+    }
+    public void Fading()
+    {
+        if(fading == true)
+        {
+            GameObject black = GameObject.Find("BlackImage");
+            if (black != null)
+            {
+                Color color = black.GetComponent<Image>().color;
+                color.a += 1 * Time.deltaTime;
+                black.GetComponent<Image>().color = color;
+            }
+        }
     }
     public IEnumerator ReturnToMainMenu()
     {

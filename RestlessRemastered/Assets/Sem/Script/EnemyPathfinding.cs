@@ -227,7 +227,10 @@ public class EnemyPathfinding : MonoBehaviour
             yield return new WaitForSeconds(2);
             if(playerObj.GetComponent<KeepTrackOfLives>().sceneLoadCount ==3)
             {
-                SceneManager.LoadScene(0);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                SceneManager.LoadScene(4);
+                
             }
             else
             {
