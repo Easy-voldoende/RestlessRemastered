@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class CheckForLock : MonoBehaviour
 {
+    public AudioSource papersound;
+    public AudioSource keySound;
     public GameObject maincam;
     public LayerMask layerMask;
     public GameObject mainHolder;
@@ -169,6 +171,7 @@ public class CheckForLock : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("GateKey"))
                 {
                     gotKey = true;
+                    keySound.Play();
                     hit.transform.gameObject.SetActive(false);
 
 
@@ -185,6 +188,7 @@ public class CheckForLock : MonoBehaviour
                         GameObject note = GameObject.Find("Note").gameObject;
                         note.GetComponent<MeshRenderer>().enabled = false;
                         paperUI.SetActive(true);
+                        papersound.Play();
                         mainMenu.GetComponent<ActivateUI>().menuOpen = true;
                         StartCoroutine(PaperShit());
                     }
