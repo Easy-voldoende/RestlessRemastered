@@ -4876,7 +4876,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: 62cab7e5bd56a3f47be95c016f9e0c9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4936,7 +4936,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4804527154119464112, guid: e9dfe137162aa27479610333c4404f6f, type: 3}
       propertyPath: m_Name
-      value: Kaars
+      value: Kaars Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5325167158797405706, guid: e9dfe137162aa27479610333c4404f6f, type: 3}
       propertyPath: m_RootOrder
