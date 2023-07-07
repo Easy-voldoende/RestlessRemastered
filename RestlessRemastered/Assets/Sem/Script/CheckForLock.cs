@@ -155,8 +155,11 @@ public class CheckForLock : MonoBehaviour
 
                         text.text = "Find the gate key!";
                         hit.transform.gameObject.GetComponent<Animator>().SetTrigger("Jiggle");
-                        UI.GetComponent<Animator>().SetTrigger("Text");
-                        cooldown = maxCooldown;
+                        if (cooldown <= 0)
+                        {
+                            UI.GetComponent<Animator>().SetTrigger("Text");
+                            cooldown = maxCooldown;
+                        }
                     }
 
 
