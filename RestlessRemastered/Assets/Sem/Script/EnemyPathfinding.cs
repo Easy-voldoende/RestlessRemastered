@@ -10,10 +10,12 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyPathfinding : MonoBehaviour
 {
     public bool canRoam;
+    
     public AudioMixer mixer;
     public AudioSource jumpscare;
     public float rotationAdjustment;
@@ -57,6 +59,7 @@ public class EnemyPathfinding : MonoBehaviour
     public SliderSpin[] spins;
     public bool isMain;
     public int died;
+    public GameObject vignette;
     public bool canAnimateEye;
     public enum EnemyState
     {
@@ -191,6 +194,7 @@ public class EnemyPathfinding : MonoBehaviour
     {
         if(isMain == true)
         {
+            
             PlayerPrefs.SetInt("Died", died+1);
             foreach (GameObject eye in eyes)
             {
@@ -224,6 +228,7 @@ public class EnemyPathfinding : MonoBehaviour
             {
                 spin.SaveVolumeButton();
             }
+            vignette.SetActive(false);
             yield return new WaitForSeconds(2);
             if(playerObj.GetComponent<KeepTrackOfLives>().sceneLoadCount ==3)
             {

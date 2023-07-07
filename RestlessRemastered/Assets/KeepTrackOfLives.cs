@@ -8,12 +8,15 @@ public class KeepTrackOfLives : MonoBehaviour
     private const string SceneLoadCountKey = "SceneLoadCount";
     public int sceneLoadCount = 0;
     public AudioSource[] audioSource;
+    public GameObject vignette1;
+    public GameObject vignette2;
     public AudioSource clip;
     public Animator anim;
 
     private void Start()
     {
         sceneLoadCount = PlayerPrefs.GetInt(SceneLoadCountKey, 0);
+        
 
         if (SceneManager.GetActiveScene().name == "CabinScene")
         {
@@ -21,6 +24,15 @@ public class KeepTrackOfLives : MonoBehaviour
         }
 
         PlayerPrefs.SetInt(SceneLoadCountKey, sceneLoadCount);
+        if (sceneLoadCount == 2)
+        {
+            vignette1.SetActive(true);
+        }
+        if (sceneLoadCount == 3)
+        {
+            vignette1.SetActive(true);
+            vignette2.SetActive(true);
+        }
         PlayerPrefs.Save();
         StartCoroutine(nameof(TimesDied));
         StartCoroutine(PlaySound(audioSource[sceneLoadCount - 1]));

@@ -11,6 +11,7 @@ public class HeartBeat : MonoBehaviour
     public float heartBeatCooldown;
     public float maxCooldown = 10;
     public AudioSource heartBeat;
+    public Animator vignette;
     public GameObject shadow;
     public void PlayHeartBeat()
     {
@@ -24,6 +25,7 @@ public class HeartBeat : MonoBehaviour
 
             if (heartBeatCooldown >= maxCooldown)
             {
+                vignette.SetTrigger("Vignette");
                 PlayOnce(heartBeat, 1);
                 heartBeatCooldown = 0;
             }

@@ -16,6 +16,7 @@ public class CheckForLock : MonoBehaviour
     public bool pickedUpScrewDriver;
     public AudioSource doorSound;
     public GameObject mainMenu;
+    public AudioSource pickUpSound;
     public GameObject UI;
     public TextMeshProUGUI text;
     public bool paper;
@@ -62,7 +63,7 @@ public class CheckForLock : MonoBehaviour
                 {
                     pickedUpPin = true;
                     itemsPickedUp++;
-                    
+                    pickUpSound.Play();
                     itemsText.text = itemsPickedUp.ToString() +"/2";
                     hit.transform.gameObject.SetActive(false);
                 }
@@ -80,7 +81,7 @@ public class CheckForLock : MonoBehaviour
                         AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
                         PlayOnce(door, Random.Range(0.9f, 1.1f));
                         hit.transform.gameObject.transform.parent.GetComponent<Animator>().SetTrigger("Budge");
-                        if (cooldown <= 0)
+                        if (cooldown <= 0 && hit.transform.gameObject.name == "RealDoor")
                         {
                             
                             text.text = "Find something to open the door with...";
@@ -97,7 +98,7 @@ public class CheckForLock : MonoBehaviour
                         AudioSource door = hit.transform.gameObject.GetComponent<AudioSource>();
                         PlayOnce(door, Random.Range(0.9f, 1.1f));
                         hit.transform.gameObject.transform.parent.GetComponent<Animator>().SetTrigger("Budge");
-                        if (cooldown <= 0)
+                        if (cooldown <= 0 )
                         {
 
                             text.text = "Find a way to open the door...";
@@ -120,7 +121,7 @@ public class CheckForLock : MonoBehaviour
                 {
                     pickedUpScrewDriver = true;
                     itemsPickedUp++;
-                    
+                    pickUpSound.Play();
                     itemsText.text = itemsPickedUp.ToString() + "/2";
                     hit.transform.gameObject.SetActive(false);
                 }
