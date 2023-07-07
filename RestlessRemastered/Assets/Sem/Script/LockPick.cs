@@ -46,7 +46,8 @@ public class LockPick : MonoBehaviour
             transform.position = pickPosition.position;
             if (startedPicking == true)
             {
-
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
 
                 if (movePick)
                 {
