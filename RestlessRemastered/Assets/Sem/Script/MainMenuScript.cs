@@ -56,6 +56,7 @@ public class MainMenuScript : MonoBehaviour
         {
             spin.SaveVolumeButton();
         }
+        PlayerPrefs.DeleteAll();
         yield return new WaitForSeconds(Random.Range(3, 5));
         SceneManager.LoadSceneAsync(1);
         

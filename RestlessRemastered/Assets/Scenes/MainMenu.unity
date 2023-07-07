@@ -6283,6 +6283,7 @@ RectTransform:
   - {fileID: 1910938018}
   - {fileID: 1077182442}
   - {fileID: 903671007}
+  - {fileID: 1954484713}
   - {fileID: 887552155}
   m_Father: {fileID: 2025996874}
   m_RootOrder: 0
@@ -8742,16 +8743,15 @@ RectTransform:
   m_GameObject: {fileID: 887552154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2958305, y: 1.2958305, z: 1.2958305}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1954484713}
+  m_Children: []
   m_Father: {fileID: 350425172}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -904, y: -77}
+  m_AnchoredPosition: {x: -268, y: -128}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887552156
@@ -11080,6 +11080,7 @@ MonoBehaviour:
   spins: []
   isMain: 0
   died: 0
+  vignette: {fileID: 0}
   canAnimateEye: 0
   state: 0
   lookingAtPlayer: 0
@@ -13512,17 +13513,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954484712}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 887552155}
-  m_RootOrder: 0
+  m_Father: {fileID: 350425172}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 126, y: 11.2}
+  m_AnchoredPosition: {x: 102, y: 442.59998}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1954484714
@@ -20434,8 +20435,11 @@ MonoBehaviour:
   pickedUpPin: 0
   pickedUpScrewDriver: 0
   doorSound: {fileID: 0}
+  mainMenu: {fileID: 0}
+  pickUpSound: {fileID: 0}
   UI: {fileID: 0}
   text: {fileID: 0}
+  paper: 0
   hidden: 0
   maxCooldown: 4
   canFade: 0
@@ -20443,6 +20447,7 @@ MonoBehaviour:
   canFadeOut: 0
   canvas: {fileID: 0}
   itemsText: {fileID: 0}
+  paperUI: {fileID: 0}
   itemsText2: {fileID: 0}
   gotKey: 0
   player: {fileID: 0}
@@ -32558,6 +32563,7 @@ MonoBehaviour:
   spins: []
   isMain: 0
   died: 0
+  vignette: {fileID: 0}
   canAnimateEye: 0
   state: 0
   lookingAtPlayer: 0

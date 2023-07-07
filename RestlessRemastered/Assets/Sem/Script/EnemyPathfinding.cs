@@ -58,7 +58,7 @@ public class EnemyPathfinding : MonoBehaviour
     public bool test = false;
     public SliderSpin[] spins;
     public bool isMain;
-    public int died;
+    public int died = 0;
     public GameObject vignette;
     public bool canAnimateEye;
     public enum EnemyState
@@ -171,7 +171,6 @@ public class EnemyPathfinding : MonoBehaviour
                 }
                 if (Vector3.Distance(myPos.position, player.position) < 4f)
                 {
-                    Debug.Log("You died");
                     if(sceneStarted == false)
                     {
                         StartCoroutine(nameof(DeathScene));
@@ -196,6 +195,7 @@ public class EnemyPathfinding : MonoBehaviour
         {
             
             PlayerPrefs.SetInt("Died", died+1);
+            PlayerPrefs.Save();
             foreach (GameObject eye in eyes)
             {
                 eye.GetComponent<LensFlareComponentSRP>().scale = 3;
@@ -230,7 +230,7 @@ public class EnemyPathfinding : MonoBehaviour
             }
             vignette.SetActive(false);
             yield return new WaitForSeconds(2);
-            if(playerObj.GetComponent<KeepTrackOfLives>().sceneLoadCount ==3)
+            if(PlayerPrefs.GetInt("Died") == 3)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -331,7 +331,6 @@ public class EnemyPathfinding : MonoBehaviour
                     {
                         eyes.GetComponent<LensFlareComponentSRP>().enabled = true;
                     }
-                    Debug.Log("Looking at player");
                     state = EnemyState.Chasing;
                     canAnimateEye = true;
                     chasing = true;
@@ -340,7 +339,6 @@ public class EnemyPathfinding : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Not looking at player");
                     state = EnemyState.Roaming;
                 }
             }

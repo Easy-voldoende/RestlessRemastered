@@ -22,7 +22,6 @@ public class FlashlightIntensity : MonoBehaviour
         if (Physics.Raycast(Camera.main.gameObject.transform.position, Camera.main.gameObject.transform.forward, out hit, minDistance))
         {
 
-            Debug.Log(hit.distance);
             distance = hit.distance;
             desiredIntensity = maxInt - (minDistance - distance) * 8;
             currentIntensity = GetComponent<Light>().intensity;

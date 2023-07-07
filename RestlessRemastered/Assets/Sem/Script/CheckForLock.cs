@@ -142,13 +142,27 @@ public class CheckForLock : MonoBehaviour
 
 
                 }
-                if (hit.transform.gameObject.CompareTag("SlotHanger") && gotKey == true)
+                if (hit.transform.gameObject.CompareTag("SlotHanger"))
                 {
-                    hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    GameObject.Find("Hek Gate").GetComponent<Animator>().SetTrigger("OpenGate");
+                    if (gotKey == true)
+                    {
+                        hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                        GameObject.Find("Hek Gate").GetComponent<Animator>().SetTrigger("OpenGate");
+                        
+                    }
+                    else 
+                    {
+
+                        text.text = "Find the gate key!";
+                        hit.transform.gameObject.GetComponent<Animator>().SetTrigger("Jiggle");
+                        UI.GetComponent<Animator>().SetTrigger("Text");
+                        cooldown = maxCooldown;
+                    }
+
 
 
                 }
+                
                 if (hit.transform.gameObject.CompareTag("GateKey"))
                 {
                     gotKey = true;
@@ -174,6 +188,7 @@ public class CheckForLock : MonoBehaviour
                     
 
                 }
+                
 
 
             }
